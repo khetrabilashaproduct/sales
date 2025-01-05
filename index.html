@@ -7,6 +7,205 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <style>
+        /* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    color: #333;
+}
+
+/* Header Styling */
+#current-date {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 0.5rem;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Header Styling */
+header {
+    position: relative;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #007bff;
+    border-radius: 2px;
+    animation: slideIn 1s ease-in-out;
+}
+
+
+#company-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #444;
+    animation: fadeIn 1s ease-in-out;
+}
+
+#current-date {
+    font-size: 1rem;
+    color: #888;
+    margin-top: 0.5rem;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Search Controls */
+.search-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.search-controls input {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.search-controls input:focus {
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    border-color: #6c63ff;
+    outline: none;
+}
+
+/* Table Styling */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease-in-out;
+    padding: 1rem;
+}
+
+.table {
+    
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    font-size: 0.95rem;
+}
+
+.table th, .table td {
+    padding: 1rem;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.table th {
+    
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #666;
+    border-bottom: 2px solid #ddd;
+}
+
+.table td {
+    border-bottom: 1px solid #eee;
+    color: #555;
+}
+
+/* Rounded Corners for Table */
+.table th:first-child,
+.table td:first-child {
+    /* margin-top: 10px; */
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.table th:last-child,
+.table td:last-child {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+/* Hover Effects for Rows */
+.table-hover tbody tr {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.table-hover tbody tr:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9ff;
+}
+
+/* Total Amount Styling */
+.text-end {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #444;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        margin-bottom: 1.5rem;
+    }
+
+    #company-name {
+        font-size: 1.5rem;
+    }
+
+    .search-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .search-controls input {
+        width: 100%;
+    }
+
+    .table th, .table td {
+        font-size: 0.85rem;
+    }
+
+    .text-end {
+        text-align: center;
+    }
+}
+
+    </style>
 </head>
 <body>
     <div class="container my-5">
