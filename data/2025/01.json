@@ -1,29 +1,23 @@
 {
     "sales": [
-      {
-        "customer": "John Doe",
-        "products": ["Product A", "Product B"],
-        "amount": 500,
-        "totalPaid": 400,
-        "onHold": 100,
-        "date": "2025-01-01"
-      },
+      
       {
         "customer": "Lokanatha Paala",
         "products": ["Ply Door Advance"],
         "amount": 2700,
         "totalPaid": 1000,
-        "onHold": 1700,
+        "onHold": 0,
         "date": "2025-01-02"
       },
       {
-        "customer": "Alice Johnson",
-        "products": ["Product D", "Product E"],
-        "amount": 700,
-        "totalPaid": 700,
-        "onHold": 0,
+        "customer": "Juma",
+        "products": ["Door fittings"],
+        "amount": 3965,
+        "totalPaid": 2000,
+        "onHold": 1965,
         "date": "2025-01-03"
       },
+
       {
         "customer": "Subrata Sahoo",
         "products": ["Durabandha", "Jharaka", "Skylight"],
@@ -80,6 +74,7 @@
         "onHold": 0,
         "date": "2025-01-05"
       }
+      
     ]
   }
   

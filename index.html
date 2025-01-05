@@ -11,7 +11,7 @@
         /* General Styling */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
+    background-color: #E6E6FA;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -31,6 +31,13 @@ header {
     position: relative;
     text-align: center;
     margin-bottom: 2rem;
+    box-shadow: 10px 8px 15px rgba(255, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 10px;
+    margin: 5px;
+    /* width: 150px; */
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
 }
 
 header::after {
@@ -50,7 +57,7 @@ header::after {
 #company-name {
     font-size: 2rem;
     font-weight: bold;
-    color: #444;
+    color: #060883;
     animation: fadeIn 1s ease-in-out;
 }
 
@@ -89,13 +96,14 @@ header::after {
 .table-responsive {
     overflow-x: auto;
     border-radius: 15px;
-    background: #fff;
+    background: #B2FFFF;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     animation: fadeInUp 1s ease-in-out;
     padding: 1rem;
 }
 
 .table {
+    font-weight: bolder;
     
     border-collapse: separate;
     border-spacing: 0;
@@ -104,27 +112,32 @@ header::after {
 }
 
 .table th, .table td {
+    font-weight: bolder;
     padding: 1rem;
     text-align: left;
     vertical-align: middle;
 }
 
 .table th {
-    
-    background-color: #f8f9fa;
+    font-weight: bolder;
+    font-style: italic              ;
+    background-color: #1CAC78;
     font-weight: bold;
-    color: #666;
-    border-bottom: 2px solid #ddd;
+    color: #ffffff;
+    border-bottom: 2px solid #50C878;
 }
 
 .table td {
-    border-bottom: 1px solid #eee;
-    color: #555;
+    font-weight: bolder;
+   
+    border-bottom: 1px solid #50C878;
+    color: #000000;
 }
 
 /* Rounded Corners for Table */
 .table th:first-child,
 .table td:first-child {
+    font-weight: bolder;
     /* margin-top: 10px; */
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -143,8 +156,8 @@ header::after {
 
 .table-hover tbody tr:hover {
     transform: scale(1.02);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9ff;
+    box-shadow: 0 4px 8px rgba(255, 1, 1, 0.1);
+    background-color: #50C878;
 }
 
 /* Total Amount Styling */
@@ -155,7 +168,47 @@ header::after {
     color: #444;
     animation: fadeIn 1.5s ease-in-out;
 }
+/* Button Group Styling */
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
 
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    box-shadow: 0 6px 12px rgba(108, 117, 125, 0.4);
+    transform: scale(1.05);
+}
 /* Animations */
 @keyframes fadeIn {
     from {
@@ -210,7 +263,7 @@ header::after {
 <body>
     <div class="container my-5">
         <header class="text-center mb-4">
-            <h1 id="company-name">Company Name</h1>
+            <h1 id="company-name">Khetra Bilasha Products</h1>
             <p id="current-date" class="text-muted"></p>
         </header>
 
@@ -243,34 +296,50 @@ header::after {
                 </tbody>
             </table>
         </div>
-
+        <div class="button-group mt-3">
+            <button id="clear-search-date" class="btn btn-primary">Clear</button>
+            <button id="another-page" class="btn btn-secondary">Graph</button>
+        </div>
         <div class="text-end mt-3">
             <strong>Total Amount:</strong> <span id="total-amount">0</span>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
+
+const clearButton = document.getElementById('clear-search-date');
+const anotherPageButton = document.getElementById('another-page');
+       document.addEventListener('DOMContentLoaded', async () => {
     const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
     document.getElementById('current-date').innerText = `Date: ${new Date().toLocaleDateString()}`;
 
     const salesTable = document.getElementById('sales-data');
     const totalAmountEl = document.getElementById('total-amount');
+    const searchInput = document.getElementById('search-input');
+    const startDateInput = document.getElementById('start-date');
+    const endDateInput = document.getElementById('end-date');
+    const clearButton = document.getElementById('clear-search-date');
 
+    
+    clearButton.addEventListener('click', async () => {
+        searchInput.value = ''; // Clear the search input
+        const filterDataEvent = new Event('input'); // Trigger input event
+        searchInput.dispatchEvent(filterDataEvent);
+    });
+
+    
+
+    // Function to render data
     const renderData = (data) => {
         salesTable.innerHTML = '';
         let totalPaid = 0;
 
         data.forEach(item => {
-            totalPaid += item.totalPaid; // Use totalPaid for calculation
+            totalPaid += item.totalPaid;
 
-            // Handle both array and string formats for products
-            let productList;
-            if (Array.isArray(item.products)) {
-                productList = item.products.map(product => `<div>${product}</div>`).join('');
-            } else {
-                productList = item.products.replace(/\n/g, '<br>');
-            }
+            const productList = Array.isArray(item.products)
+                ? item.products.map(product => `<div>${product}</div>`).join('')
+                : item.products.replace(/\n/g, '<br>');
 
             const row = `<tr>
                 <td>${item.customer}</td>
@@ -283,9 +352,10 @@ header::after {
             salesTable.insertAdjacentHTML('beforeend', row);
         });
 
-        totalAmountEl.innerText = totalPaid.toFixed(2); // Update total to reflect totalPaid
+        totalAmountEl.innerText = totalPaid.toFixed(2);
     };
 
+    // Function to fetch data for a specific month
     const fetchDataForMonth = async (month) => {
         try {
             const [year, monthNum] = month.split('-');
@@ -301,10 +371,11 @@ header::after {
         }
     };
 
+    // Function to filter data based on input
     const filterData = async () => {
-        const searchValue = document.getElementById('search-input').value.toLowerCase();
-        const startDate = document.getElementById('start-date').value;
-        const endDate = document.getElementById('end-date').value;
+        const searchValue = searchInput.value.toLowerCase();
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
 
         // Determine relevant months to load
         const filesToLoad = new Set();
@@ -346,21 +417,41 @@ header::after {
         renderData(filteredData);
     };
 
-    // Load Default Data for Current Date
-    const currentMonth = currentDate.slice(0, 7);
-    const defaultData = await fetchDataForMonth(currentMonth);
-    const todaysData = defaultData.filter(item => item.date === currentDate);
-    renderData(todaysData);
+    // Load today's data by default
+    const loadTodaysData = async () => {
+        const currentMonth = currentDate.slice(0, 7);
+        const defaultData = await fetchDataForMonth(currentMonth);
+        const today = new Date();
+        const formattedToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        const todaysData = defaultData.filter(item => item.date === formattedToday);
+        console.log(`Today's Date: ${formattedToday}`);
 
-    // Event Listeners for Filters
-    document.getElementById('search-input').addEventListener('input', filterData);
-    document.getElementById('start-date').addEventListener('change', filterData);
-    document.getElementById('end-date').addEventListener('change', filterData);
 
+        renderData(todaysData);
+    };
+
+    // Event listeners
+    searchInput.addEventListener('input', async () => {
+        if (searchInput.value.trim() === '') {
+            await loadTodaysData(); // Load today's data when search box is cleared
+        } else {
+            await filterData();
+        }
+    });
+    startDateInput.addEventListener('change', filterData);
+    endDateInput.addEventListener('change', filterData);
+
+    // Initialize Flatpickr
     flatpickr('#start-date');
     flatpickr('#end-date');
+
+    // Initial load for today's data
+    await loadTodaysData();
 });
 
+anotherPageButton.addEventListener('click', () => {
+        window.location.href = '/graph.html'; // Replace with the correct URL
+    });
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

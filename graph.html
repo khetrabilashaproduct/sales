@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Performance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #E6E6FA;
+            margin: 0;
+            padding: 0;
+            color: #333;
+          
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow-x: hidden; /* Prevent horizontal overflow */
+        }
+
+        /* Header and Logo Styling */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 2rem;
+        }
+
+        .logo-container {
+            height: 100px;
+            justify-content: center;
+            width: 40%;
+            box-shadow: 10px 8px 15px rgba(255, 0, 0, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            animation: slideIn 1s ease-out;
+        }
+
+        .logo {
+            border-radius: 10px;
+            width: 60px; /* Logo size */
+            height: 60px;
+            margin-right: 10px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007bff;
+            margin: 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Animation for logo and text */
+        @keyframes slideIn {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .years{
+            visibility: hidden;
+        }
+        /* Charts Container */
+        #charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .chart-card {
+            background: #F0F8FF;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+       
+        /* Input Styling */
+        input[type="text"] {
+            text-align: center;
+            border-radius: 15px;
+            padding: 10px;
+            margin: 5px;
+            width: 160px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+            
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Button Styling */
+        #move-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #29AB87;
+            color: black;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Button Hover Animation */
+        #move-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Animations for Charts */
+        .chart-card {
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .moved {
+            transform: translateY(50px);
+        }
+        .text-muted{
+            box-shadow: 10px 8px 15px rgba(255, 0, 0, 0.1);
+            border-radius: 15px;
+            padding: 10px;
+            margin: 5px;
+            width: 150px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 768px) {
+            .logo-container {
+            height: 200px;
+            width: 50%;
+          
+        }
+  
+        }
+       
+
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <header>
+            <div class="logo-container">
+                <img src="/logo.png" class="logo" alt="Company Logo">
+                <h1>Khetra Bilasha Products Dashboard</h1>
+            </div>
+            <p id="current-date" class="text-muted"></p>
+        </header>
+
+        <div class="filter-section">
+            <label class="selectdate" for="month-picker">Select Date:</label>
+            <input class="selectdate1" type="text" id="month-picker" placeholder="Pick a Month">
+            <label class="years" for="year-picker">Select Year:</label>
+            <input class="years" type="text" id="year-picker" placeholder="Pick a Year">
+            <div id="selected-month-year"></div>
+        </div>
+
+        <!-- Button to Move Graph -->
+        <button id="move-button" class="btn btn-primary">Move Last Graph</button>
+
+        <div id="charts-container">
+            <!-- Charts will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            const currentDate = new Date().toISOString().split('T')[0];
+            const currentMonth = currentDate.slice(0, 7);
+            const currentYear = currentDate.slice(0, 4);
+            const currentDay = currentDate.slice(0, 10);
+    
+            document.getElementById('current-date').innerText = `Date: ${new Date().toLocaleDateString()}`;
+            const chartsContainer = document.getElementById('charts-container');
+            const monthPicker = document.getElementById('month-picker');
+            const yearPicker = document.getElementById('year-picker');
+            const selectedDisplay = document.getElementById('selected-month-year');
+    
+            // Set default date pickers
+            flatpickr(monthPicker, {
+                dateFormat: 'Y-m',
+                defaultDate: currentMonth,
+                onChange: async (selectedDates, dateStr) => {
+                    selectedDisplay.innerText = `Selected Date: ${dateStr}`;
+                    const salesData = await fetchDataForMonth(dateStr);
+                    renderCharts(salesData, dateStr, 'month');
+                }
+            });
+    
+            flatpickr(yearPicker, {
+                dateFormat: 'Y',
+                defaultDate: currentYear,
+                onChange: async (selectedDates, yearStr) => {
+                    selectedDisplay.innerText = `Selected Year: ${yearStr}`;
+                    const salesData = await fetchYearlyData(yearStr);
+                    renderCharts(salesData, yearStr, 'year');  // Both monthly and daily for year
+                }
+            });
+    
+            // Fetch data for current day, month, and year by default
+            const fetchDataForDay = async (day) => {
+                const filePath = `data/${day.slice(0, 4)}/${day.slice(5, 7)}/${day.slice(8, 10)}.json`;
+                const response = await fetch(filePath);
+                if (!response.ok) return [];
+                const json = await response.json();
+                return json.sales || [];
+            };
+    
+            const fetchDataForMonth = async (month) => {
+                const filePath = `data/${month.slice(0, 4)}/${month.slice(5, 7)}.json`;
+                const response = await fetch(filePath);
+                if (!response.ok) return [];
+                const json = await response.json();
+                return json.sales || [];
+            };
+    
+            const fetchYearlyData = async (year) => {
+                let yearlyData = [];
+                for (let month = 1; month <= 12; month++) {
+                    const formattedMonth = `${year}-${String(month).padStart(2, '0')}`;
+                    const data = await fetchDataForMonth(formattedMonth);
+                    yearlyData.push(...data);
+                }
+                return yearlyData;
+            };
+    
+            const renderCharts = (salesData, period, type = 'month') => {
+                chartsContainer.innerHTML = '';
+                const dailySales = {};
+                const dailyOnHold = {};
+                const monthlySales = {};
+                const monthlyOnHold = {};
+                const yearlySales = {};
+                const yearlyOnHold = {};
+    
+                salesData.forEach(sale => {
+                    const monthKey = sale.date.slice(0, 7);
+                    const yearKey = sale.date.slice(0, 4);
+    
+                    dailySales[sale.date] = (dailySales[sale.date] || 0) + sale.amount;
+                    dailyOnHold[sale.date] = (dailyOnHold[sale.date] || 0) + sale.onHold;
+                    monthlySales[monthKey] = (monthlySales[monthKey] || 0) + sale.amount;
+                    monthlyOnHold[monthKey] = (monthlyOnHold[monthKey] || 0) + sale.onHold;
+                    yearlySales[yearKey] = (yearlySales[yearKey] || 0) + sale.amount;
+                    yearlyOnHold[yearKey] = (yearlyOnHold[yearKey] || 0) + sale.onHold;
+                });
+    
+                // Always show both daily and monthly data
+                renderChart('Daily Sales for ' + period, 'line', Object.keys(dailySales), Object.values(dailySales));
+                renderChart('On-Hold (Daily) for ' + period, 'bar', Object.keys(dailyOnHold), Object.values(dailyOnHold));
+    
+                if (type === 'month' || (type === 'year' && period === currentYear)) {
+                    renderChart('Monthly Sales for ' + period.slice(0, 4), 'bar', Object.keys(monthlySales), Object.values(monthlySales));
+                    renderChart('On-Hold (Monthly) for ' + period.slice(0, 4), 'bar', Object.keys(monthlyOnHold), Object.values(monthlyOnHold));
+                }
+                
+                renderChart('Yearly Sales', 'pie', Object.keys(yearlySales), Object.values(yearlySales));
+                renderChart('On-Hold (Yearly)', 'pie', Object.keys(yearlyOnHold), Object.values(yearlyOnHold));
+            };
+    
+            const renderChart = (title, type, labels, data) => {
+                const canvas = document.createElement('canvas');
+                const card = document.createElement('div');
+                card.classList.add('chart-card');
+                card.appendChild(canvas);
+                chartsContainer.appendChild(card);
+    
+                new Chart(canvas, {
+                    type: type,
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: title,
+                            data: data,
+                            borderColor: '#004953',
+                            backgroundColor: '#50C878',
+                            fill: true
+                        }]
+                    }
+                });
+            };
+    
+            // Load default data for the current day, month, and year
+            const defaultDayData = await fetchDataForDay(currentDay);
+            const defaultMonthData = await fetchDataForMonth(currentMonth);
+            const defaultYearData = await fetchYearlyData(currentYear);
+    
+            renderCharts(defaultDayData, currentDay);  // Default daily sales for today
+            renderCharts(defaultMonthData, currentMonth, 'month');  // Default monthly sales for current month
+            renderCharts(defaultYearData, currentYear, 'year');  // Default yearly sales for current year
+        });
+
+      // Move Button Event Listener (make sure to reference the button correctly)
+const moveButton = document.getElementById('move-button');
+moveButton.addEventListener('click', () => {
+    // Reload the page to reset everything to its default state
+    location.reload();
+});
+
+
+
+    </script>
+    
+</body>
+</html>
