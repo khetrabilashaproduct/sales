@@ -1,0 +1,29 @@
+{
+    "sales": [
+      {
+        "customer": "Lokanatha Paala",
+        "products": ["Ply Door Advance"],
+        "amount": 2700,
+        "totalPaid": 1000,
+        "onHold": 0,
+        "date": "2025-01-02"
+      },
+      {
+        "customer": "Juma",
+        "products": ["Door fittings"],
+        "amount": 3965,
+        "totalPaid": 2000,
+        "onHold": 1965,
+        "date": "2025-01-03"
+      },
+      {
+        "customer": "Subrata Sahoo",
+        "products": ["Durabandha", "Jharaka", "Skylight"],
+        "amount": 19475.00,
+        "totalPaid": 19300,
+        "onHold": 0,
+        "date": "2025-01-04"
+      }
+    ]
+  }
+  

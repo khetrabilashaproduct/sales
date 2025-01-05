@@ -23,6 +23,39 @@
             flex-direction: column;
             overflow-x: hidden; /* Prevent horizontal overflow */
         }
+        .on-hold-details {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 90%;
+    overflow-y: auto;
+}
+
+.on-hold-item {
+    margin-bottom: 10px;
+}
+
+.on-hold-details h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.on-hold-details p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+button {
+    margin-top: 20px;
+}
+
 
         /* Header and Logo Styling */
         header {
@@ -283,6 +316,7 @@
                     monthlyOnHold[monthKey] = (monthlyOnHold[monthKey] || 0) + sale.onHold;
                     yearlySales[yearKey] = (yearlySales[yearKey] || 0) + sale.amount;
                     yearlyOnHold[yearKey] = (yearlyOnHold[yearKey] || 0) + sale.onHold;
+                    
                 });
     
                 // Always show both daily and monthly data

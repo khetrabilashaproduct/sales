@@ -279,6 +279,14 @@ header::after {
             </div>
         </div>
 
+        <!-- Checkbox to filter 'On Hold' payments -->
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="on-hold-checkbox">
+            <label class="form-check-label" for="on-hold-checkbox">
+                Show On Hold Payments
+            </label>
+        </div>
+
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead class="table-dark">
@@ -296,20 +304,19 @@ header::after {
                 </tbody>
             </table>
         </div>
+
         <div class="button-group mt-3">
             <button id="clear-search-date" class="btn btn-primary">Clear</button>
             <button id="another-page" class="btn btn-secondary">Graph</button>
         </div>
+        
         <div class="text-end mt-3">
             <strong>Total Amount:</strong> <span id="total-amount">0</span>
         </div>
     </div>
 
     <script>
-
-const clearButton = document.getElementById('clear-search-date');
-const anotherPageButton = document.getElementById('another-page');
-       document.addEventListener('DOMContentLoaded', async () => {
+      document.addEventListener('DOMContentLoaded', async () => {
     const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
     document.getElementById('current-date').innerText = `Date: ${new Date().toLocaleDateString()}`;
 
@@ -319,17 +326,9 @@ const anotherPageButton = document.getElementById('another-page');
     const startDateInput = document.getElementById('start-date');
     const endDateInput = document.getElementById('end-date');
     const clearButton = document.getElementById('clear-search-date');
+    const onHoldCheckbox = document.getElementById('on-hold-checkbox');
+    let showOnHoldOnly = false;
 
-    
-    clearButton.addEventListener('click', async () => {
-        searchInput.value = ''; // Clear the search input
-        const filterDataEvent = new Event('input'); // Trigger input event
-        searchInput.dispatchEvent(filterDataEvent);
-    });
-
-    
-
-    // Function to render data
     const renderData = (data) => {
         salesTable.innerHTML = '';
         let totalPaid = 0;
@@ -355,7 +354,6 @@ const anotherPageButton = document.getElementById('another-page');
         totalAmountEl.innerText = totalPaid.toFixed(2);
     };
 
-    // Function to fetch data for a specific month
     const fetchDataForMonth = async (month) => {
         try {
             const [year, monthNum] = month.split('-');
@@ -371,13 +369,11 @@ const anotherPageButton = document.getElementById('another-page');
         }
     };
 
-    // Function to filter data based on input
     const filterData = async () => {
         const searchValue = searchInput.value.toLowerCase();
         const startDate = startDateInput.value;
         const endDate = endDateInput.value;
 
-        // Determine relevant months to load
         const filesToLoad = new Set();
         if (startDate && endDate) {
             let startMonth = startDate.slice(0, 7);
@@ -392,14 +388,12 @@ const anotherPageButton = document.getElementById('another-page');
             filesToLoad.add(currentDate.slice(0, 7));
         }
 
-        // Load data from relevant files
         const salesData = [];
         for (const month of filesToLoad) {
             const data = await fetchDataForMonth(month);
             salesData.push(...data);
         }
 
-        // Apply filters
         const filteredData = salesData.filter(item => {
             const productString = Array.isArray(item.products)
                 ? item.products.join(', ').toLowerCase()
@@ -411,29 +405,27 @@ const anotherPageButton = document.getElementById('another-page');
             const withinDateRange = (!startDate || new Date(item.date) >= new Date(startDate)) &&
                                     (!endDate || new Date(item.date) <= new Date(endDate));
 
-            return matchesSearch && withinDateRange;
+            const matchesOnHold = showOnHoldOnly ? item.onHold !== 0 : true;
+
+            return matchesSearch && withinDateRange && matchesOnHold;
         });
 
         renderData(filteredData);
     };
 
-    // Load today's data by default
     const loadTodaysData = async () => {
         const currentMonth = currentDate.slice(0, 7);
         const defaultData = await fetchDataForMonth(currentMonth);
         const today = new Date();
         const formattedToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
         const todaysData = defaultData.filter(item => item.date === formattedToday);
-        console.log(`Today's Date: ${formattedToday}`);
-
 
         renderData(todaysData);
     };
 
-    // Event listeners
     searchInput.addEventListener('input', async () => {
         if (searchInput.value.trim() === '') {
-            await loadTodaysData(); // Load today's data when search box is cleared
+            await loadTodaysData();
         } else {
             await filterData();
         }
@@ -441,17 +433,36 @@ const anotherPageButton = document.getElementById('another-page');
     startDateInput.addEventListener('change', filterData);
     endDateInput.addEventListener('change', filterData);
 
-    // Initialize Flatpickr
+    // Handle "On Hold" checkbox
+    onHoldCheckbox.addEventListener('change', () => {
+        showOnHoldOnly = onHoldCheckbox.checked;
+        if (showOnHoldOnly) {
+            filterData(); // Apply filter when checkbox is checked
+        } else {
+            loadTodaysData(); // Show only ongoing data when checkbox is unchecked
+        }
+    });
+
+    clearButton.addEventListener('click', () => {
+        searchInput.value = '';
+        startDateInput.value = '';
+        endDateInput.value = '';
+        onHoldCheckbox.checked = false;
+        showOnHoldOnly = false;
+        loadTodaysData(); // Reset filters and show ongoing data
+    });
+
     flatpickr('#start-date');
     flatpickr('#end-date');
 
-    // Initial load for today's data
-    await loadTodaysData();
+    await loadTodaysData(); // Initially load the data for the ongoing date
 });
 
+const anotherPageButton = document.getElementById('another-page');
 anotherPageButton.addEventListener('click', () => {
-        window.location.href = 'https://khetrabilashaproduct.github.io/sales/graph.html'; // Replace with the correct URL
-    });
+    window.location.href = 'https://khetrabilashaproduct.github.io/sales/graph.html';
+});
+
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
