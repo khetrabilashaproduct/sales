@@ -1,0 +1,77 @@
+{
+    "sales": [
+      {
+        "customer": "John Doe",
+        "products": ["Product A", "Product B"],
+        "amount": 500,
+        "totalPaid": 400,
+        "onHold": 100,
+        "date": "2025-01-01"
+      },
+      {
+        "customer": "Lokanatha Paala",
+        "products": ["Ply Door Advance"],
+        "amount": 2700,
+        "totalPaid": 1000,
+        "onHold": 1700,
+        "date": "2025-01-02"
+      },
+      {
+        "customer": "Alice Johnson",
+        "products": ["Product D", "Product E"],
+        "amount": 700,
+        "totalPaid": 700,
+        "onHold": 0,
+        "date": "2025-01-03"
+      },
+      {
+        "customer": "Subrata Sahoo",
+        "products": ["Durabandha", "Jharaka", "Skylight"],
+        "amount": 19475.00,
+        "totalPaid": 19300,
+        "onHold": 0,
+        "date": "2025-01-04"
+      },
+      {
+        "customer": "Manir Alei",
+        "products": ["Duara Bandha-2 = 1500","Jharaka 3.6/4 ft -1 = 1600"],
+        "amount": 3100,
+        "totalPaid": 1100,
+        "onHold": 2000,
+        "date": "2025-01-04"
+      },
+      {
+        "customer": "Manoranjan Mallik",
+        "products": ["5 ft nanda plate project work"],
+        "amount": 3000,
+        "totalPaid": 3000,
+        "onHold": 0,
+        "date": "2025-01-04"
+      },
+      {
+        "customer": "Lokanatha Paala",
+        "products": ["Ply Door","Advance paid-1000"],
+        "amount": 1700,
+        "totalPaid": 1700,
+        "onHold": 0,
+        "date": "2025-01-05"
+      },
+      {
+        "customer": "Customer02",
+        "products": ["Adjust Fan"],
+        "amount": 100,
+        "totalPaid": 100,
+        "onHold": 0,
+        "date": "2025-01-05"
+      },
+      {
+        "customer": "Customer03",
+        "products": ["Main Door Duara Bandha"],
+        "amount": 2000,
+        "totalPaid": 2000,
+        "onHold": 0,
+        "date": "2025-01-05"
+      }
+    ]
+  }
+  
