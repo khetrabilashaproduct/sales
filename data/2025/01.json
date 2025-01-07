@@ -59,6 +59,14 @@
         "date": "2025-01-05"
       },
       {
+        "customer": "Deva",
+        "products": ["Ankor Bolt-6"],
+        "amount": 100,
+        "totalPaid": 0,
+        "onHold": 100,
+        "date": "2025-01-05"
+      },
+      {
         "customer": "Customer02",
         "products": ["Adjust Fan"],
         "amount": 100,
@@ -73,6 +81,46 @@
         "totalPaid": 2000,
         "onHold": 0,
         "date": "2025-01-05"
+      },
+      {
+        "customer": "Sarata Bhaina TATA Ace",
+        "products": ["Skylght 12/18"],
+        "amount": 60,
+        "totalPaid": 60,
+        "onHold": 0,
+        "date": "2025-01-05"
+      },
+      {
+        "customer": "Tuna",
+        "products": ["Skylght 2/2 ft"],
+        "amount": 310,
+        "totalPaid": 200,
+        "onHold": 110,
+        "date": "2025-01-06"
+      },
+      {
+        "customer": "Rahim ke abbu",
+        "products": ["Nanda 3ft- 2"],
+        "amount": 1200,
+        "totalPaid": 1100,
+        "onHold": 0,
+        "date": "2025-01-06"
+      },
+      {
+        "customer": "Suraj",
+        "products": ["Ply Door Advance"],
+        "amount": 1000,
+        "totalPaid": 1000,
+        "onHold": 0,
+        "date": "2025-01-07"
+      },
+      {
+        "customer": "Babu Pradhan (khairata)",
+        "products": ["Ply Door Advance"],
+        "amount": 9000,
+        "totalPaid": 9000,
+        "onHold": 0,
+        "date": "2025-01-07"
       }
       
     ]

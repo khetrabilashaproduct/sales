@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Payments</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    .company-tile {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 10px 0;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .company-tile:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .details {
+      display: none;
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .transaction {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .transaction img {
+      max-width: 100px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .transaction img:hover {
+      transform: scale(1.1);
+    }
+
+    .animated {
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Company Payments</h1>
+
+    <!-- Company Tiles -->
+    <div id="company-list">
+      <!-- Dynamically populated tiles -->
+    </div>
+
+    <!-- Details Section -->
+    <div id="details" class="details">
+      <h2 id="company-name">Company Name</h2>
+      <div id="transactions">
+        <!-- Dynamically populated transactions -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const companies = [
+      { id: 1, name: "Company 1", details: "Supplier of goods A" },
+      { id: 2, name: "Company 2", details: "Supplier of goods B" },
+      { id: 3, name: "Company 3", details: "Supplier of goods C" }
+    ];
+
+    const transactionsData = {
+      1: [
+        { date: "2025-01-01", payment: "$100", notes: "Installment 1", img: "https://via.placeholder.com/100" },
+        { date: "2025-01-15", payment: "$200", notes: "Installment 2", img: "https://via.placeholder.com/100" }
+      ],
+      2: [
+        { date: "2025-02-01", payment: "$150", notes: "Full payment", img: "https://via.placeholder.com/100" }
+      ],
+      3: [
+        { date: "2025-03-01", payment: "$50", notes: "Initial deposit", img: "https://via.placeholder.com/100" }
+      ]
+    };
+
+    // Populate company tiles
+    const companyList = document.getElementById("company-list");
+    companies.forEach(company => {
+      const tile = document.createElement("div");
+      tile.classList.add("company-tile");
+      tile.innerHTML = `
+        <div>
+          <h3>${company.name}</h3>
+          <p>${company.details}</p>
+        </div>
+        <div>&#9654;</div>
+      `;
+      tile.addEventListener("click", () => showDetails(company.id, company.name));
+      companyList.appendChild(tile);
+    });
+
+    // Show details
+    const details = document.getElementById("details");
+    const transactions = document.getElementById("transactions");
+
+    function showDetails(companyId, companyName) {
+      const companyTransactions = transactionsData[companyId];
+      document.getElementById("company-name").textContent = companyName;
+      transactions.innerHTML = "";
+
+      companyTransactions.forEach(({ date, payment, notes, img }) => {
+        const transaction = document.createElement("div");
+        transaction.classList.add("transaction", "animated");
+        transaction.innerHTML = `
+          <div>
+            <p><strong>Date:</strong> ${date}</p>
+            <p><strong>Payment:</strong> ${payment}</p>
+            <p><strong>Notes:</strong> ${notes}</p>
+          </div>
+          <img src="${img}" alt="Invoice Image" onclick="window.open('${img}', '_blank')">
+        `;
+        transactions.appendChild(transaction);
+      });
+
+      details.style.display = "block";
+      details.classList.add("animated");
+    }
+  </script>
+</body>
+</html>

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Performance-Graph | Khetra Bilasha Products</title>
+    <link rel="stylesheet" href="flatpickr.min.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -118,28 +120,57 @@ button {
         }
         /* Charts Container */
         #charts-container {
-            margin-left: -10%;
             display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            /* justify-content: center; */
-            margin-top: 2rem;
-            width: 140%;
-            /* max-width: 1200px; */
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
         }
 
-       .chart-row {
+        .chart-row {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    /* justify-content: center; */
+    justify-content: center;
     margin-bottom: 30px;
 }
 
-.chart-card {
-    flex: 1 1 calc(30.33% - 40px); /* Adjust for 3 graphs per row */
-    max-width: calc(30.33% - 40px);
-    min-width: 300px; /* Ensure minimum size for smaller screens */
+
+.chart-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+/* Navigation Buttons */
+.nav-buttons {
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+.nav-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #0056b3;
 }
 
         /* Filter Section */
@@ -187,8 +218,10 @@ button {
 
         /* Animations for Charts */
         .chart-card {
-            transition: transform 0.5s ease-in-out;
-        }
+    flex: 1 1 calc(33.33% - 40px); /* Adjust for 3 graphs per row */
+    max-width: calc(33.33% - 40px);
+    min-width: 300px; /* Ensure minimum size for smaller screens */
+}
 
         .moved {
             transform: translateY(50px);
@@ -207,17 +240,6 @@ button {
             height: 200px;
             width: 50%;
           
-        }
-
-        #charts-container {
-            margin-left: 2%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            /* justify-content: center; */
-            margin-top: 2rem;
-            width: 230%;
-            /* max-width: 1200px; */
         }
   
         }
@@ -262,29 +284,61 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('current-date').innerText = `Date: ${new Date().toLocaleDateString()}`;
     const chartsContainer = document.getElementById('charts-container');
-    const monthPicker = document.getElementById('month-picker');
-    const yearPicker = document.getElementById('year-picker');
-    const selectedDisplay = document.getElementById('selected-month-year');
 
-    flatpickr(monthPicker, {
-        dateFormat: 'Y-m',
-        defaultDate: currentMonth,
-        onChange: async (selectedDates, dateStr) => {
-            selectedDisplay.innerText = `Selected Date: ${dateStr}`;
-            const salesData = await fetchDataForMonth(dateStr);
-            renderCharts(salesData, dateStr, 'month');
-        }
+    // Create slider structure
+    const dailySlide = document.createElement('div');
+    dailySlide.classList.add('chart-slide');
+    dailySlide.id = 'daily-slide';
+
+    const monthlySlide = document.createElement('div');
+    monthlySlide.classList.add('chart-slide');
+    monthlySlide.id = 'monthly-slide';
+
+    const yearlySlide = document.createElement('div');
+    yearlySlide.classList.add('chart-slide');
+    yearlySlide.id = 'yearly-slide';
+
+    chartsContainer.appendChild(dailySlide);
+    chartsContainer.appendChild(monthlySlide);
+    chartsContainer.appendChild(yearlySlide);
+
+    // Add navigation buttons
+    const navButtons = document.createElement('div');
+    navButtons.classList.add('nav-buttons');
+
+    const prevButton = document.createElement('button');
+    prevButton.classList.add('nav-button');
+    prevButton.innerText = 'Previous';
+
+    const nextButton = document.createElement('button');
+    nextButton.classList.add('nav-button');
+    nextButton.innerText = 'Next';
+
+    navButtons.appendChild(prevButton);
+    navButtons.appendChild(nextButton);
+    document.body.appendChild(navButtons);
+
+    // Slide navigation logic
+    let currentSlideIndex = 0;
+    const slides = [dailySlide, monthlySlide, yearlySlide];
+
+    const updateSlideVisibility = () => {
+        slides.forEach((slide, index) => {
+            slide.style.display = index === currentSlideIndex ? 'flex' : 'none';
+        });
+    };
+
+    prevButton.addEventListener('click', () => {
+        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+        updateSlideVisibility();
     });
 
-    flatpickr(yearPicker, {
-        dateFormat: 'Y',
-        defaultDate: currentYear,
-        onChange: async (selectedDates, yearStr) => {
-            selectedDisplay.innerText = `Selected Year: ${yearStr}`;
-            const salesData = await fetchYearlyData(yearStr);
-            renderCharts(salesData, yearStr, 'year');
-        }
+    nextButton.addEventListener('click', () => {
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        updateSlideVisibility();
     });
+
+    updateSlideVisibility();
 
     const fetchDataForDay = async (day) => {
         const filePath = `data/${day.slice(0, 4)}/${day.slice(5, 7)}/${day.slice(8, 10)}.json`;
@@ -312,58 +366,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         return yearlyData;
     };
 
-    const renderCharts = (salesData, period, type = 'month') => {
-        chartsContainer.innerHTML = '';
+    const renderCharts = (salesData, container, type) => {
+        container.innerHTML = '';
 
-        const dailySales = {};
-        const dailyOnHold = {};
-        const dailyPaid = {};
-        const monthlySales = {};
-        const monthlyOnHold = {};
-        const monthlyPaid = {};
-        const yearlySales = {};
-        const yearlyOnHold = {};
-        const yearlyPaid = {};
+        const sales = {};
+        const onHold = {};
+        const totalPaid = {};
 
         salesData.forEach(sale => {
-            const dayKey = sale.date;
-            const monthKey = sale.date.slice(0, 7);
-            const yearKey = sale.date.slice(0, 4);
+            const key = type === 'daily' ? sale.date : type === 'monthly' ? sale.date.slice(0, 7) : sale.date.slice(0, 4);
 
-            dailySales[dayKey] = (dailySales[dayKey] || 0) + sale.amount;
-            dailyOnHold[dayKey] = (dailyOnHold[dayKey] || 0) + sale.onHold;
-            dailyPaid[dayKey] = (dailyPaid[dayKey] || 0) + sale.totalPaid;
-
-            monthlySales[monthKey] = (monthlySales[monthKey] || 0) + sale.amount;
-            monthlyOnHold[monthKey] = (monthlyOnHold[monthKey] || 0) + sale.onHold;
-            monthlyPaid[monthKey] = (monthlyPaid[monthKey] || 0) + sale.totalPaid;
-
-            yearlySales[yearKey] = (yearlySales[yearKey] || 0) + sale.amount;
-            yearlyOnHold[yearKey] = (yearlyOnHold[yearKey] || 0) + sale.onHold;
-            yearlyPaid[yearKey] = (yearlyPaid[yearKey] || 0) + sale.totalPaid;
+            sales[key] = (sales[key] || 0) + sale.amount;
+            onHold[key] = (onHold[key] || 0) + sale.onHold;
+            totalPaid[key] = (totalPaid[key] || 0) + sale.totalPaid;
         });
 
-        renderChart('Daily Sales for ' + period, 'line', Object.keys(dailySales), Object.values(dailySales));
-        renderChart('On-Hold (Daily) for ' + period, 'bar', Object.keys(dailyOnHold), Object.values(dailyOnHold));
-        renderChart('Total Received (Daily) for ' + period, 'line', Object.keys(dailyPaid), Object.values(dailyPaid));
-
-        if (type === 'month' || (type === 'year' && period === currentYear)) {
-            renderChart('Monthly Sales for ' + period.slice(0, 4), 'bar', Object.keys(monthlySales), Object.values(monthlySales));
-            renderChart('On-Hold (Monthly) for ' + period.slice(0, 4), 'bar', Object.keys(monthlyOnHold), Object.values(monthlyOnHold));
-            renderChart('Total Received (Monthly) for ' + period.slice(0, 4), 'bar', Object.keys(monthlyPaid), Object.values(monthlyPaid));
-        }
-
-        renderChart('Yearly Sales', 'pie', Object.keys(yearlySales), Object.values(yearlySales));
-        renderChart('On-Hold (Yearly)', 'pie', Object.keys(yearlyOnHold), Object.values(yearlyOnHold));
-        renderChart('Total Received (Yearly)', 'pie', Object.keys(yearlyPaid), Object.values(yearlyPaid));
+        renderChart('Sales', 'bar', Object.keys(sales), Object.values(sales), container, `${type.charAt(0).toUpperCase() + type.slice(1)} Sales`);
+        renderChart('On-Hold', 'bar', Object.keys(onHold), Object.values(onHold), container, `${type.charAt(0).toUpperCase() + type.slice(1)} On-Hold`);
+        renderChart('Total Paid', 'bar', Object.keys(totalPaid), Object.values(totalPaid), container, `${type.charAt(0).toUpperCase() + type.slice(1)} Total Paid`);
     };
 
-    const renderChart = (title, type, labels, data) => {
-        const canvas = document.createElement('canvas');
+    const renderChart = (title, type, labels, data, container, description) => {
         const card = document.createElement('div');
         card.classList.add('chart-card');
+
+        const canvas = document.createElement('canvas');
         card.appendChild(canvas);
-        chartsContainer.appendChild(card);
+
+        const desc = document.createElement('p');
+        desc.innerText = description;
+        desc.style.textAlign = 'center';
+        desc.style.marginTop = '10px';
+        card.appendChild(desc);
+
+        container.appendChild(card);
 
         new Chart(canvas, {
             type: type,
@@ -384,9 +420,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     const defaultMonthData = await fetchDataForMonth(currentMonth);
     const defaultYearData = await fetchYearlyData(currentYear);
 
-    renderCharts(defaultDayData, currentDay);
-    renderCharts(defaultMonthData, currentMonth, 'month');
-    renderCharts(defaultYearData, currentYear, 'year');
+    renderCharts(defaultDayData, dailySlide, 'daily');
+    renderCharts(defaultMonthData, monthlySlide, 'monthly');
+    renderCharts(defaultYearData, yearlySlide, 'yearly');
+
+    flatpickr("#month-picker", {
+        dateFormat: "Y-m",
+        defaultDate: currentMonth,
+        onChange: async (selectedDates, dateStr) => {
+            const selectedMonth = dateStr;
+            const monthlyData = await fetchDataForMonth(selectedMonth);
+            renderCharts(monthlyData, monthlySlide, 'monthly');
+        },
+    });
+
+    flatpickr("#year-picker", {
+        dateFormat: "Y",
+        defaultDate: currentYear,
+        onChange: async (selectedDates, dateStr) => {
+            const selectedYear = dateStr;
+            const yearlyData = await fetchYearlyData(selectedYear);
+            renderCharts(yearlyData, yearlySlide, 'yearly');
+        },
+    });
 });
 
 
