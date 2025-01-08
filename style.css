@@ -1,0 +1,342 @@
+ /* Body Styling */
+ body {
+    font-family: 'Arial', sans-serif;
+    background-color: #E6E6FA;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+.on-hold-details {
+position: fixed;
+top: 20%;
+left: 50%;
+transform: translateX(-50%);
+background-color: white;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+z-index: 1000;
+max-width: 100%;
+overflow-y: auto;
+}
+
+.on-hold-item {
+margin-bottom: 10px;
+}
+
+.on-hold-details h3 {
+font-size: 1.5rem;
+color: #333;
+margin-bottom: 15px;
+}
+
+.on-hold-details p {
+font-size: 1.2rem;
+color: #333;
+}
+
+button {
+margin-top: 20px;
+}
+
+
+/* Header and Logo Styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 2rem;
+}
+
+.logo-container {
+    height: 100px;
+    justify-content: center;
+    width: 50%;
+    box-shadow: 10px 8px 15px rgba(255, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    animation: slideIn 1s ease-out;
+}
+
+.logo {
+    border-radius: 10px;
+    width: 60px; /* Logo size */
+    height: 60px;
+    margin-right: 10px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007bff;
+    margin: 0;
+    animation: fadeIn 1s ease-out;
+}
+
+/* Animation for logo and text */
+@keyframes slideIn {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.years{
+    visibility: hidden;
+}
+/* Charts Container */
+#charts-container {
+    margin-left: -10%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    /* justify-content: center; */
+    margin-top: 2rem;
+    width: 140%;
+    /* max-width: 1200px; */
+}
+
+.chart-row {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+/* justify-content: center; */
+margin-bottom: 30px;
+}
+
+.chart-card {
+margin-left: -3%;
+flex: 1 1 calc(29.33% - 40px); /* Adjust for 3 graphs per row */
+max-width: calc(29.33% - 40px);
+min-width: 200px; /* Ensure minimum size for smaller screens */
+}
+
+/* Filter Section */
+.filter-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Input Styling */
+input[type="text"] {
+    text-align: center;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 5px;
+    width: 160px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    
+}
+
+input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button Styling */
+#move-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #29AB87;
+    color: black;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Button Hover Animation */
+#move-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Animations for Charts */
+.chart-card {
+    transition: transform 0.5s ease-in-out;
+}
+
+.moved {
+    transform: translateY(50px);
+}
+.text-muted{
+    box-shadow: 10px 8px 15px rgba(255, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 10px;
+    margin: 5px;
+    width: 150px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+}
+/* Global Styles */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f4;
+color: #333;
+}
+
+/* Container for the whole dashboard */
+.container {
+min-width: 90%;
+margin: 0 auto;
+background-color: #fff;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 30px;
+}
+
+.logo-container {
+display: flex;
+align-items: center;
+}
+
+.logo {
+width: 50px;
+height: auto;
+margin-right: 10px;
+}
+
+h1 {
+font-size: 1.5rem;
+color: #004953;
+}
+
+/* Current date style */
+#current-date {
+font-size: 0.9rem;
+color: #888;
+}
+
+/* Filter Section */
+.filter-section {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 30px;
+}
+
+.selectdate,
+.years {
+font-size: 1rem;
+color: #004953;
+margin-right: 10px;
+}
+
+.selectdate1, .years {
+padding: 5px;
+font-size: 1rem;
+border: 1px solid #ddd;
+border-radius: 5px;
+width: 150px;
+}
+
+/* Button Style */
+#move-button {
+margin-bottom: 20px;
+padding: 10px 20px;
+font-size: 1rem;
+background-color: #004953;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+#move-button:hover {
+background-color: #006D73;
+}
+
+/* Charts Container */
+#charts-container {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+justify-content: center;
+}
+
+.chart-card {
+width: 350px;
+height: 300px;
+background-color: #fff;
+border-radius: 8px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+padding: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+/* Animation for charts */
+.chart-card canvas {
+max-width: 100%;
+max-height: 100%;
+}
+
+/* Smooth slide effect when moving graphs */
+.chart-wrapper {
+display: flex;
+transition: transform 0.5s ease;
+}
+
+.chart-wrapper canvas {
+width: 100px;
+margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .logo-container {
+    height: 200px;
+    width: 50%;
+  
+}
+
+#charts-container {
+    margin-left: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    /* justify-content: center; */
+    margin-top: 2rem;
+    width: 230%;
+    /* max-width: 1200px; */
+}
+
+}

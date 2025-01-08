@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,219 +10,167 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
-        /* Body Styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #E6E6FA;
-            margin: 0;
-            padding: 0;
-            color: #333;
-          
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            overflow-x: hidden; /* Prevent horizontal overflow */
-        }
-        .on-hold-details {
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: white;
+       /* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #E6E6FA;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Container for the whole dashboard */
+.container {
+    min-width: 90%;
+    margin: 0 auto;
+    background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    max-width: 90%;
-    overflow-y: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.on-hold-item {
-    margin-bottom: 10px;
-}
-
-.on-hold-details h3 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.on-hold-details p {
-    font-size: 1.2rem;
-    color: #333;
-}
-
-button {
-    margin-top: 20px;
-}
-
-
-        /* Header and Logo Styling */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 2rem;
-        }
-
-        .logo-container {
-            height: 100px;
-            justify-content: center;
-            width: 40%;
-            box-shadow: 10px 8px 15px rgba(255, 0, 0, 0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            animation: slideIn 1s ease-out;
-        }
-
-        .logo {
-            border-radius: 10px;
-            width: 60px; /* Logo size */
-            height: 60px;
-            margin-right: 10px;
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #007bff;
-            margin: 0;
-            animation: fadeIn 1s ease-out;
-        }
-
-        /* Animation for logo and text */
-        @keyframes slideIn {
-            from {
-                transform: translateX(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        .years{
-            visibility: hidden;
-        }
-        /* Charts Container */
-        #charts-container {
-            margin-left: -10%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            /* justify-content: center; */
-            margin-top: 2rem;
-            width: 140%;
-            /* max-width: 1200px; */
-        }
-
-       .chart-row {
+/* Header Styles */
+header {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    /* justify-content: center; */
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 30px;
 }
 
-.chart-card {
-    flex: 1 1 calc(30.33% - 40px); /* Adjust for 3 graphs per row */
-    max-width: calc(30.33% - 40px);
-    min-width: 300px; /* Ensure minimum size for smaller screens */
+.logo-container {
+    display: flex;
+    align-items: center;
 }
 
-        /* Filter Section */
-        .filter-section {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-       
-        /* Input Styling */
-        input[type="text"] {
-            text-align: center;
-            border-radius: 15px;
-            padding: 10px;
-            margin: 5px;
-            width: 160px;
-            border: 1px solid #ddd;
-            transition: all 0.3s ease;
-            
-        }
+.logo {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
 
-        input[type="text"]:focus {
-            border-color: #007bff;
-            outline: none;
-        }
+h1 {
+    font-size: 1.5rem;
+    color: #004953;
+}
 
-        /* Button Styling */
-        #move-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            background-color: #29AB87;
-            color: black;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-        }
+/* Filter Section */
+.filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
 
-        /* Button Hover Animation */
-        #move-button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
+.selectdate,
+.years {
+    font-size: 1rem;
+    color: #004953;
+    margin-right: 10px;
+}
 
-        /* Animations for Charts */
-        .chart-card {
-            transition: transform 0.5s ease-in-out;
-        }
+.selectdate1, .years {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 150px;
+}
 
-        .moved {
-            transform: translateY(50px);
-        }
-        .text-muted{
-            box-shadow: 10px 8px 15px rgba(255, 0, 0, 0.1);
-            border-radius: 15px;
-            padding: 10px;
-            margin: 5px;
-            width: 150px;
-            border: 1px solid #ddd;
-            transition: all 0.3s ease;
-        }
-        @media (max-width: 768px) {
-            .logo-container {
-            height: 200px;
-            width: 50%;
-          
-        }
+/* Button Style */
+#move-button {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #004953;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-        #charts-container {
-            margin-left: 2%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            /* justify-content: center; */
-            margin-top: 2rem;
-            width: 230%;
-            /* max-width: 1200px; */
-        }
-  
-        }
-       
+#move-button:hover {
+    background-color: #006D73;
+}
+
+/* Charts Container */
+#charts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%; /* Ensuring the charts container stays within the parent */
+    margin-top: 2rem;
+}
+
+/* Adjust Chart Card */
+.chart-card {
+    width: calc(33.33% - 20px); /* 3 cards per row */
+    height: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; /* Ensure there is space at the bottom */
+    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+}
+
+/* Chart card animation */
+.chart-card {
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Animation for charts */
+.chart-card canvas {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Smooth slide effect when moving graphs */
+.chart-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.chart-wrapper canvas {
+    width: 100px;
+    margin-right: 10px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+    .chart-card {
+        width: calc(50% - 20px); /* 2 cards per row */
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-card {
+        width: calc(100% - 20px); /* 1 card per row */
+    }
+}
+
 
     </style>
 </head>
@@ -251,84 +200,87 @@ button {
         </div>
     </div>
 
+
     <script>
-
-        
-document.addEventListener('DOMContentLoaded', async () => {
-    const currentDate = new Date().toISOString().split('T')[0];
-    const currentMonth = currentDate.slice(0, 7);
-    const currentYear = currentDate.slice(0, 4);
-    const currentDay = currentDate.slice(0, 10);
-
-    document.getElementById('current-date').innerText = `Date: ${new Date().toLocaleDateString()}`;
+        document.addEventListener('DOMContentLoaded', async () => {
     const chartsContainer = document.getElementById('charts-container');
     const monthPicker = document.getElementById('month-picker');
     const yearPicker = document.getElementById('year-picker');
-    const selectedDisplay = document.getElementById('selected-month-year');
 
+    let dailySalesChart, dailyOnHoldChart, dailyPaidChart;
+    let monthlySalesChart, monthlyOnHoldChart, monthlyPaidChart;
+    let yearlyDonutChart;
+
+    // Set current date
+    const today = new Date();
+    const currentYear = today.toISOString().slice(0, 4); // YYYY
+    const currentMonth = today.toISOString().slice(0, 7); // YYYY-MM
+    const currentDate = today.toISOString().split('T')[0];
+    document.getElementById('current-date').innerText = currentDate;
+
+    // Initialize flatpickr for date pickers
     flatpickr(monthPicker, {
-        dateFormat: 'Y-m',
-        defaultDate: currentMonth,
-        onChange: async (selectedDates, dateStr) => {
-            selectedDisplay.innerText = `Selected Date: ${dateStr}`;
-            const salesData = await fetchDataForMonth(dateStr);
-            renderCharts(salesData, dateStr, 'month');
+        dateFormat: "Y-m",
+        defaultDate: today,
+        onChange: function (selectedDates, dateStr) {
+            document.getElementById('selected-month-year').innerText = `Selected Month: ${dateStr}`;
+            updateMonthlyGraphs(dateStr);  // Update monthly graphs
         }
     });
 
     flatpickr(yearPicker, {
-        dateFormat: 'Y',
-        defaultDate: currentYear,
-        onChange: async (selectedDates, yearStr) => {
-            selectedDisplay.innerText = `Selected Year: ${yearStr}`;
-            const salesData = await fetchYearlyData(yearStr);
-            renderCharts(salesData, yearStr, 'year');
+        dateFormat: "Y",
+        defaultDate: today,
+        onChange: function (selectedDates, dateStr) {
+            document.getElementById('selected-month-year').innerText = `Selected Year: ${dateStr}`;
+            updateYearlyGraph(dateStr);  // Update yearly donut chart
         }
     });
 
-    const fetchDataForDay = async (day) => {
-        const filePath = `data/${day.slice(0, 4)}/${day.slice(5, 7)}/${day.slice(8, 10)}.json`;
-        const response = await fetch(filePath);
-        if (!response.ok) return [];
-        const json = await response.json();
-        return json.sales || [];
-    };
-
-    const fetchDataForMonth = async (month) => {
-        const filePath = `data/${month.slice(0, 4)}/${month.slice(5, 7)}.json`;
-        const response = await fetch(filePath);
-        if (!response.ok) return [];
-        const json = await response.json();
-        return json.sales || [];
-    };
-
-    const fetchYearlyData = async (year) => {
-        let yearlyData = [];
-        for (let month = 1; month <= 12; month++) {
-            const formattedMonth = `${year}-${String(month).padStart(2, '0')}`;
-            const data = await fetchDataForMonth(formattedMonth);
-            yearlyData.push(...data);
+    // Fetch data from JSON files
+    const fetchAllData = async () => {
+        const allData = [];
+        const years = [2025];  // Update this list with relevant years
+        for (const year of years) {
+            const response = await fetch(`data/${year}.json`);
+            if (response.ok) {
+                const json = await response.json();
+                allData.push(...json.sales);
+            }
         }
-        return yearlyData;
+        return allData;
     };
 
-    const renderCharts = (salesData, period, type = 'month') => {
-        chartsContainer.innerHTML = '';
+    // Helper: Get last 7 days for daily graphs
+    const getLast7Days = () => {
+        const dates = [];
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            dates.push(date.toISOString().split('T')[0]);
+        }
+        return dates;
+    };
 
+    // Helper: Filter data by month or year
+    const filterDataByPeriod = (salesData, period, type) => {
+        return salesData.filter(sale => sale.date.startsWith(period.slice(0, type === 'month' ? 7 : 4)));
+    };
+
+    // Process data into daily, monthly, and yearly structures
+    const processData = (salesData) => {
         const dailySales = {};
         const dailyOnHold = {};
         const dailyPaid = {};
         const monthlySales = {};
         const monthlyOnHold = {};
         const monthlyPaid = {};
-        const yearlySales = {};
-        const yearlyOnHold = {};
-        const yearlyPaid = {};
+        const yearlyTotals = { sales: 0, onHold: 0, paid: 0 };
 
         salesData.forEach(sale => {
             const dayKey = sale.date;
-            const monthKey = sale.date.slice(0, 7);
-            const yearKey = sale.date.slice(0, 4);
+            const monthKey = sale.date.slice(0, 7);  // YYYY-MM
+            const yearKey = sale.date.slice(0, 4);  // YYYY
 
             dailySales[dayKey] = (dailySales[dayKey] || 0) + sale.amount;
             dailyOnHold[dayKey] = (dailyOnHold[dayKey] || 0) + sale.onHold;
@@ -338,35 +290,28 @@ document.addEventListener('DOMContentLoaded', async () => {
             monthlyOnHold[monthKey] = (monthlyOnHold[monthKey] || 0) + sale.onHold;
             monthlyPaid[monthKey] = (monthlyPaid[monthKey] || 0) + sale.totalPaid;
 
-            yearlySales[yearKey] = (yearlySales[yearKey] || 0) + sale.amount;
-            yearlyOnHold[yearKey] = (yearlyOnHold[yearKey] || 0) + sale.onHold;
-            yearlyPaid[yearKey] = (yearlyPaid[yearKey] || 0) + sale.totalPaid;
+            yearlyTotals.sales += sale.amount;
+            yearlyTotals.onHold += sale.onHold;
+            yearlyTotals.paid += sale.totalPaid;
         });
 
-        renderChart('Daily Sales for ' + period, 'line', Object.keys(dailySales), Object.values(dailySales));
-        renderChart('On-Hold (Daily) for ' + period, 'bar', Object.keys(dailyOnHold), Object.values(dailyOnHold));
-        renderChart('Total Received (Daily) for ' + period, 'line', Object.keys(dailyPaid), Object.values(dailyPaid));
-
-        if (type === 'month' || (type === 'year' && period === currentYear)) {
-            renderChart('Monthly Sales for ' + period.slice(0, 4), 'bar', Object.keys(monthlySales), Object.values(monthlySales));
-            renderChart('On-Hold (Monthly) for ' + period.slice(0, 4), 'bar', Object.keys(monthlyOnHold), Object.values(monthlyOnHold));
-            renderChart('Total Received (Monthly) for ' + period.slice(0, 4), 'bar', Object.keys(monthlyPaid), Object.values(monthlyPaid));
-        }
-
-        renderChart('Yearly Sales', 'pie', Object.keys(yearlySales), Object.values(yearlySales));
-        renderChart('On-Hold (Yearly)', 'pie', Object.keys(yearlyOnHold), Object.values(yearlyOnHold));
-        renderChart('Total Received (Yearly)', 'pie', Object.keys(yearlyPaid), Object.values(yearlyPaid));
+        return { 
+            daily: { sales: dailySales, onHold: dailyOnHold, paid: dailyPaid },
+            monthly: { sales: monthlySales, onHold: monthlyOnHold, paid: monthlyPaid },
+            yearly: yearlyTotals
+        };
     };
 
-    const renderChart = (title, type, labels, data) => {
+    // Render line charts for daily data
+    const renderLineChart = (title, labels, data) => {
         const canvas = document.createElement('canvas');
         const card = document.createElement('div');
         card.classList.add('chart-card');
         card.appendChild(canvas);
         chartsContainer.appendChild(card);
 
-        new Chart(canvas, {
-            type: type,
+        return new Chart(canvas, {
+            type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
@@ -380,17 +325,72 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     };
 
-    const defaultDayData = await fetchDataForDay(currentDay);
-    const defaultMonthData = await fetchDataForMonth(currentMonth);
-    const defaultYearData = await fetchYearlyData(currentYear);
+    // Render bar charts for monthly data
+    const renderBarChart = (title, labels, data) => {
+        const canvas = document.createElement('canvas');
+        const card = document.createElement('div');
+        card.classList.add('chart-card');
+        card.appendChild(canvas);
+        chartsContainer.appendChild(card);
 
-    renderCharts(defaultDayData, currentDay);
-    renderCharts(defaultMonthData, currentMonth, 'month');
-    renderCharts(defaultYearData, currentYear, 'year');
+        return new Chart(canvas, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: title,
+                    data: data,
+                    backgroundColor: '#50C878',
+                    borderColor: '#004953',
+                    borderWidth: 1
+                }]
+            }
+        });
+    };
+
+    // Render yearly donut chart
+    const renderDonutChart = (yearlyData) => {
+        const canvas = document.createElement('canvas');
+        const card = document.createElement('div');
+        card.classList.add('chart-card');
+        card.style.width = "500px";
+        card.style.height = "500px";
+        card.appendChild(canvas);
+        chartsContainer.appendChild(card);
+
+        if (yearlyDonutChart) yearlyDonutChart.destroy();
+        yearlyDonutChart = new Chart(canvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Sales', 'On-Hold', 'Paid'],
+                datasets: [{
+                    data: [yearlyData.sales, yearlyData.onHold, yearlyData.paid],
+                    backgroundColor: ['#50C878', '#F4C542', '#004953']
+                }]
+            }
+        });
+    };
+
+    const allData = await fetchAllData();
+    const processedData = processData(allData);
+
+    // Render initial daily and monthly graphs
+    const last7Days = getLast7Days();
+    dailySalesChart = renderLineChart('Daily Sales', last7Days, last7Days.map(date => processedData.daily.sales[date] || 0));
+    dailyOnHoldChart = renderLineChart('Daily On-Hold', last7Days, last7Days.map(date => processedData.daily.onHold[date] || 0));
+    dailyPaidChart = renderLineChart('Daily Paid', last7Days, last7Days.map(date => processedData.daily.paid[date] || 0));
+
+    const labels = Object.keys(processedData.monthly.sales);
+    monthlySalesChart = renderBarChart('Monthly Sales', labels, Object.values(processedData.monthly.sales));
+    monthlyOnHoldChart = renderBarChart('Monthly On-Hold', labels, Object.values(processedData.monthly.onHold));
+    monthlyPaidChart = renderBarChart('Monthly Paid', labels, Object.values(processedData.monthly.paid));
+
+    // Render initial yearly donut chart
+    renderDonutChart(processedData.yearly);
 });
 
-
     </script>
+        
     
 </body>
 </html>

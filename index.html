@@ -311,7 +311,7 @@ header::after {
         </div>
         
         <div class="text-end mt-3">
-            <strong>Total Amount:</strong> <span id="total-amount">0</span>
+            <strong></strong> <span id="total-amount">0</span>
         </div>
     </div>
 
@@ -331,10 +331,14 @@ header::after {
 
     const renderData = (data) => {
         salesTable.innerHTML = '';
+        let totalAmount = 0;
         let totalPaid = 0;
+        let onHoldAmount = 0;
 
         data.forEach(item => {
+            totalAmount += item.amount;
             totalPaid += item.totalPaid;
+            onHoldAmount += item.onHold;
 
             const productList = Array.isArray(item.products)
                 ? item.products.map(product => `<div>${product}</div>`).join('')
@@ -351,13 +355,18 @@ header::after {
             salesTable.insertAdjacentHTML('beforeend', row);
         });
 
-        totalAmountEl.innerText = totalPaid.toFixed(2);
+        // Update total values displayed
+        totalAmountEl.innerHTML = `
+            <strong>Total Amount:</strong> ${totalAmount.toFixed(2)}<br>
+            <strong>Total Paid:</strong> ${totalPaid.toFixed(2)}<br>
+            <strong>On Hold:</strong> ${onHoldAmount.toFixed(2)}
+        `;
     };
 
-    const fetchDataForMonth = async (month) => {
+    // Modified fetch function to load data from 2025.json
+    const fetchDataForYear = async (year) => {
         try {
-            const [year, monthNum] = month.split('-');
-            const filePath = `data/${year}/${monthNum}.json`;
+            const filePath = `data/${year}.json`; // Accessing the 2025.json file
             const response = await fetch(filePath);
 
             if (!response.ok) throw new Error(`File not found: ${filePath}`);
@@ -390,7 +399,8 @@ header::after {
 
         const salesData = [];
         for (const month of filesToLoad) {
-            const data = await fetchDataForMonth(month);
+            const [year] = month.split('-');
+            const data = await fetchDataForYear(year); // Fetch data for the year (like 2025.json)
             salesData.push(...data);
         }
 
@@ -414,8 +424,8 @@ header::after {
     };
 
     const loadTodaysData = async () => {
-        const currentMonth = currentDate.slice(0, 7);
-        const defaultData = await fetchDataForMonth(currentMonth);
+        const currentYear = currentDate.slice(0, 4); // Extract the current year (e.g., 2025)
+        const defaultData = await fetchDataForYear(currentYear); // Fetch data for 2025.json
         const today = new Date();
         const formattedToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
         const todaysData = defaultData.filter(item => item.date === formattedToday);
@@ -462,6 +472,7 @@ const anotherPageButton = document.getElementById('another-page');
 anotherPageButton.addEventListener('click', () => {
     window.location.href = 'https://khetrabilashaproduct.github.io/sales/graph.html';
 });
+
 
     </script>
 
