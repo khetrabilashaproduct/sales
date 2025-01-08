@@ -9,154 +9,223 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Animate.css CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<!-- AOS (Animate on Scroll) CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+<!-- AOS JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
     <style>
        /* Global Styles */
-* {
-    margin: 0;
+/* Global Styles */
+/* * {
+    margin: 1;
     padding: 0;
     box-sizing: border-box;
-}
+} */
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-/* Body Styling */
-body {
+    margin-top: -1.5%;
+    margin-left: 8px;
+    margin-right: 8px;
     font-family: 'Arial', sans-serif;
     background-color: #E6E6FA;
-    margin: 0;
-    padding: 0;
     color: #333;
-    /* display: flex; */
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;
-    overflow-x: hidden; /* Prevent horizontal overflow */
+    overflow-x: hidden;
 }
 
-/* Container for the whole dashboard */
+/* Full-Width Container */
 .container {
-    min-width: 90%;
+
+    min-width: 99%;
     margin: 0 auto;
+    padding: 30px;
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    min-height: 90vh; /* Ensure it fills the viewport */
 }
 
-/* Header Styles */
+/* Header Section */
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    animation: slideInDown 1s ease-in-out;
 }
 
-.logo-container {
+/* Logo Styling */
+.logo {
     display: flex;
+    justify-content: flex-start;  /* Align to the left */
     align-items: center;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;  /* Make it round */
+    overflow: hidden;
+    border: 4px solid #007bff;  /* Blue border */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    animation: slideInLeft 1s ease-out;  /* Slide-in from the left */
 }
 
 .logo {
-    width: 50px;
-    height: auto;
-    margin-right: 10px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;  /* Ensure the logo fills the container */
+    border-radius: 50%;  /* Ensure the logo inside is also round */
 }
 
+/* Hover Effect */
+.logo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 18px rgba(0, 123, 255, 0.3);
+    border-color: #29AB87;
+}
+
+/* Animation for Logo Entrance */
+@keyframes popIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
 h1 {
-    font-size: 1.5rem;
-    color: #004953;
+    font-size: 2.5rem;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Button Styling */
+#move-button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    background-color: #29AB87;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+#move-button:hover {
+    background-color: #006D73;
+    transform: translateY(-5px);
+}
+
+/* Chart Container - Full Width and Flex */
+#charts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+/* Chart Card - Large and Flexible */
+.chart-card {
+    flex: 1 1 calc(45% - 30px);  /* Takes up nearly half the width */
+    height: 400px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1s ease;
+    transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 /* Filter Section */
 .filter-section {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 30px;
 }
 
-.selectdate,
-.years {
-    font-size: 1rem;
-    color: #004953;
-    margin-right: 10px;
-}
-
-.selectdate1, .years {
-    padding: 5px;
-    font-size: 1rem;
+input[type="text"] {
     border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 150px;
+    border-radius: 20px;
+    padding: 12px;
+    width: 200px;
+    transition: border-color 0.3s ease;
 }
 
-/* Button Style */
-#move-button {
-    margin-bottom: 20px;
+input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* AOS Fade-In Effect */
+[data-aos] {
+    opacity: 0;
+    transition-property: transform, opacity;
+}
+
+
+/* Current Date Styling */
+#current-date {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;  /* Blue color */
+    background-color: #f0f8ff;  /* Light blue background */
     padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #004953;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 25px;  /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Soft shadow */
+    display: inline-block;
+    text-align: center;
+    transition: all 0.4s ease;
+    animation: fadeInUp 1s ease-out;
 }
 
-#move-button:hover {
-    background-color: #006D73;
+/* Hover Effect */
+#current-date:hover {
+    background-color: #29AB87;  /* Green on hover */
+    color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);  /* Stronger shadow */
+    transform: translateY(-5px);  /* Lift on hover */
 }
 
-/* Charts Container */
-#charts-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    width: 100%; /* Ensuring the charts container stays within the parent */
-    margin-top: 2rem;
+/* Fade-in and Slide-up Animation */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Adjust Chart Card */
-.chart-card {
-    width: calc(33.33% - 20px); /* 3 cards per row */
-    height: 300px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px; /* Ensure there is space at the bottom */
-    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+
+
+
+/* Responsive Chart Cards for Mobile */
+@media (max-width: 768px) {
+    .chart-card {
+        flex: 1 1 100%;
+        height: 300px;
+    }
 }
 
-/* Chart card animation */
-.chart-card {
-    transition: transform 0.5s ease-in-out;
-}
-
-/* Animation for charts */
-.chart-card canvas {
-    max-width: 100%;
-    max-height: 100%;
-}
-
-/* Smooth slide effect when moving graphs */
-.chart-wrapper {
-    display: flex;
-    transition: transform 0.5s ease;
-}
-
-.chart-wrapper canvas {
-    width: 100px;
-    margin-right: 10px;
-}
 
 /* Media Queries for Responsiveness */
 @media (max-width: 1024px) {
@@ -169,6 +238,18 @@ h1 {
     .chart-card {
         width: calc(100% - 20px); /* 1 card per row */
     }
+}
+
+@media (max-width: 480px) {
+body {
+    margin-top: -2%;
+    margin-left: 8px;
+    margin-right: 8px;
+    font-family: 'Arial', sans-serif;
+    background-color: #E6E6FA;
+    color: #333;
+    overflow-x: hidden;
+}
 }
 
 
@@ -185,10 +266,10 @@ h1 {
         </header>
 
         <div class="filter-section">
-            <label class="selectdate" for="month-picker">Select Date:</label>
-            <input class="selectdate1" type="text" id="month-picker" placeholder="Pick a Month">
-            <label class="years" for="year-picker">Select Year:</label>
-            <input class="years" type="text" id="year-picker" placeholder="Pick a Year">
+            <!-- <label class="selectdate" for="month-picker">Select Date:</label> -->
+            <!-- <input class="selectdate1" type="text" id="month-picker" placeholder="Pick a Month"> -->
+            <!-- <label class="years" for="year-picker">Select Year:</label> -->
+            <!-- <input class="years" type="text" id="year-picker" placeholder="Pick a Year"> -->
             <div id="selected-month-year"></div>
         </div>
 
@@ -202,40 +283,51 @@ h1 {
 
 
     <script>
+
+AOS.init({
+        duration: 1000, // Animation duration
+        once: true // Animation only happens once per scroll
+    });
+    
+    document.getElementById("move-button").addEventListener("click", function() {
+    location.reload();  // This will refresh the page
+});
+
+const todayy = new Date();
+    const currentYear = todayy.toISOString().slice(0, 4); // YYYY
+    const currentMonth = todayy.toISOString().slice(0, 7); // YYYY-MM
+    const currentDate = todayy.toISOString().split('T')[0];
+    document.getElementById('current-date').innerText = currentDate;
+
         document.addEventListener('DOMContentLoaded', async () => {
     const chartsContainer = document.getElementById('charts-container');
-    const monthPicker = document.getElementById('month-picker');
-    const yearPicker = document.getElementById('year-picker');
+    const filterSection = document.querySelector('.filter-section');
+
 
     let dailySalesChart, dailyOnHoldChart, dailyPaidChart;
     let monthlySalesChart, monthlyOnHoldChart, monthlyPaidChart;
     let yearlyDonutChart;
 
-    // Set current date
-    const today = new Date();
-    const currentYear = today.toISOString().slice(0, 4); // YYYY
-    const currentMonth = today.toISOString().slice(0, 7); // YYYY-MM
-    const currentDate = today.toISOString().split('T')[0];
-    document.getElementById('current-date').innerText = currentDate;
+    
 
-    // Initialize flatpickr for date pickers
-    flatpickr(monthPicker, {
-        dateFormat: "Y-m",
-        defaultDate: today,
-        onChange: function (selectedDates, dateStr) {
-            document.getElementById('selected-month-year').innerText = `Selected Month: ${dateStr}`;
-            updateMonthlyGraphs(dateStr);  // Update monthly graphs
+    // Add a date range picker
+    const dateRangePicker = document.createElement('input');
+    dateRangePicker.id = "date-range-picker";
+    dateRangePicker.placeholder = "Select Date Range";
+    dateRangePicker.classList.add('form-control', 'mb-3');
+    filterSection.appendChild(dateRangePicker);
+
+    flatpickr(dateRangePicker, {
+        mode: "range",
+        dateFormat: "Y-m-d",
+        onChange: function (selectedDates) {
+            if (selectedDates.length === 2) {
+                const [startDate, endDate] = selectedDates;
+                updateGraphsForDateRange(startDate, endDate);
+            }
         }
     });
 
-    flatpickr(yearPicker, {
-        dateFormat: "Y",
-        defaultDate: today,
-        onChange: function (selectedDates, dateStr) {
-            document.getElementById('selected-month-year').innerText = `Selected Year: ${dateStr}`;
-            updateYearlyGraph(dateStr);  // Update yearly donut chart
-        }
-    });
 
     // Fetch data from JSON files
     const fetchAllData = async () => {
@@ -249,6 +341,14 @@ h1 {
             }
         }
         return allData;
+    };
+
+    // Initialize monthly data with all 12 months
+    const initializeMonthlyData = (year) => {
+        return Array.from({ length: 12 }, (_, i) => `${year}-${String(i + 1).padStart(2, '0')}`).reduce((acc, month) => {
+            acc[month] = 0;
+            return acc;
+        }, {});
     };
 
     // Helper: Get last 7 days for daily graphs
@@ -371,6 +471,47 @@ h1 {
         });
     };
 
+    const updateGraphsForDateRange = (startDate, endDate) => {
+        // Clear previous graphs
+        chartsContainer.innerHTML = "";
+
+        // Filter and process data
+        const filteredData = filterDataByDateRange(allData, startDate, endDate);
+        const processedData = processData(filteredData);
+
+        // Render daily charts
+        const dateLabels = getDateLabelsForRange(startDate, endDate);
+        dailySalesChart = renderLineChart('Daily Sales', dateLabels, dateLabels.map(date => processedData.daily.sales[date] || 0));
+        dailyOnHoldChart = renderLineChart('Daily On-Hold', dateLabels, dateLabels.map(date => processedData.daily.onHold[date] || 0));
+        dailyPaidChart = renderLineChart('Daily Paid', dateLabels, dateLabels.map(date => processedData.daily.paid[date] || 0));
+
+        // Render monthly charts for all months
+        const monthlyLabels = Object.keys(processedData.monthly.sales);
+        monthlySalesChart = renderBarChart('Monthly Sales', monthlyLabels, Object.values(processedData.monthly.sales));
+        monthlyOnHoldChart = renderBarChart('Monthly On-Hold', monthlyLabels, Object.values(processedData.monthly.onHold));
+        monthlyPaidChart = renderBarChart('Monthly Paid', monthlyLabels, Object.values(processedData.monthly.paid));
+
+        // Render yearly donut chart
+        yearlyDonutChart = renderDonutChart(processedData.yearly);
+    };
+
+    const getDateLabelsForRange = (startDate, endDate) => {
+        const labels = [];
+        let currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+            labels.push(currentDate.toISOString().split('T')[0]);
+            currentDate.setDate(currentDate.getDate() +1);
+        }
+        return labels;
+    };
+
+    const filterDataByDateRange = (salesData, startDate, endDate) => {
+        return salesData.filter(sale => {
+            const saleDate = new Date(sale.date);
+            return saleDate >= startDate && saleDate <= endDate;
+        });
+    };
+
     const allData = await fetchAllData();
     const processedData = processData(allData);
 
@@ -387,7 +528,13 @@ h1 {
 
     // Render initial yearly donut chart
     renderDonutChart(processedData.yearly);
+
+
+    
 });
+
+
+
 
     </script>
         
