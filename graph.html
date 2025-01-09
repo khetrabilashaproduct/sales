@@ -107,6 +107,8 @@ h1 {
     font-weight: bold;
 }
 
+
+
 /* Button Styling */
 #move-button {
     padding: 12px 25px;
@@ -158,7 +160,7 @@ h1 {
 .filter-section {
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
 }
 
 input[type="text"] {
@@ -267,15 +269,16 @@ body {
         </header>
 
         <div class="filter-section">
+           
             <!-- <label class="selectdate" for="month-picker">Select Date:</label> -->
             <!-- <input class="selectdate1" type="text" id="month-picker" placeholder="Pick a Month"> -->
             <!-- <label class="years" for="year-picker">Select Year:</label> -->
             <!-- <input class="years" type="text" id="year-picker" placeholder="Pick a Year"> -->
             <div id="selected-month-year"></div>
         </div>
-
-        <!-- Button to Move Graph -->
         <button id="move-button" class="btn btn-primary">Move Last Graph</button>
+        <!-- Button to Move Graph -->
+ 
 
         <div id="charts-container">
             <!-- Charts will be dynamically added here -->

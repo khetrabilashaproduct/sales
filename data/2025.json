@@ -107,7 +107,7 @@
       },
       {
         "customer": "Suraj",
-        "products": ["Ply Door Advance"],
+        "products": ["Ply Door Advance","Size- 73.1/2 x 34.1/4, ND83","Size- 82 x 36.3/4, ND04"],
         "amount": 1000,
         "totalPaid": 1000,
         "onHold": 0,
@@ -122,8 +122,8 @@
         "date": "2025-01-07"
       },
       {
-        "customer": "Bamadeba Mishra",
-        "products": ["Ply, PVC Door Advance"],
+        "customer": "Baamadeba Mishra",
+        "products": ["Ply, PVC Door Advance","PvcDoor 37.1/4","PlyDoor 43x78, 44x78"],
         "amount": 2000,
         "totalPaid": 2000,
         "onHold": 0,
@@ -131,9 +131,25 @@
       },
       {
         "customer": "Kalandi Pradhan",
-        "products": ["Ply Door Advance"],
+        "products": ["Ply Door Advance","PlyDoor- 37x77","PVCDoor 28x78, 36x80 (ganesha)"],
         "amount": 2000,
         "totalPaid": 2000,
+        "onHold": 0,
+        "date": "2025-01-08"
+      },
+      {
+        "customer": "Kamal kumar biswal",
+        "products": ["Ply Door Advance"," Size- 75.5x36.3/4, ND-14","Size- 80x38, ND-40","Size- 79.5x38.5, ND-38"],
+        "amount": 3000,
+        "totalPaid": 3000,
+        "onHold": 0,
+        "date": "2025-01-08"
+      },
+      {
+        "customer": "Kalia- 7809159872",
+        "products": ["Ply Door- 3","Jharaka Door- 4"],
+        "amount": 10500,
+        "totalPaid": 10500,
         "onHold": 0,
         "date": "2025-01-08"
       }
