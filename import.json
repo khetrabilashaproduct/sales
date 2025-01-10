@@ -1,20 +1,29 @@
 {
-    "companies": [
-      { "id": 1, "name": "Company 1", "details": "Supplier of goods A" },
-      { "id": 2, "name": "Company 2", "details": "Supplier of goods B" },
-      { "id": 3, "name": "Company 3", "details": "Supplier of goods C" }
-    ],
-    "transactions": {
-      "1": [
-        { "date": "2025-01-01", "payment": "$100", "notes": "Installment 1", "img": "https://via.placeholder.com/100" },
-        { "date": "2025-01-15", "payment": "$200", "notes": "Installment 2", "img": "https://via.placeholder.com/100" }
-      ],
-      "2": [
-        { "date": "2025-02-01", "payment": "$150", "notes": "Full payment", "img": "https://via.placeholder.com/100" }
-      ],
-      "3": [
-        { "date": "2025-03-01", "payment": "$50", "notes": "Initial deposit", "img": "https://via.placeholder.com/100" }
+  "companies": [
+    {
+      "id": 1,
+      "name": "Company A",
+      "details": "Supplier of raw materials",
+      "transactions": [
+        {"date": "2025-01-01", "payment": 0, "notes": "Invoice #123", "img": "invoice1.png"},
+        {"date": "2025-01-15", "payment": 0, "notes": "Invoice #124", "img": "invoice2.png"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Sanjeeb Dash Cement",
+      "details": "Cement Provider",
+      "transactions": [
+        {"date": "2025-01-09", "payment": 33300, "notes": "Invoice #200", "img": "invoice3.png"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Siba cement",
+      "details": "Cement Provider",
+      "transactions": [
+        {"date": "2025-01-09", "payment": 1050, "notes": "Invoice #200", "img": "invoice3.png"}
       ]
     }
-  }
-  
+  ]
+}

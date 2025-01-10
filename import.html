@@ -77,6 +77,10 @@
         transform: translateY(0);
       }
     }
+
+    canvas {
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -95,70 +99,110 @@
         <!-- Dynamically populated transactions -->
       </div>
     </div>
+
+    <!-- Spending Graph -->
+    <canvas id="spendingChart" width="400" height="200"></canvas>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const companies = [
-      { id: 1, name: "Company 1", details: "Supplier of goods A" },
-      { id: 2, name: "Company 2", details: "Supplier of goods B" },
-      { id: 3, name: "Company 3", details: "Supplier of goods C" }
-    ];
-
-    const transactionsData = {
-      1: [
-        { date: "2025-01-01", payment: "$100", notes: "Installment 1", img: "https://via.placeholder.com/100" },
-        { date: "2025-01-15", payment: "$200", notes: "Installment 2", img: "https://via.placeholder.com/100" }
-      ],
-      2: [
-        { date: "2025-02-01", payment: "$150", notes: "Full payment", img: "https://via.placeholder.com/100" }
-      ],
-      3: [
-        { date: "2025-03-01", payment: "$50", notes: "Initial deposit", img: "https://via.placeholder.com/100" }
-      ]
+    const fetchData = async () => {
+      try {
+        const response = await fetch("import.json");
+        if (!response.ok) throw new Error("Failed to fetch data");
+        return await response.json();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        return null;
+      }
     };
 
-    // Populate company tiles
-    const companyList = document.getElementById("company-list");
-    companies.forEach(company => {
-      const tile = document.createElement("div");
-      tile.classList.add("company-tile");
-      tile.innerHTML = `
-        <div>
-          <h3>${company.name}</h3>
-          <p>${company.details}</p>
-        </div>
-        <div>&#9654;</div>
-      `;
-      tile.addEventListener("click", () => showDetails(company.id, company.name));
-      companyList.appendChild(tile);
-    });
+    const initPage = async () => {
+      const data = await fetchData();
+      if (!data) return;
 
-    // Show details
-    const details = document.getElementById("details");
-    const transactions = document.getElementById("transactions");
+      const companyList = document.getElementById("company-list");
+      const transactionsData = {};
+      const monthlySpending = Array(12).fill(0);
+      const monthlyDetails = Array.from({ length: 12 }, () => []);
 
-    function showDetails(companyId, companyName) {
-      const companyTransactions = transactionsData[companyId];
-      document.getElementById("company-name").textContent = companyName;
-      transactions.innerHTML = "";
-
-      companyTransactions.forEach(({ date, payment, notes, img }) => {
-        const transaction = document.createElement("div");
-        transaction.classList.add("transaction", "animated");
-        transaction.innerHTML = `
+      data.companies.forEach(company => {
+        const tile = document.createElement("div");
+        tile.classList.add("company-tile");
+        tile.innerHTML = `
           <div>
-            <p><strong>Date:</strong> ${date}</p>
-            <p><strong>Payment:</strong> ${payment}</p>
-            <p><strong>Notes:</strong> ${notes}</p>
+            <h3>${company.name}</h3>
+            <p>${company.details}</p>
           </div>
-          <img src="${img}" alt="Invoice Image" onclick="window.open('${img}', '_blank')">
+          <div>&#9654;</div>
         `;
-        transactions.appendChild(transaction);
+        tile.addEventListener("click", () => showDetails(company.id, company.name));
+        companyList.appendChild(tile);
+
+        transactionsData[company.id] = company.transactions;
+        company.transactions.forEach(({ date, payment }) => {
+          const month = new Date(date).getMonth();
+          monthlySpending[month] += payment;
+          monthlyDetails[month].push({ company: company.name, payment, date });
+        });
       });
 
-      details.style.display = "block";
-      details.classList.add("animated");
-    }
+      const spendingData = {
+        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        datasets: [{
+          label: 'Monthly Spending',
+          data: monthlySpending,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      const config = {
+        type: 'bar',
+        data: spendingData,
+        options: {
+          onClick: (event, elements) => {
+            if (elements.length > 0) {
+              const monthIndex = elements[0].index;
+              showMonthlyDetails(monthIndex);
+            }
+          },
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      };
+
+      new Chart(document.getElementById('spendingChart'), config);
+
+      const showMonthlyDetails = (monthIndex) => {
+        const details = document.getElementById("details");
+        const transactions = document.getElementById("transactions");
+        const monthDetails = monthlyDetails[monthIndex];
+
+        document.getElementById("company-name").textContent = `Details for ${spendingData.labels[monthIndex]}`;
+        transactions.innerHTML = "";
+
+        monthDetails.forEach(({ company, payment, date }) => {
+          const transaction = document.createElement("div");
+          transaction.classList.add("transaction", "animated");
+          transaction.innerHTML = `
+            <div>
+              <p><strong>Company:</strong> ${company}</p>
+              <p><strong>Date:</strong> ${date}</p>
+              <p><strong>Payment:</strong> ${payment}</p>
+            </div>
+          `;
+          transactions.appendChild(transaction);
+        });
+
+        details.style.display = "block";
+        details.classList.add("animated");
+      };
+    };
+
+    initPage();
   </script>
 </body>
 </html>

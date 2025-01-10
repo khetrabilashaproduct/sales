@@ -390,7 +390,7 @@ let salesData = [];
 // Fetch data and render the table
 const fetchData = async () => {
     try {
-        const response = await fetch('data/20255.json'); // Adjust path as needed
+        const response = await fetch('data/2025.json'); // Adjust path as needed
         const data = await response.json();
         salesData = data.sales;
         renderDefaultData(); // Show today's data on page load

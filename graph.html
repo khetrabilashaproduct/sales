@@ -283,7 +283,10 @@ body {
     </div>
 
 
+
     <script>
+
+document.getElementById('current-date').innerText = `Date: ${new Date().toLocaleDateString()}`;
 
 document.addEventListener("DOMContentLoaded", () => {
     const refreshButton = document.getElementById("move-button");
@@ -482,6 +485,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Error processing data:", error);
     }
 });
+
+
 
     </script>
         
