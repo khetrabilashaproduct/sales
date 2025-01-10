@@ -149,7 +149,7 @@ h1 {
     align-items: center;
     animation: fadeIn 1s ease;
     transition: all 0.3s ease;
-    min-width: 50%;
+    min-width: 20%;
 }
 
 .chart-card:hover {
@@ -321,7 +321,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch("/data/2025.json");
+            const response = await fetch("data/2025.json");
             if (!response.ok) throw new Error("Failed to fetch data");
             return await response.json();
         } catch (error) {
