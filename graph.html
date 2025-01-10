@@ -288,22 +288,13 @@ body {
 
 document.getElementById('current-date').innerText = `Date: ${new Date().toLocaleDateString()}`;
 
-document.addEventListener("DOMContentLoaded", () => {
-    const refreshButton = document.getElementById("move-button");
+// Enhanced JavaScript for graph2.html with Visual Yearly Chart
 
-    refreshButton.addEventListener("click", () => {
-        location.reload(); // Refresh the page
-    });
-});
-
-
-// Updated JavaScript for graph2.html
-
+// Adds visually appealing labels to the yearly graph with connecting lines.
 document.addEventListener("DOMContentLoaded", async () => {
     const chartsContainer = document.getElementById("charts-container");
     const dateRangeInput = document.getElementById("date-range");
     let processedData = null;
-    let isFiltered = false; // Track whether the user applied a custom filter
 
     flatpickr(dateRangeInput, {
         mode: "range",
@@ -311,7 +302,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         onChange: (selectedDates) => {
             if (selectedDates.length === 2) {
                 const [startDate, endDate] = selectedDates;
-                isFiltered = true; // User has applied a custom filter
                 const filteredData = filterDataByDateRange(processedData.daily, startDate, endDate);
                 updateGraphs({
                     daily: filteredData,
@@ -324,9 +314,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch("data/2025.json");
+            const response = await fetch("/data/2025.json");
             if (!response.ok) throw new Error("Failed to fetch data");
-            return await response.json();
+            const data = await response.json();
+            console.log("Fetched Data:", data); // Debugging Log
+            return data;
         } catch (error) {
             console.error("Error fetching data:", error);
             return null;
@@ -343,7 +335,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (!daily[date]) daily[date] = { sales: 0, onHold: 0 };
 
                 if (level === "E" || level === "F") {
-                    daily[date].sales += paid; // Sum payments as sales
+                    daily[date].sales += paid;
                 }
             });
 
@@ -356,18 +348,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             const month = saleDate?.slice(0, 7);
             if (month) {
                 if (!monthly[month]) monthly[month] = { sales: 0, onHold: 0, totalPaid: 0 };
-                monthly[month].sales += amount;
-                monthly[month].onHold += onHold;
                 monthly[month].totalPaid += totalPaid || 0;
+                monthly[month].onHold += onHold;
             }
 
             yearly.totalPaid += totalPaid || 0;
             yearly.onHold += onHold;
         });
 
-        // Update yearly.sales to be the sum of totalPaid and onHold
         yearly.sales = yearly.totalPaid + yearly.onHold;
 
+        console.log("Processed Data:", { daily, monthly, yearly }); // Debugging Log
         return { daily, monthly, yearly };
     };
 
@@ -387,73 +378,145 @@ document.addEventListener("DOMContentLoaded", async () => {
         const last7DaysData = {};
         const datesToInclude = [];
 
-        // Generate the last 7 dates in "YYYY-MM-DD" format
         for (let i = 0; i < 7; i++) {
             const date = new Date(today);
             date.setDate(today.getDate() - i);
             datesToInclude.push(date.toISOString().split("T")[0]);
         }
 
-        // Extract data for the last 7 dates
         datesToInclude.forEach((date) => {
-            if (dailyData[date]) {
-                last7DaysData[date] = dailyData[date];
-            } else {
-                last7DaysData[date] = { sales: 0, onHold: 0 };
-            }
+            last7DaysData[date] = dailyData[date] || { sales: 0, onHold: 0 };
         });
 
         return last7DaysData;
     };
 
+
     const renderChart = (type, title, labels, data, backgroundColor, container) => {
+    const canvas = document.createElement("canvas");
+    const card = document.createElement("div");
+    card.classList.add("chart-card");
+    card.appendChild(canvas);
+    container.appendChild(card);
+
+    new Chart(canvas, {
+        type,
+        data: {
+            labels,
+            datasets: [
+                {
+                    label: title,
+                    data,
+                    backgroundColor,
+                    borderColor: "#004953",
+                    borderWidth: 1,
+                    fill: true,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        },
+    });
+};
+
+
+    const renderYearlyChart = (data) => {
         const canvas = document.createElement("canvas");
         const card = document.createElement("div");
         card.classList.add("chart-card");
-        card.appendChild(canvas);
-        container.appendChild(card);
+        card.style.position = "relative";
+        card.style.padding = "20px";
+        card.style.display = "flex";
+        card.style.flexDirection = "row"; // Change layout to row
+        card.style.alignItems = "center";
+        chartsContainer.appendChild(card);
 
-        new Chart(canvas, {
-            type,
+        const chartContainer = document.createElement("div");
+        chartContainer.style.flex = "1";
+        chartContainer.style.display = "flex";
+        chartContainer.style.justifyContent = "center";
+        chartContainer.appendChild(canvas);
+        card.appendChild(chartContainer);
+
+        const chart = new Chart(canvas, {
+            type: "doughnut",
             data: {
-                labels,
+                labels: ["Total Paid", "On Hold", "Sales"],
                 datasets: [
                     {
-                        label: title,
-                        data,
-                        backgroundColor,
-                        borderColor: "#004953",
+                        label: "Yearly Summary",
+                        data: [data.totalPaid, data.onHold, data.sales],
+                        backgroundColor: ["#50C878", "#F4C542", "#004953"],
                         borderWidth: 1,
-                        fill: true,
                     },
                 ],
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    tooltip: {
+                        enabled: true,
+                    },
+                },
             },
         });
+
+        const labels = [
+            { label: `Total Paid: ${data.totalPaid}`, color: "#50C878" },
+            { label: `On Hold: ${data.onHold}`, color: "#F4C542" },
+            { label: `Sales: ${data.sales}`, color: "#004953" },
+        ];
+
+        const labelContainer = document.createElement("div");
+        labelContainer.style.flex = "1";
+        labelContainer.style.display = "flex";
+        labelContainer.style.flexDirection = "column";
+        labelContainer.style.justifyContent = "center";
+        labelContainer.style.gap = "10px";
+        labelContainer.style.marginLeft = "20px";
+
+        labels.forEach((item) => {
+            const labelItem = document.createElement("div");
+            labelItem.style.display = "flex";
+            labelItem.style.alignItems = "center";
+            labelItem.style.marginLeft = "-900%";
+
+            const colorBox = document.createElement("div");
+            colorBox.style.width = "20px";
+            colorBox.style.height = "20px";
+            colorBox.style.backgroundColor = item.color;
+            colorBox.style.marginRight = "10px";
+
+            const text = document.createElement("span");
+            text.innerText = item.label;
+            text.style.fontWeight = "bold";
+            text.style.color = "#333";
+
+            labelItem.appendChild(colorBox);
+            labelItem.appendChild(text);
+            labelContainer.appendChild(labelItem);
+        });
+
+        card.appendChild(labelContainer);
     };
 
     const updateGraphs = (data) => {
         chartsContainer.innerHTML = "";
 
-        // Daily Data
-        let dailyData;
-        if (isFiltered) {
-            dailyData = data.daily;
-        } else {
-            dailyData = getLast7DaysData(data.daily);
-        }
-
+        const dailyData = getLast7DaysData(data.daily);
         const dailyLabels = Object.keys(dailyData).sort();
         const dailySalesData = dailyLabels.map((date) => dailyData[date]?.sales || 0);
         const dailyOnHoldData = dailyLabels.map((date) => dailyData[date]?.onHold || 0);
 
-        renderChart("line", "Daily Sales", dailyLabels, dailySalesData, "rgba(80, 200, 120, 0.5)", chartsContainer);
-        renderChart("line", "Daily On-Hold", dailyLabels, dailyOnHoldData, "rgba(240, 194, 66, 0.5)", chartsContainer);
+        renderChart("line", "Daily Sales (Last 7 Days)", dailyLabels, dailySalesData, "rgba(80, 200, 120, 0.5)", chartsContainer);
+        renderChart("line", "Daily On-Hold (Last 7 Days)", dailyLabels, dailyOnHoldData, "rgba(240, 194, 66, 0.5)", chartsContainer);
 
-        // Monthly Data
         const monthlyLabels = Object.keys(data.monthly).sort();
         const monthlyTotalPaidData = monthlyLabels.map((month) => data.monthly[month]?.totalPaid || 0);
         const monthlyOnHoldData = monthlyLabels.map((month) => data.monthly[month]?.onHold || 0);
@@ -461,16 +524,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderChart("bar", "Monthly Sales (Total Paid)", monthlyLabels, monthlyTotalPaidData, "rgba(80, 200, 120, 0.5)", chartsContainer);
         renderChart("bar", "Monthly On-Hold", monthlyLabels, monthlyOnHoldData, "rgba(240, 194, 66, 0.5)", chartsContainer);
 
-        // Yearly Data
-        const yearlyData = [data.yearly.sales, data.yearly.onHold, data.yearly.totalPaid];
-        renderChart(
-            "doughnut",
-            "Yearly Summary",
-            ["Sales (Paid + On-Hold)", "On-Hold", "Total Paid"],
-            yearlyData,
-            ["#50C878", "#F4C542", "#004953"],
-            chartsContainer
-        );
+        renderYearlyChart(data.yearly);
     };
 
     try {
