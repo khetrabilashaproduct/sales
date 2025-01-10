@@ -149,6 +149,7 @@ h1 {
     align-items: center;
     animation: fadeIn 1s ease;
     transition: all 0.3s ease;
+    min-width: 50%;
 }
 
 .chart-card:hover {
@@ -269,13 +270,9 @@ body {
         </header>
 
         <div class="filter-section">
-           
-            <!-- <label class="selectdate" for="month-picker">Select Date:</label> -->
-            <!-- <input class="selectdate1" type="text" id="month-picker" placeholder="Pick a Month"> -->
-            <!-- <label class="years" for="year-picker">Select Year:</label> -->
-            <!-- <input class="years" type="text" id="year-picker" placeholder="Pick a Year"> -->
-            <div id="selected-month-year"></div>
+            <input id="date-range" type="text" placeholder="Select Date Range" />
         </div>
+        
         <button id="move-button" class="btn btn-primary">Move Last Graph</button>
         <!-- Button to Move Graph -->
  
@@ -288,257 +285,203 @@ body {
 
     <script>
 
-AOS.init({
-        duration: 1000, // Animation duration
-        once: true // Animation only happens once per scroll
+document.addEventListener("DOMContentLoaded", () => {
+    const refreshButton = document.getElementById("move-button");
+
+    refreshButton.addEventListener("click", () => {
+        location.reload(); // Refresh the page
     });
-    
-    document.getElementById("move-button").addEventListener("click", function() {
-    location.reload();  // This will refresh the page
 });
 
-const todayy = new Date();
-    const currentYear = todayy.toISOString().slice(0, 4); // YYYY
-    const currentMonth = todayy.toISOString().slice(0, 7); // YYYY-MM
-    const currentDate = todayy.toISOString().split('T')[0];
-    document.getElementById('current-date').innerText = currentDate;
 
-        document.addEventListener('DOMContentLoaded', async () => {
-    const chartsContainer = document.getElementById('charts-container');
-    const filterSection = document.querySelector('.filter-section');
+// Updated JavaScript for graph2.html
 
+document.addEventListener("DOMContentLoaded", async () => {
+    const chartsContainer = document.getElementById("charts-container");
+    const dateRangeInput = document.getElementById("date-range");
+    let processedData = null;
+    let isFiltered = false; // Track whether the user applied a custom filter
 
-    let dailySalesChart, dailyOnHoldChart, dailyPaidChart;
-    let monthlySalesChart, monthlyOnHoldChart, monthlyPaidChart;
-    let yearlyDonutChart;
-
-    
-
-    // Add a date range picker
-    const dateRangePicker = document.createElement('input');
-    dateRangePicker.id = "date-range-picker";
-    dateRangePicker.placeholder = "Select Date Range";
-    dateRangePicker.classList.add('form-control', 'mb-3');
-    filterSection.appendChild(dateRangePicker);
-
-    flatpickr(dateRangePicker, {
+    flatpickr(dateRangeInput, {
         mode: "range",
         dateFormat: "Y-m-d",
-        onChange: function (selectedDates) {
+        onChange: (selectedDates) => {
             if (selectedDates.length === 2) {
                 const [startDate, endDate] = selectedDates;
-                updateGraphsForDateRange(startDate, endDate);
+                isFiltered = true; // User has applied a custom filter
+                const filteredData = filterDataByDateRange(processedData.daily, startDate, endDate);
+                updateGraphs({
+                    daily: filteredData,
+                    monthly: processedData.monthly,
+                    yearly: processedData.yearly,
+                });
             }
-        }
+        },
     });
 
-
-    // Fetch data from JSON files
-    const fetchAllData = async () => {
-        const allData = [];
-        const years = [2025];  // Update this list with relevant years
-        for (const year of years) {
-            const response = await fetch(`data/${year}.json`);
-            if (response.ok) {
-                const json = await response.json();
-                allData.push(...json.sales);
-            }
+    const fetchData = async () => {
+        try {
+            const response = await fetch("/data/2025.json");
+            if (!response.ok) throw new Error("Failed to fetch data");
+            return await response.json();
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            return null;
         }
-        return allData;
     };
 
-    // Initialize monthly data with all 12 months
-    const initializeMonthlyData = (year) => {
-        return Array.from({ length: 12 }, (_, i) => `${year}-${String(i + 1).padStart(2, '0')}`).reduce((acc, month) => {
-            acc[month] = 0;
-            return acc;
-        }, {});
+    const processData = (data) => {
+        const daily = {};
+        const monthly = {};
+        const yearly = { sales: 0, onHold: 0, totalPaid: 0 };
+
+        data.sales.forEach(({ payments, amount, onHold, totalPaid }) => {
+            payments.forEach(({ date, paid, level }) => {
+                if (!daily[date]) daily[date] = { sales: 0, onHold: 0 };
+
+                if (level === "E" || level === "F") {
+                    daily[date].sales += paid; // Sum payments as sales
+                }
+            });
+
+            const saleDate = payments[0]?.date;
+            if (saleDate) {
+                if (!daily[saleDate]) daily[saleDate] = { sales: 0, onHold: 0 };
+                daily[saleDate].onHold += onHold;
+            }
+
+            const month = saleDate?.slice(0, 7);
+            if (month) {
+                if (!monthly[month]) monthly[month] = { sales: 0, onHold: 0, totalPaid: 0 };
+                monthly[month].sales += amount;
+                monthly[month].onHold += onHold;
+                monthly[month].totalPaid += totalPaid || 0;
+            }
+
+            yearly.totalPaid += totalPaid || 0;
+            yearly.onHold += onHold;
+        });
+
+        // Update yearly.sales to be the sum of totalPaid and onHold
+        yearly.sales = yearly.totalPaid + yearly.onHold;
+
+        return { daily, monthly, yearly };
     };
 
-    // Helper: Get last 7 days for daily graphs
-    const getLast7Days = () => {
-        const dates = [];
-        for (let i = 6; i >= 0; i--) {
-            const date = new Date();
-            date.setDate(date.getDate() - i);
-            dates.push(date.toISOString().split('T')[0]);
+    const filterDataByDateRange = (data, startDate, endDate) => {
+        const filtered = {};
+        Object.keys(data).forEach((date) => {
+            const currentDate = new Date(date);
+            if (currentDate >= startDate && currentDate <= endDate) {
+                filtered[date] = data[date];
+            }
+        });
+        return filtered;
+    };
+
+    const getLast7DaysData = (dailyData) => {
+        const today = new Date();
+        const last7DaysData = {};
+        const datesToInclude = [];
+
+        // Generate the last 7 dates in "YYYY-MM-DD" format
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(today);
+            date.setDate(today.getDate() - i);
+            datesToInclude.push(date.toISOString().split("T")[0]);
         }
-        return dates;
-    };
 
-    // Helper: Filter data by month or year
-    const filterDataByPeriod = (salesData, period, type) => {
-        return salesData.filter(sale => sale.date.startsWith(period.slice(0, type === 'month' ? 7 : 4)));
-    };
-
-    // Process data into daily, monthly, and yearly structures
-    const processData = (salesData) => {
-        const dailySales = {};
-        const dailyOnHold = {};
-        const dailyPaid = {};
-        const monthlySales = {};
-        const monthlyOnHold = {};
-        const monthlyPaid = {};
-        const yearlyTotals = { sales: 0, onHold: 0, paid: 0 };
-
-        salesData.forEach(sale => {
-            const dayKey = sale.date;
-            const monthKey = sale.date.slice(0, 7);  // YYYY-MM
-            const yearKey = sale.date.slice(0, 4);  // YYYY
-
-            dailySales[dayKey] = (dailySales[dayKey] || 0) + sale.amount;
-            dailyOnHold[dayKey] = (dailyOnHold[dayKey] || 0) + sale.onHold;
-            dailyPaid[dayKey] = (dailyPaid[dayKey] || 0) + sale.totalPaid;
-
-            monthlySales[monthKey] = (monthlySales[monthKey] || 0) + sale.amount;
-            monthlyOnHold[monthKey] = (monthlyOnHold[monthKey] || 0) + sale.onHold;
-            monthlyPaid[monthKey] = (monthlyPaid[monthKey] || 0) + sale.totalPaid;
-
-            yearlyTotals.sales += sale.amount;
-            yearlyTotals.onHold += sale.onHold;
-            yearlyTotals.paid += sale.totalPaid;
-        });
-
-        return { 
-            daily: { sales: dailySales, onHold: dailyOnHold, paid: dailyPaid },
-            monthly: { sales: monthlySales, onHold: monthlyOnHold, paid: monthlyPaid },
-            yearly: yearlyTotals
-        };
-    };
-
-    // Render line charts for daily data
-    const renderLineChart = (title, labels, data) => {
-        const canvas = document.createElement('canvas');
-        const card = document.createElement('div');
-        card.classList.add('chart-card');
-        card.appendChild(canvas);
-        chartsContainer.appendChild(card);
-
-        return new Chart(canvas, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: title,
-                    data: data,
-                    borderColor: '#004953',
-                    backgroundColor: '#50C878',
-                    fill: true
-                }]
+        // Extract data for the last 7 dates
+        datesToInclude.forEach((date) => {
+            if (dailyData[date]) {
+                last7DaysData[date] = dailyData[date];
+            } else {
+                last7DaysData[date] = { sales: 0, onHold: 0 };
             }
         });
+
+        return last7DaysData;
     };
 
-    // Render bar charts for monthly data
-    const renderBarChart = (title, labels, data) => {
-        const canvas = document.createElement('canvas');
-        const card = document.createElement('div');
-        card.classList.add('chart-card');
+    const renderChart = (type, title, labels, data, backgroundColor, container) => {
+        const canvas = document.createElement("canvas");
+        const card = document.createElement("div");
+        card.classList.add("chart-card");
         card.appendChild(canvas);
-        chartsContainer.appendChild(card);
+        container.appendChild(card);
 
-        return new Chart(canvas, {
-            type: 'bar',
+        new Chart(canvas, {
+            type,
             data: {
-                labels: labels,
-                datasets: [{
-                    label: title,
-                    data: data,
-                    backgroundColor: '#50C878',
-                    borderColor: '#004953',
-                    borderWidth: 1
-                }]
-            }
+                labels,
+                datasets: [
+                    {
+                        label: title,
+                        data,
+                        backgroundColor,
+                        borderColor: "#004953",
+                        borderWidth: 1,
+                        fill: true,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
         });
     };
 
-    // Render yearly donut chart
-    const renderDonutChart = (yearlyData) => {
-        const canvas = document.createElement('canvas');
-        const card = document.createElement('div');
-        card.classList.add('chart-card');
-        card.style.width = "500px";
-        card.style.height = "500px";
-        card.appendChild(canvas);
-        chartsContainer.appendChild(card);
-
-        if (yearlyDonutChart) yearlyDonutChart.destroy();
-        yearlyDonutChart = new Chart(canvas, {
-            type: 'doughnut',
-            data: {
-                labels: ['Sales', 'On-Hold', 'Paid'],
-                datasets: [{
-                    data: [yearlyData.sales, yearlyData.onHold, yearlyData.paid],
-                    backgroundColor: ['#50C878', '#F4C542', '#004953']
-                }]
-            }
-        });
-    };
-
-    const updateGraphsForDateRange = (startDate, endDate) => {
-        // Clear previous graphs
+    const updateGraphs = (data) => {
         chartsContainer.innerHTML = "";
 
-        // Filter and process data
-        const filteredData = filterDataByDateRange(allData, startDate, endDate);
-        const processedData = processData(filteredData);
-
-        // Render daily charts
-        const dateLabels = getDateLabelsForRange(startDate, endDate);
-        dailySalesChart = renderLineChart('Daily Sales', dateLabels, dateLabels.map(date => processedData.daily.sales[date] || 0));
-        dailyOnHoldChart = renderLineChart('Daily On-Hold', dateLabels, dateLabels.map(date => processedData.daily.onHold[date] || 0));
-        dailyPaidChart = renderLineChart('Daily Paid', dateLabels, dateLabels.map(date => processedData.daily.paid[date] || 0));
-
-        // Render monthly charts for all months
-        const monthlyLabels = Object.keys(processedData.monthly.sales);
-        monthlySalesChart = renderBarChart('Monthly Sales', monthlyLabels, Object.values(processedData.monthly.sales));
-        monthlyOnHoldChart = renderBarChart('Monthly On-Hold', monthlyLabels, Object.values(processedData.monthly.onHold));
-        monthlyPaidChart = renderBarChart('Monthly Paid', monthlyLabels, Object.values(processedData.monthly.paid));
-
-        // Render yearly donut chart
-        yearlyDonutChart = renderDonutChart(processedData.yearly);
-    };
-
-    const getDateLabelsForRange = (startDate, endDate) => {
-        const labels = [];
-        let currentDate = new Date(startDate);
-        while (currentDate <= endDate) {
-            labels.push(currentDate.toISOString().split('T')[0]);
-            currentDate.setDate(currentDate.getDate() +1);
+        // Daily Data
+        let dailyData;
+        if (isFiltered) {
+            dailyData = data.daily;
+        } else {
+            dailyData = getLast7DaysData(data.daily);
         }
-        return labels;
+
+        const dailyLabels = Object.keys(dailyData).sort();
+        const dailySalesData = dailyLabels.map((date) => dailyData[date]?.sales || 0);
+        const dailyOnHoldData = dailyLabels.map((date) => dailyData[date]?.onHold || 0);
+
+        renderChart("line", "Daily Sales", dailyLabels, dailySalesData, "rgba(80, 200, 120, 0.5)", chartsContainer);
+        renderChart("line", "Daily On-Hold", dailyLabels, dailyOnHoldData, "rgba(240, 194, 66, 0.5)", chartsContainer);
+
+        // Monthly Data
+        const monthlyLabels = Object.keys(data.monthly).sort();
+        const monthlyTotalPaidData = monthlyLabels.map((month) => data.monthly[month]?.totalPaid || 0);
+        const monthlyOnHoldData = monthlyLabels.map((month) => data.monthly[month]?.onHold || 0);
+
+        renderChart("bar", "Monthly Sales (Total Paid)", monthlyLabels, monthlyTotalPaidData, "rgba(80, 200, 120, 0.5)", chartsContainer);
+        renderChart("bar", "Monthly On-Hold", monthlyLabels, monthlyOnHoldData, "rgba(240, 194, 66, 0.5)", chartsContainer);
+
+        // Yearly Data
+        const yearlyData = [data.yearly.sales, data.yearly.onHold, data.yearly.totalPaid];
+        renderChart(
+            "doughnut",
+            "Yearly Summary",
+            ["Sales (Paid + On-Hold)", "On-Hold", "Total Paid"],
+            yearlyData,
+            ["#50C878", "#F4C542", "#004953"],
+            chartsContainer
+        );
     };
 
-    const filterDataByDateRange = (salesData, startDate, endDate) => {
-        return salesData.filter(sale => {
-            const saleDate = new Date(sale.date);
-            return saleDate >= startDate && saleDate <= endDate;
-        });
-    };
-
-    const allData = await fetchAllData();
-    const processedData = processData(allData);
-
-    // Render initial daily and monthly graphs
-    const last7Days = getLast7Days();
-    dailySalesChart = renderLineChart('Daily Sales', last7Days, last7Days.map(date => processedData.daily.sales[date] || 0));
-    dailyOnHoldChart = renderLineChart('Daily On-Hold', last7Days, last7Days.map(date => processedData.daily.onHold[date] || 0));
-    dailyPaidChart = renderLineChart('Daily Paid', last7Days, last7Days.map(date => processedData.daily.paid[date] || 0));
-
-    const labels = Object.keys(processedData.monthly.sales);
-    monthlySalesChart = renderBarChart('Monthly Sales', labels, Object.values(processedData.monthly.sales));
-    monthlyOnHoldChart = renderBarChart('Monthly On-Hold', labels, Object.values(processedData.monthly.onHold));
-    monthlyPaidChart = renderBarChart('Monthly Paid', labels, Object.values(processedData.monthly.paid));
-
-    // Render initial yearly donut chart
-    renderDonutChart(processedData.yearly);
-
-
-    
+    try {
+        const jsonData = await fetchData();
+        if (jsonData) {
+            processedData = processData(jsonData);
+            updateGraphs(processedData);
+        } else {
+            console.error("No data available.");
+        }
+    } catch (error) {
+        console.error("Error processing data:", error);
+    }
 });
-
-
-
 
     </script>
         

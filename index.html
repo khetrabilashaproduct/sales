@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales-Data | Khetra Bilasha Product</title>
+    <title>Sales Installment Tracker</title>
     <link rel="icon" type="image/x-icon" href="sales.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
     <style>
-        /* General Styling */
+            /* General Styling */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #fff;
@@ -320,23 +320,19 @@ header::after {
 
 
 }
-
     </style>
 </head>
 <body>
     <div class="container my-5">
 
-        <header class="d-flex align-items-center justify-content-start mb-4">
-            <img src="https://khetrabilashaproduct.github.io/sales/logo.png" class="logo me-3" alt="Company Logo">
-            <h1 id="company-name" class="m-0">Khetra Bilasha Products</h1>
-        </header>
-        
-
-     <div class="text-center mb-4">  <p id="current-date" class="text-muted"></p></div>
-
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <input type="text" id="search-input" class="form-control" placeholder="Search by customer, product...">
+            <header class="d-flex align-items-center justify-content-start mb-4">
+                <img src="https://khetrabilashaproduct.github.io/sales/logo.png" class="logo me-3" alt="Company Logo">
+                <h1 id="company-name" class="m-0">Khetra Bilasha Products</h1>
+            </header>
+            <div class="text-center mb-4">  <p id="current-date" class="text-muted"></p></div>
+        <div class="mb-3 row">
+            <div class="col-md-4">
+                <input type="text" id="search-input" class="form-control" placeholder="Search by customer or product">
             </div>
             <div class="col-md-3">
                 <input type="text" id="start-date" class="form-control" placeholder="Start Date">
@@ -344,201 +340,191 @@ header::after {
             <div class="col-md-3">
                 <input type="text" id="end-date" class="form-control" placeholder="End Date">
             </div>
+            <div class="col-md-2">
+                <button id="clear-filters" class="btn btn-secondary w-100">Clear Filters</button>
+                <!-- <button id="another-page" class="btn btn-secondary">Graph</button> -->
+            </div>
         </div>
-
-        <!-- Checkbox to filter 'On Hold' payments -->
-        <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" id="on-hold-checkbox">
-            <label class="form-check-label" for="on-hold-checkbox">
-                Show On Hold Payments
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="on-hold-filter">
+            <label class="form-check-label" for="on-hold-filter">
+                Show Only On Hold
             </label>
         </div>
+        
 
-        <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Customer Name</th>
-                        <th>Products</th>
-                        <th>Amount</th>
-                        <th>Total Paid</th>
-                        <th>On Hold</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody id="sales-data">
-                    <!-- Data will be dynamically injected here -->
-                </tbody>
-            </table>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Customer</th>
+                    <th>Products</th>
+                    <th>Total Amount</th>
+                    <th>Payment History</th>
+                    <th>Total Paid</th>
+                    <th>On Hold</th>
+                </tr>
+            </thead>
+            <tbody id="sales-data"></tbody>
+        </table>
+
+        <div class="total-summary text-end">
+            <p id="total-summary"></p>
         </div>
-
         <div class="button-group mt-3">
-            <button id="clear-search-date" class="btn btn-primary">Clear</button>
             <button id="another-page" class="btn btn-secondary">Graph</button>
         </div>
-        
-        <div class="text-end mt-3">
-            <strong></strong> <span id="total-amount">0</span>
-        </div>
     </div>
-
+  
     <script>
-      document.addEventListener('DOMContentLoaded', async () => {
-    const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-    document.getElementById('current-date').innerText = `Date: ${new Date().toLocaleDateString()}`;
-
-    const salesTable = document.getElementById('sales-data');
-    const totalAmountEl = document.getElementById('total-amount');
-    const searchInput = document.getElementById('search-input');
-    const startDateInput = document.getElementById('start-date');
-    const endDateInput = document.getElementById('end-date');
-    const clearButton = document.getElementById('clear-search-date');
-    const onHoldCheckbox = document.getElementById('on-hold-checkbox');
-    let showOnHoldOnly = false;
-
-    const renderData = (data) => {
-        salesTable.innerHTML = '';
-        let totalAmount = 0;
-        let totalPaid = 0;
-        let onHoldAmount = 0;
-
-        data.forEach(item => {
-            totalAmount += item.amount;
-            totalPaid += item.totalPaid;
-            onHoldAmount += item.onHold;
-
-            const productList = Array.isArray(item.products)
-                ? item.products.map(product => `<div>${product}</div>`).join('')
-                : item.products.replace(/\n/g, '<br>');
-
-            const row = `<tr>
-                <td>${item.customer}</td>
-                <td>${productList}</td>
-                <td>${item.amount}</td>
-                <td>${item.totalPaid}</td>
-                <td>${item.onHold}</td>
-                <td>${item.date}</td>
-            </tr>`;
-            salesTable.insertAdjacentHTML('beforeend', row);
-        });
-
-        // Update total values displayed
-        totalAmountEl.innerHTML = `
-            <strong>Total Amount:</strong> ${totalAmount.toFixed(2)}<br>
-            <strong>Total Paid:</strong> ${totalPaid.toFixed(2)}<br>
-            <strong>On Hold:</strong> ${onHoldAmount.toFixed(2)}
-        `;
-    };
-
-    // Modified fetch function to load data from 2025.json
-    const fetchDataForYear = async (year) => {
-        try {
-            const filePath = `data/${year}.json`; // Accessing the 2025.json file
-            const response = await fetch(filePath);
-
-            if (!response.ok) throw new Error(`File not found: ${filePath}`);
-            const json = await response.json();
-            return json.sales || [];
-        } catch (error) {
-            console.error(error);
-            return [];
-        }
-    };
-
-    const filterData = async () => {
-        const searchValue = searchInput.value.toLowerCase();
-        const startDate = startDateInput.value;
-        const endDate = endDateInput.value;
-
-        const filesToLoad = new Set();
-        if (startDate && endDate) {
-            let startMonth = startDate.slice(0, 7);
-            const endMonth = endDate.slice(0, 7);
-
-            while (startMonth <= endMonth) {
-                filesToLoad.add(startMonth);
-                const [year, monthNum] = startMonth.split('-');
-                startMonth = `${year}-${String(Number(monthNum) + 1).padStart(2, '0')}`;
-            }
-        } else {
-            filesToLoad.add(currentDate.slice(0, 7));
-        }
-
-        const salesData = [];
-        for (const month of filesToLoad) {
-            const [year] = month.split('-');
-            const data = await fetchDataForYear(year); // Fetch data for the year (like 2025.json)
-            salesData.push(...data);
-        }
-
-        const filteredData = salesData.filter(item => {
-            const productString = Array.isArray(item.products)
-                ? item.products.join(', ').toLowerCase()
-                : item.products.toLowerCase();
-
-            const matchesSearch = item.customer.toLowerCase().includes(searchValue) ||
-                                  productString.includes(searchValue);
-
-            const withinDateRange = (!startDate || new Date(item.date) >= new Date(startDate)) &&
-                                    (!endDate || new Date(item.date) <= new Date(endDate));
-
-            const matchesOnHold = showOnHoldOnly ? item.onHold !== 0 : true;
-
-            return matchesSearch && withinDateRange && matchesOnHold;
-        });
-
-        renderData(filteredData);
-    };
-
-    const loadTodaysData = async () => {
-        const currentYear = currentDate.slice(0, 4); // Extract the current year (e.g., 2025)
-        const defaultData = await fetchDataForYear(currentYear); // Fetch data for 2025.json
-        const today = new Date();
-        const formattedToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-        const todaysData = defaultData.filter(item => item.date === formattedToday);
-
-        renderData(todaysData);
-    };
-
-    searchInput.addEventListener('input', async () => {
-        if (searchInput.value.trim() === '') {
-            await loadTodaysData();
-        } else {
-            await filterData();
-        }
-    });
-    startDateInput.addEventListener('change', filterData);
-    endDateInput.addEventListener('change', filterData);
-
-    // Handle "On Hold" checkbox
-    onHoldCheckbox.addEventListener('change', () => {
-        showOnHoldOnly = onHoldCheckbox.checked;
-        if (showOnHoldOnly) {
-            filterData(); // Apply filter when checkbox is checked
-        } else {
-            loadTodaysData(); // Show only ongoing data when checkbox is unchecked
-        }
-    });
-
-    clearButton.addEventListener('click', () => {
-        searchInput.value = '';
-        startDateInput.value = '';
-        endDateInput.value = '';
-        onHoldCheckbox.checked = false;
-        showOnHoldOnly = false;
-        loadTodaysData(); // Reset filters and show ongoing data
-    });
-
-    flatpickr('#start-date');
-    flatpickr('#end-date');
-
-    await loadTodaysData(); // Initially load the data for the ongoing date
-});
-
-const anotherPageButton = document.getElementById('another-page');
+        const anotherPageButton = document.getElementById('another-page');
 anotherPageButton.addEventListener('click', () => {
     window.location.href = 'https://khetrabilashaproduct.github.io/sales/graph.html';
 });
+    </script>
+    <script>
+
+
+document.getElementById('current-date').innerText = `Date: ${new Date().toLocaleDateString()}`;
+let salesData = [];
+
+// Fetch data and render the table
+const fetchData = async () => {
+    try {
+        const response = await fetch('/data/20255.json'); // Adjust path as needed
+        const data = await response.json();
+        salesData = data.sales;
+        renderDefaultData(); // Show today's data on page load
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+
+const salesTable = document.getElementById("sales-data");
+const totalSummaryEl = document.getElementById("total-summary");
+
+// Render payment history in the table
+// Render payment history in the table
+const renderPaymentHistory = (payments) => {
+    return payments
+        .map(
+            (p) =>
+                `<div>${p.date}: ₹${p.paid} 
+                <br><strong>Description:</strong> ${p.description}
+                <span hidden>(Level: ${p.level})</span></div>`
+        )
+        .join("");
+};
+
+// Render data in the table
+const renderData = (data) => {
+    salesTable.innerHTML = "";
+    let totalAmount = 0;
+    let totalPaid = 0;
+    let totalOnHold = 0;
+
+    data.forEach(item => {
+        totalAmount += item.amount;
+        totalPaid += item.totalPaid;
+        totalOnHold += item.onHold;
+
+        const row = `
+            <tr>
+                <td>${item.customer}</td>
+                <td>${item.products.join(", ")}</td>
+                <td>₹${item.amount}</td>
+                <td>${renderPaymentHistory(item.payments || [])}</td>
+                <td>₹${item.totalPaid}</td>
+                <td>₹${item.onHold}</td>
+            </tr>
+        `;
+        salesTable.insertAdjacentHTML("beforeend", row);
+    });
+
+    totalSummaryEl.innerHTML = `
+        Total Amount: ₹${totalAmount.toFixed(2)}<br>
+        Total Paid: ₹${totalPaid.toFixed(2)}<br>
+        Total On Hold: ₹${totalOnHold.toFixed(2)}
+    `;
+};
+
+
+// Render default data for today's date
+const renderDefaultData = () => {
+    const today = new Date().toISOString().split('T')[0];
+    const filteredData = salesData.filter(item =>
+        item.payments.some(payment => new Date(payment.date).toISOString().split('T')[0] === today)
+    );
+    renderData(filteredData);
+};
+
+// Filter and render the data
+const filterData = () => {
+    const searchValue = document.getElementById("search-input").value.toLowerCase();
+    const startDate = document.getElementById("start-date").value;
+    const endDate = document.getElementById("end-date").value;
+    const showOnHold = document.getElementById("on-hold-filter").checked;
+
+    // Reset to default data if no search input and filters are cleared
+    if (!searchValue && !startDate && !endDate && !showOnHold) {
+        renderDefaultData();
+        return;
+    }
+
+    const filteredData = salesData.filter(item => {
+        // Match search input
+        const matchesSearch = !searchValue || item.customer.toLowerCase().includes(searchValue) ||
+            item.products.join(", ").toLowerCase().includes(searchValue);
+
+        // Apply date range only if at least one date is set
+        const withinDateRange = (!startDate && !endDate) || item.payments.some(payment => {
+            const paymentDate = new Date(payment.date);
+            return (!startDate || paymentDate >= new Date(startDate)) &&
+                   (!endDate || paymentDate <= new Date(endDate));
+        });
+
+        // Show on-hold filter condition
+        const matchesOnHold = !showOnHold || item.onHold > 0;
+
+        // Combine filters
+        return matchesSearch && withinDateRange && matchesOnHold;
+    });
+
+    renderData(filteredData);
+};
+
+// Event Listeners for filters
+document.getElementById("search-input").addEventListener("input", () => {
+    filterData();
+    if (!document.getElementById("search-input").value) {
+        renderDefaultData(); // Reset to default data when search input is cleared
+    }
+});
+
+document.getElementById("start-date").addEventListener("change", filterData);
+document.getElementById("end-date").addEventListener("change", filterData);
+
+document.getElementById("on-hold-filter").addEventListener("change", () => {
+    filterData();
+    if (!document.getElementById("on-hold-filter").checked) {
+        renderDefaultData(); // Reset to default data when "On Hold" filter is unchecked
+    }
+});
+
+document.getElementById("clear-filters").addEventListener("click", () => {
+    document.getElementById("search-input").value = "";
+    document.getElementById("start-date").value = "";
+    document.getElementById("end-date").value = "";
+    document.getElementById("on-hold-filter").checked = false;
+    renderDefaultData(); // Reset to default date data
+    
+
+});
+
+// Initialize date pickers and fetch data
+flatpickr("#start-date");
+flatpickr("#end-date");
+
+fetchData();
 
 
     </script>

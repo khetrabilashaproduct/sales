@@ -1,158 +1,390 @@
 {
-    "year": 2025,
-    "sales": [
-      {
-        "customer": "Lokanatha Paala",
-        "products": ["Ply Door Advance", "Ply Door Price -2700"],
-        "amount": 1000,
-        "totalPaid": 1000,
-        "onHold": 0,
-        "date": "2025-01-02"
-      },
-      {
-        "customer": "Juma",
-        "products": ["Door fittings"],
-        "amount": 3965,
-        "totalPaid": 2000,
-        "onHold": 1965,
-        "date": "2025-01-03"
-      },
-      {
-        "customer": "Subrata Sahoo",
-        "products": ["Durabandha", "Jharaka", "Skylight"],
-        "amount": 19475.00,
-        "totalPaid": 19300,
-        "onHold": 0,
-        "date": "2025-01-04"
-      },
-      {
-        "customer": "Manir Alei",
-        "products": ["Duara Bandha-2 = 1500", "Jharaka 3.6/4 ft -1 = 1600"],
-        "amount": 3100,
-        "totalPaid": 1100,
-        "onHold": 2000,
-        "date": "2025-01-04"
-      },
-      {
-        "customer": "Manoranjan Mallik",
-        "products": ["5 ft nanda plate project work"],
-        "amount": 3000,
-        "totalPaid": 3000,
-        "onHold": 0,
-        "date": "2025-01-04"
-      },
-      {
-        "customer": "Lokanatha Paala",
-        "products": ["Ply Door", "Advance paid-1000"],
-        "amount": 1700,
-        "totalPaid": 1700,
-        "onHold": 0,
-        "date": "2025-01-05"
-      },
-      {
-        "customer": "Deva",
-        "products": ["Plydoor"],
-        "amount": 2600,
-        "totalPaid": 2500,
-        "onHold": 0,
-        "date": "2025-01-05"
-      },
-      {
-        "customer": "Deva",
-        "products": ["Ankor Bolt-6"],
-        "amount": 100,
-        "totalPaid": 0,
-        "onHold": 100,
-        "date": "2025-01-05"
-      },
-      {
-        "customer": "Customer02",
-        "products": ["Adjust Fan"],
-        "amount": 100,
-        "totalPaid": 100,
-        "onHold": 0,
-        "date": "2025-01-05"
-      },
-      {
-        "customer": "Customer03",
-        "products": ["Main Door Duara Bandha"],
-        "amount": 2000,
-        "totalPaid": 2000,
-        "onHold": 0,
-        "date": "2025-01-05"
-      },
-      {
-        "customer": "Sarata Bhaina TATA Ace",
-        "products": ["Skylght 12/18"],
-        "amount": 60,
-        "totalPaid": 60,
-        "onHold": 0,
-        "date": "2025-01-05"
-      },
-      {
-        "customer": "Tuna",
-        "products": ["Skylght 2/2 ft"],
-        "amount": 310,
-        "totalPaid": 200,
-        "onHold": 110,
-        "date": "2025-01-06"
-      },
-      {
-        "customer": "Rahim ke abbu",
-        "products": ["Nanda 3ft- 2"],
-        "amount": 1200,
-        "totalPaid": 1100,
-        "onHold": 0,
-        "date": "2025-01-06"
-      },
-      {
-        "customer": "Suraj",
-        "products": ["Ply Door Advance","Size- 73.1/2 x 34.1/4, ND83","Size- 82 x 36.3/4, ND04"],
-        "amount": 1000,
-        "totalPaid": 1000,
-        "onHold": 0,
-        "date": "2025-01-07"
-      },
-      {
-        "customer": "Babu Pradhan (khairata)",
-        "products": ["Ply Door Advance"],
-        "amount": 9000,
-        "totalPaid": 9000,
-        "onHold": 0,
-        "date": "2025-01-07"
-      },
-      {
-        "customer": "Baamadeba Mishra",
-        "products": ["Ply, PVC Door Advance","PvcDoor 37.1/4","PlyDoor 43x78, 44x78"],
-        "amount": 2000,
-        "totalPaid": 2000,
-        "onHold": 0,
-        "date": "2025-01-08"
-      },
-      {
-        "customer": "Kalandi Pradhan",
-        "products": ["Ply Door Advance","PlyDoor- 37x77","PVCDoor 28x78, 36x80 (ganesha)"],
-        "amount": 2000,
-        "totalPaid": 2000,
-        "onHold": 0,
-        "date": "2025-01-08"
-      },
-      {
-        "customer": "Kamal kumar biswal",
-        "products": ["Ply Door Advance"," Size- 75.5x36.3/4, ND-14","Size- 80x38, ND-40","Size- 79.5x38.5, ND-38"],
-        "amount": 3000,
-        "totalPaid": 3000,
-        "onHold": 0,
-        "date": "2025-01-08"
-      },
-      {
-        "customer": "Kalia- 7809159872",
-        "products": ["Ply Door- 3","Jharaka Door- 4"],
-        "amount": 10500,
-        "totalPaid": 10500,
-        "onHold": 0,
-        "date": "2025-01-08"
-      }
-    ]
-  }
-  
+  "year": 2025,
+  "sales": [
+    {
+      "customer": "Lokanatha Paala",
+      "products": ["Ply Door Advance", "Ply Door Price -2700"],
+      "amount": 2700,
+      "payments": [
+        {
+          "date": "2025-01-02",
+          "paid": 1000,
+          "description": "Advance",
+          "level": "F"
+        },
+        {
+          "date": "2025-01-05",
+          "paid": 1700,
+          "description": "Full payment made",
+          "level": "F"
+        }
+      ],
+      "totalPaid": 1000,
+      "onHold": 0
+    },
+    {
+      "customer": "Juma",
+      "products": ["Door fittings"],
+      "amount": 3965,
+      "payments": [
+        {
+          "date": "2025-01-03",
+          "paid": 2000,
+          "description": "First installment",
+          "level": "E"
+        }
+      ],
+      "totalPaid": 2000,
+      "onHold": 1965
+    },
+    {
+      "customer": "Subrata Sahoo",
+      "products": ["Durabandha", "Jharaka", "Skylight"],
+      "amount": 19475.00,
+      "payments": [
+        {
+          "date": "2025-01-04",
+          "paid": 19300,
+          "description": "Full payment made",
+          "level": "F"
+        }
+      ],
+      "totalPaid": 19300,
+      "onHold": 0
+    },
+    {
+      "customer": "Manir Alei",
+      "products": ["Duara Bandha-2 = 1500", "Jharaka 3.6/4 ft -1 = 1600"],
+      "amount": 3100,
+      "payments": [
+        {
+          "date": "2025-01-04",
+          "paid": 1100,
+          "description": "First installment",
+          "level": "E"
+        },
+        {
+          "date": "2025-01-09",
+          "paid": 1000,
+          "description": "Second installment",
+          "level": "E"
+        }
+      ],
+      "totalPaid": 2100,
+      "onHold": 1000
+    },
+    {
+      "customer": "Manoranjan Mallik",
+      "products": ["5 ft nanda plate project work"],
+      "amount": 3000,
+      "payments": [
+        {
+          "date": "2025-01-04",
+          "paid": 3000,
+          "description": "Full payment made",
+          "level": "F"
+        }
+      ],
+      "totalPaid": 3000,
+      "onHold": 0
+    },
+    {
+      "customer": "Deva",
+      "products": ["Plydoor"],
+      "amount": 2600,
+      "payments": [
+        {
+          "date": "2025-01-05",
+          "paid": 2500,
+          "description": "Full payment made",
+          "level": "f"
+        }
+      ],
+      "totalPaid": 2500,
+      "onHold": 0
+    },
+    {
+      "customer": "Deva",
+      "products": ["Ankor Bolt-6"],
+      "amount": 100,
+      "payments": [
+          {
+              "date": "2025-01-05",
+              "paid": 0,
+              "description": "Not Paid",
+              "level": "E"
+            }
+      ],
+      "totalPaid": 0,
+      "onHold": 100
+    },
+    {
+      "customer": "Customer02",
+      "products": ["Adjust Fan"],
+      "amount": 100,
+      "payments": [
+        {
+          "date": "2025-01-05",
+          "paid": 100,
+          "description": "Full payment made",
+          "level": "F"
+        }
+      ],
+      "totalPaid": 100,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer03",
+      "products": ["Main Door Duara Bandha"],
+      "amount": 2000,
+      "payments": [
+        {
+          "date": "2025-01-05",
+          "paid": 2000,
+          "description": "Full payment made",
+          "level": "F"
+        }
+      ],
+      "totalPaid": 2000,
+      "onHold": 0
+    },
+    {
+      "customer": "Sarata Bhaina TATA Ace",
+      "products": ["Skylght 12/18"],
+      "amount": 60,
+      "payments": [
+        {
+          "date": "2025-01-05",
+          "paid": 60,
+          "description": "Full payment made",
+          "level": "F"
+        }
+      ],
+      "totalPaid": 60,
+      "onHold": 0
+    },
+    {
+      "customer": "Tuna",
+      "products": ["Skylght 2/2 ft"],
+      "amount": 310,
+      "payments": [
+        {
+          "date": "2025-01-06",
+          "paid": 200,
+          "description": "Partial payment",
+          "level": "E"
+        }
+      ],
+      "totalPaid": 200,
+      "onHold": 110
+    },
+    {
+      "customer": "Rahim ke abbu",
+      "products": ["Nanda 3ft- 2"],
+      "amount": 1200,
+      "payments": [
+        {
+          "date": "2025-01-06",
+          "paid": 1100,
+          "description": "Full payment made",
+          "level": "E"
+        }
+      ],
+      "totalPaid": 1100,
+      "onHold": 0
+    },
+    {
+      "customer": "Suraj",
+      "products": ["Ply Door", "Size- 73.1/2 x 34.1/4, ND83", "Size- 82 x 36.3/4, ND04"],
+      "amount": 5000,
+      "payments": [
+          {
+              "date": "2025-01-07",
+              "paid": 1000,
+              "description": "Advance",
+              "level": "F"
+            },
+            {
+              "date": "2025-01-09",
+              "paid": 4500,
+              "description": "Full payment made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 5500,
+      "onHold": 0
+    },
+    {
+      "customer": "Babu Pradhan (khairata)",
+      "products": ["Ply Door"],
+      "amount": 9000,
+      "payments": [
+          {
+              "date": "2025-01-07",
+              "paid": 9000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 9000,
+      "onHold": 0
+    },
+    {
+      "customer": "Baamadeba Mishra- 9438877238",
+      "products": ["Ply, PVC Door Advance", "PvcDoor 37.1/4", "PlyDoor 43x78, 44x78"],
+      "amount": 2000,
+      "payments": [
+          {
+              "date": "2025-01-08",
+              "paid": 2000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2000,
+      "onHold": 0
+    },
+    {
+      "customer": "Kalandi Pradhan- ",
+      "products": ["Ply Door Advance", "PlyDoor- 37x77", "PVCDoor 28x78, 36x80 (ganesha)"],
+      "amount": 2000,
+      "payments": [
+          {
+              "date": "2025-01-08",
+              "paid": 2000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2000,
+      "onHold": 0
+    },
+    {
+      "customer": "Kamal kumar biswal",
+      "products": ["Ply Door Advance", "Size- 75.5x36.3/4, ND-14", "Size- 80x38, ND-40", "Size- 79.5x38.5, ND-38"],
+      "amount": 3000,
+      "payments": [
+          {
+              "date": "2025-01-08",
+              "paid": 3000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 3000,
+      "onHold": 0
+    },
+    {
+      "customer": "Kalia- 7809159872",
+      "products": ["Ply Door- 3", "Jharaka Door- 4"],
+      "amount": 10500,
+      "payments": [
+          {
+              "date": "2025-01-08",
+              "paid": 10500,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 10500,
+      "onHold": 0
+    },
+    {
+      "customer": "Samsundar Bhoi- 6372788245",
+      "products": ["Duara Bandha- 1,Ankor Bolt- 4, Gadi Bhada, fitting"],
+      "amount": 1500,
+      "payments": [
+        {
+          "date": "2025-01-08",
+          "paid": 1500,
+          "description": "Full payment made",
+          "level": "F"
+        }
+      ],
+      "totalPaid": 1500,
+      "onHold": 0
+    },
+    {
+      "customer": "Jagannatha Mallik",
+      "products": ["Ply Door","Size:75.1/4 x 35, ND50"],
+      "amount": 2700,
+      "payments": [
+          {
+              "date": "2025-01-09",
+              "paid": 900,
+              "description": "Advance",
+              "level": "F"
+            },
+            {
+              "date": "2025-01-10",
+              "paid": 1700,
+              "description": "Full payment made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2600,
+      "onHold": 0
+    },
+    {
+      "customer": "Abdul Gufran khan",
+      "products": ["Door fittings"],
+      "amount": 1222,
+      "payments": [
+          {
+              "date": "2025-01-10",
+              "paid": 1170,
+              "description": "Full payment made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1170,
+      "onHold": 0
+    },
+    {
+      "customer": "Sk. Mansur - 8144601168",
+      "products": ["Door fittings"],
+      "amount": 1100,
+      "payments": [
+          {
+              "date": "2025-01-10",
+              "paid": 1050,
+              "description": "Full payment made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1050,
+      "onHold": 0
+    },
+    {
+      "customer": "Taj uddin Khan",
+      "products": ["Plydoor"],
+      "amount": 1100,
+      "payments": [
+          {
+              "date": "2025-01-10",
+              "paid": 2000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2000,
+      "onHold": 0
+    },
+    {
+      "customer": "Raju Kabadia",
+      "products": ["Nanda 4ft - 5","Plate- 1"],
+      "amount": 3050,
+      "payments": [
+          {
+              "date": "2025-01-10",
+              "paid": 0,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 0,
+      "onHold": 3050
+    }
+    
+  ]
+}
