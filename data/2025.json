@@ -269,9 +269,15 @@
               "paid": 3000,
               "description": "Advance",
               "level": "F"
+            },
+            {
+              "date": "2025-01-11",
+              "paid": 4450,
+              "description": "Advance",
+              "level": "F"
             }
       ],
-      "totalPaid": 3000,
+      "totalPaid": 7450,
       "onHold": 0
     },
     {
@@ -365,9 +371,15 @@
               "paid": 2000,
               "description": "Advance",
               "level": "F"
+            },
+            {
+              "date": "2025-01-11",
+              "paid": 10000,
+              "description": "Partial payment",
+              "level": "F"
             }
       ],
-      "totalPaid": 2000,
+      "totalPaid": 12000,
       "onHold": 0
     },
     {
@@ -384,6 +396,21 @@
       ],
       "totalPaid": 0,
       "onHold": 3050
+    },
+    {
+      "customer": "Customer03",
+      "products": ["Nanda 4ft - 5","Plate- 1"],
+      "amount": 420,
+      "payments": [
+          {
+              "date": "2025-01-11",
+              "paid": 390,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 390,
+      "onHold": 0
     }
     
   ]
