@@ -154,17 +154,29 @@ header::after {
 
 /* Table Styling */
 .table-responsive {
-    overflow-x: auto;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
     border-radius: 15px;
     background: #B2FFFF;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    animation: fadeInUp 1s ease-in-out;
-    padding: 1rem;
+    padding: 1rem; /* Add padding around the table */
+    max-width: 100%; /* Ensure the container does not exceed the screen width */
+    margin: 0 auto; /* Center the table container */
+    box-sizing: border-box; /* Include padding in the width */
 }
+.table-responsive::after {
+    content: "Swipe left/right to view more";
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
 
 .table {
     font-weight: bolder;
-    
+    table-layout: auto;
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
@@ -352,7 +364,7 @@ header::after {
             </label>
         </div>
         
-
+        <div class="table-responsive">
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
@@ -366,7 +378,7 @@ header::after {
             </thead>
             <tbody id="sales-data"></tbody>
         </table>
-
+        </div>
         <div class="total-summary text-end">
             <p id="total-summary"></p>
         </div>
@@ -382,6 +394,15 @@ anotherPageButton.addEventListener('click', () => {
 });
     </script>
     <script>
+window.addEventListener('resize', () => {
+    const tableWrapper = document.querySelector('.table-responsive');
+    if (window.innerWidth < 768) {
+        tableWrapper.classList.add('scrollable');
+    } else {
+        tableWrapper.classList.remove('scrollable');
+    }
+});
+
 
 
 document.getElementById('current-date').innerText = `Date: ${new Date().toLocaleDateString()}`;
@@ -430,7 +451,7 @@ const renderData = (data) => {
         const row = `
             <tr>
                 <td>${item.customer}</td>
-                <td>${item.products.join(", ")}</td>
+                <td>${item.products.join("<br>")}</td>
                 <td>₹${item.amount}</td>
                 <td>${renderPaymentHistory(item.payments || [])}</td>
                 <td>₹${item.totalPaid}</td>

@@ -364,7 +364,7 @@
     {
       "customer": "Taj uddin Khan",
       "products": ["Plydoor"],
-      "amount": 1100,
+      "amount": 15793,
       "payments": [
           {
               "date": "2025-01-10",
@@ -374,12 +374,12 @@
             },
             {
               "date": "2025-01-11",
-              "paid": 10000,
-              "description": "Partial payment",
+              "paid": 13400,
+              "description": "Full payment made",
               "level": "F"
             }
       ],
-      "totalPaid": 12000,
+      "totalPaid": 15400,
       "onHold": 0
     },
     {
@@ -399,18 +399,93 @@
     },
     {
       "customer": "Customer03",
-      "products": ["Nanda 4ft - 5","Plate- 1"],
+      "products": ["Skylght 12/18 -7"],
       "amount": 420,
       "payments": [
           {
               "date": "2025-01-11",
               "paid": 390,
-              "description": "Advance",
+              "description": "Full payment made",
               "level": "F"
             }
       ],
       "totalPaid": 390,
       "onHold": 0
+    },
+    {
+      "customer": "Customer04",
+      "products": ["4ft Plate"],
+      "amount": 600,
+      "payments": [
+          {
+              "date": "2025-01-11",
+              "paid": 600,
+              "description": "Full payment made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 600,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer04",
+      "products": ["3ft Plotting pillar -6"],
+      "amount": 480,
+      "payments": [
+          {
+              "date": "2025-01-11",
+              "paid": 480,
+              "description": "Full payment made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 480,
+      "onHold": 0
+    },
+    {
+      "customer": "Jakham",
+      "products": ["Ply Door"],
+      "amount": 1000,
+      "payments": [
+          {
+              "date": "2025-01-11",
+              "paid": 1000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1000,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer01",
+      "products": ["skylight- 12x12"],
+      "amount": 50,
+      "payments": [
+          {
+              "date": "2025-01-12",
+              "paid": 50,
+              "description": "Full payment made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 50,
+      "onHold": 0
+    },
+    {
+      "customer": "Dhadu Sahu (kalabuna) ",
+      "products": ["5ft khunta 140 piecex31= 4340","wire- perkg=118x23 =2513"],
+      "amount": 6853,
+      "payments": [
+          {
+              "date": "2025-01-12",
+              "paid": 6500,
+              "description": "Partial payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 6500,
+      "onHold": 350
     }
     
   ]
