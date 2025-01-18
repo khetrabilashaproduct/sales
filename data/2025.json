@@ -22,21 +22,29 @@
       "totalPaid": 1000,
       "onHold": 0
     },
+   
     {
-      "customer": "Juma",
+      "customer": "Sayed Imteaz (Hakim-kora)",
       "products": ["Door fittings"],
       "amount": 3965,
       "payments": [
         {
           "date": "2025-01-03",
-          "paid": 2000,
-          "description": "First installment",
-          "level": "E"
+          "paid": 400,
+          "description": "Advance",
+          "level": "F"
+        },
+        {
+          "date": "2025-01-15",
+          "paid": 7600,
+          "description": "parsial payment",
+          "level": "F"
         }
       ],
-      "totalPaid": 2000,
-      "onHold": 1965
+      "totalPaid": 8000,
+      "onHold": 50
     },
+    
     {
       "customer": "Subrata Sahoo",
       "products": ["Durabandha", "Jharaka", "Skylight"],
@@ -53,7 +61,7 @@
       "onHold": 0
     },
     {
-      "customer": "Manir Alei",
+      "customer": "Manir",
       "products": ["Duara Bandha-2 = 1500", "Jharaka 3.6/4 ft -1 = 1600"],
       "amount": 3100,
       "payments": [
@@ -175,8 +183,8 @@
           "level": "E"
         }
       ],
-      "totalPaid": 200,
-      "onHold": 110
+      "totalPaid": 300,
+      "onHold": 0
     },
     {
       "customer": "Rahim ke abbu",
@@ -217,17 +225,23 @@
     {
       "customer": "Babu Pradhan (khairata)",
       "products": ["Ply Door"],
-      "amount": 9000,
+      "amount": 13571,
       "payments": [
           {
               "date": "2025-01-07",
               "paid": 9000,
               "description": "Advance",
               "level": "F"
+            },
+            {
+              "date": "2025-01-18",
+              "paid": 4000,
+              "description": "Parsial Payment",
+              "level": "F"
             }
       ],
-      "totalPaid": 9000,
-      "onHold": 0
+      "totalPaid": 13000,
+      "onHold": 571
     },
     {
       "customer": "Baamadeba Mishra- 9438877238",
@@ -239,24 +253,36 @@
               "paid": 2000,
               "description": "Advance",
               "level": "F"
+            },
+            {
+              "date": "2025-01-15",
+              "paid": 12200,
+              "description": "Full payment (Gpay)",
+              "level": "F"
             }
       ],
-      "totalPaid": 2000,
+      "totalPaid": 14200,
       "onHold": 0
     },
     {
       "customer": "Kalandi Pradhan- ",
       "products": ["Ply Door Advance", "PlyDoor- 37x77", "PVCDoor 28x78, 36x80 (ganesha)"],
-      "amount": 2000,
+      "amount": 10516,
       "payments": [
           {
               "date": "2025-01-08",
               "paid": 2000,
               "description": "Advance",
               "level": "F"
+            },
+            {
+              "date": "2025-01-15",
+              "paid": 8400,
+              "description": "Advance",
+              "level": "F"
             }
       ],
-      "totalPaid": 2000,
+      "totalPaid": 14000,
       "onHold": 0
     },
     {
@@ -445,16 +471,22 @@
     {
       "customer": "Jakham",
       "products": ["Ply Door"],
-      "amount": 1000,
+      "amount": 2700,
       "payments": [
           {
               "date": "2025-01-11",
               "paid": 1000,
               "description": "Advance",
               "level": "F"
+            },
+            {
+              "date": "2025-01-17",
+              "paid": 1600,
+              "description": "Advance",
+              "level": "F"
             }
       ],
-      "totalPaid": 1000,
+      "totalPaid": 2600,
       "onHold": 0
     },
     {
@@ -479,13 +511,289 @@
       "payments": [
           {
               "date": "2025-01-12",
-              "paid": 6500,
+              "paid": 6850,
               "description": "Partial payment",
               "level": "F"
             }
       ],
-      "totalPaid": 6500,
-      "onHold": 350
+      "totalPaid": 6850,
+      "onHold": 0
+    },
+    {
+      "customer": "Manir",
+      "products": ["PlyDoor - 1950","Door fittings- 810"],
+      "amount": 2760,
+      "payments": [
+          {
+              "date": "2025-01-12",
+              "paid": 1500,
+              "description": "Partial payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1500,
+      "onHold": 1260
+    },
+    {
+      "customer": "Saroj Sir",
+      "products": ["Skylight 12/18 -1","12/12 -1"],
+      "amount": 110,
+      "payments": [
+          {
+              "date": "2025-01-13",
+              "paid": 100,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 100,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer02",
+      "products": ["Skylight 12/18 -1"],
+      "amount": 60,
+      "payments": [
+          {
+              "date": "2025-01-13",
+              "paid": 60,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 60,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer03",
+      "products": ["PVC Bathroom door"],
+      "amount": 2250,
+      "payments": [
+          {
+              "date": "2025-01-13",
+              "paid": 2200,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2200,
+      "onHold": 0
+    },
+    {
+      "customer": "Subendu Mohanty",
+      "products": ["PlyDoor, PVC, WPC"],
+      "amount": 7400,
+      "payments": [
+          {
+              "date": "2025-01-13",
+              "paid": 14700,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 14700,
+      "onHold": 0
+    },
+    {
+      "customer": "Tuku Bhaina",
+      "products": ["PlyDoor Ftting accesories"],
+      "amount": 2250,
+      "payments": [
+          {
+              "date": "2025-01-13",
+              "paid": 6029,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 5800,
+      "onHold": 0
+    },
+    {
+      "customer": "Tata ACE bhaina - Ramesh",
+      "products": ["PVC DOOR"],
+      "amount": 2100,
+      "payments": [
+          {
+              "date": "2025-01-15",
+              "paid": 2100,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2100,
+      "onHold": 0
+    },
+    {
+      "customer": "RK Bhata Bindha",
+      "products": ["Water Tank set"],
+      "amount": 5300,
+      "payments": [
+          {
+              "date": "2025-01-15",
+              "paid": 3700,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 3700,
+      "onHold": 0
+    },
+    {
+      "customer": "Niranjan Mishara",
+      "products": ["Plydoor- 82x37.3/4"],
+      "amount": 1000,
+      "payments": [
+          {
+              "date": "2025-01-15",
+              "paid": 1000,
+              "description": "Advance",
+              "level": "F"
+            },
+            {
+              "date": "2025-01-17",
+              "paid": 1900,
+              "description": "Full payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2900,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer1",
+      "products": ["SkyLight- 12/18 -4"],
+      "amount": 240,
+      "payments": [
+          {
+              "date": "2025-01-16",
+              "paid": 220,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 220,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer2",
+      "products": ["Adjust Fan- 3"],
+      "amount": 300,
+      "payments": [
+          {
+              "date": "2025-01-16",
+              "paid": 300,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 300,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer3",
+      "products": ["5 inch kabja, anchore bolt, nill-500"],
+      "amount": 850,
+      "payments": [
+          {
+              "date": "2025-01-16",
+              "paid": 800,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 800,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer3",
+      "products": ["5 inch kabja, anchore bolt, nill-500"],
+      "amount": 850,
+      "payments": [
+          {
+              "date": "2025-01-16",
+              "paid": 800,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 800,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer01",
+      "products": ["12/18 skylight - 3"],
+      "amount": 180,
+      "payments": [
+          {
+              "date": "2025-01-17",
+              "paid": 180,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 180,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer02",
+      "products": ["24/24 skylight - 2"],
+      "amount": 320,
+      "payments": [
+          {
+              "date": "2025-01-17",
+              "paid": 300,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 300,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer02",
+      "products": ["5 inch kabja -7, 3/16- 30"],
+      "amount": 670,
+      "payments": [
+          {
+              "date": "2025-01-17",
+              "paid": 665,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 665,
+      "onHold": 0
+    },
+    {
+      "customer": "Customer03",
+      "products": ["Plydoor"],
+      "amount": 3500,
+      "payments": [
+          {
+              "date": "2025-01-17",
+              "paid": 3500,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 3500,
+      "onHold": 0
+    },
+    {
+      "customer": "Niranjan Mishara",
+      "products": ["Door Fiiting Accessories"],
+      "amount": 1320,
+      "payments": [
+          {
+              "date": "2025-01-18",
+              "paid": 1250,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1250,
+      "onHold": 0
     }
     
   ]
