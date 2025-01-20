@@ -384,6 +384,7 @@ header::after {
         </div>
         <div class="button-group mt-3">
             <button id="another-page" class="btn btn-secondary">Graph</button>
+            <button id="another-page2" class="btn btn-secondary">Import Data</button>
         </div>
     </div>
   
@@ -391,6 +392,11 @@ header::after {
         const anotherPageButton = document.getElementById('another-page');
 anotherPageButton.addEventListener('click', () => {
     window.location.href = 'graph.html';
+});
+
+const anotherPageButton2 = document.getElementById('another-page2');
+anotherPageButton2.addEventListener('click', () => {
+    window.location.href = 'import.html';
 });
     </script>
     <script>

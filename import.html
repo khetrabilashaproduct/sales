@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Company Payments</title>
+  <title>Import Data | Khetra Bilasha Products</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -67,6 +67,52 @@
       animation: fadeIn 0.5s ease;
     }
 
+    .transaction {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.transaction div {
+  flex: 1;
+}
+
+.transaction img {
+  max-width: 100px;
+  max-height: 100px;
+  border: 1px solid #ddd;
+  margin-left: 10px;
+}
+
+.transaction p {
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.transaction strong {
+  font-weight: bold;
+}
+
+.invoice-img {
+  max-width: 150px;
+  max-height: 150px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.invoice-img:hover {
+  transform: scale(1.1);
+}
+
+
+
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -81,128 +127,276 @@
     canvas {
       margin-top: 20px;
     }
+.product{
+    background-color: #F0F8FF;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    animation: fadeIn 1s ease;
+    transition: all 0.3s ease;
+    border-bottom: 5px solid #50C878;
+  
+}
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Company Payments</h1>
-
+    <h1>Products Import Data</h1>
+  
+    <!-- Seller Filter -->
+    <label for="seller-selector">Filter by Seller:</label>
+    <select id="seller-selector">
+      <!-- Dynamically populated options -->
+    </select>
+  
     <!-- Company Tiles -->
     <div id="company-list">
       <!-- Dynamically populated tiles -->
     </div>
-
+  
     <!-- Details Section -->
     <div id="details" class="details">
       <h2 id="company-name">Company Name</h2>
-      <div id="transactions">
-        <!-- Dynamically populated transactions -->
+      <div id="product-details">
+        <!-- Dynamically populated product details -->
       </div>
     </div>
-
+  
     <!-- Spending Graph -->
     <canvas id="spendingChart" width="400" height="200"></canvas>
   </div>
+  
 
+  
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const fetchData = async () => {
-      try {
-        const response = await fetch("import.json");
-        if (!response.ok) throw new Error("Failed to fetch data");
-        return await response.json();
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        return null;
-      }
-    };
+const fetchData = async () => {
+  try {
+    const response = await fetch("import.json");
+    if (!response.ok) throw new Error("Failed to fetch data");
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+};
 
-    const initPage = async () => {
-      const data = await fetchData();
-      if (!data) return;
+let selectedYear = new Date().getFullYear();
+let selectedSeller = "All Sellers";
 
-      const companyList = document.getElementById("company-list");
-      const transactionsData = {};
-      const monthlySpending = Array(12).fill(0);
-      const monthlyDetails = Array.from({ length: 12 }, () => []);
+const renderGraph = (monthlySpending, monthlyDetails) => {
+  const ctx = document.getElementById("spendingChart").getContext("2d");
 
-      data.companies.forEach(company => {
-        const tile = document.createElement("div");
-        tile.classList.add("company-tile");
-        tile.innerHTML = `
+  const spendingData = {
+    labels: [
+      "January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December"
+    ],
+    datasets: [{
+      label: `Monthly Spending (${selectedYear}) - ${selectedSeller}`,
+      data: monthlySpending,
+      backgroundColor: "rgba(75, 192, 192, 0.2)",
+      borderColor: "rgba(75, 192, 192, 1)",
+      borderWidth: 1
+    }]
+  };
+
+  const config = {
+    type: "bar",
+    data: spendingData,
+    options: {
+      onClick: (event, elements) => {
+        if (elements.length > 0) {
+          const monthIndex = elements[0].index;
+          showMonthlyDetails(monthIndex, monthlyDetails);
+        }
+      },
+      scales: { y: { beginAtZero: true } }
+    }
+  };
+
+  // Clear previous graph instance
+  if (window.spendingChartInstance) {
+    window.spendingChartInstance.destroy();
+  }
+  window.spendingChartInstance = new Chart(ctx, config);
+};
+
+const showMonthlyDetails = (monthIndex, monthlyDetails) => {
+  const details = document.getElementById("details");
+  const productDetails = document.getElementById("product-details");
+
+  const transactions = monthlyDetails[monthIndex];
+  productDetails.innerHTML = "";
+
+  if (!transactions || transactions.length === 0) {
+    productDetails.innerHTML = "<p>No transactions for this month.</p>";
+    return;
+  }
+
+  const totalSpending = transactions.reduce((sum, { payment }) => sum + payment, 0);
+  productDetails.innerHTML += `<h3>Total Spending for ${transactions[0]?.month || ""}: ${totalSpending.toFixed(2)}</h3>`;
+
+  transactions.forEach(({ company, payment, date, notes }) => {
+    const transactionDiv = document.createElement("div");
+    transactionDiv.classList.add("transaction");
+    transactionDiv.innerHTML = `
+      <p><strong>Company:</strong> ${company}</p>
+      <p><strong>Date:</strong> ${date}</p>
+      <p><strong>Payment:</strong> ${payment.toFixed(2)}</p>
+      <p><strong>Notes:</strong> ${notes}</p>
+    `;
+    productDetails.appendChild(transactionDiv);
+  });
+
+  details.style.display = "block";
+};
+
+const processTransactions = (companies) => {
+  const monthlySpending = Array(12).fill(0);
+  const monthlyDetails = Array.from({ length: 12 }, () => []);
+  const monthLabels = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  companies.forEach(company => {
+    if (selectedSeller !== "All Sellers" && company.name !== selectedSeller) return;
+
+    company.products.forEach(product => {
+      product.transactions.forEach(transaction => {
+        const transactionDate = new Date(transaction.date);
+        const transactionYear = transactionDate.getFullYear();
+
+        if (transactionYear === selectedYear) {
+          const month = transactionDate.getMonth();
+          monthlySpending[month] += transaction.payment;
+          monthlyDetails[month].push({
+            company: company.name,
+            payment: transaction.payment,
+            date: transaction.date,
+            notes: transaction.notes,
+            month: monthLabels[month] // Use local monthLabels array
+          });
+        }
+      });
+    });
+  });
+
+  return { monthlySpending, monthlyDetails };
+};
+
+
+const renderFilters = (companies) => {
+  const sellerSelector = document.getElementById("seller-selector");
+  const uniqueSellers = ["All Sellers", ...new Set(companies.map(company => company.name))];
+
+  sellerSelector.innerHTML = ""; // Clear existing options
+
+  uniqueSellers.forEach(seller => {
+    const option = document.createElement("option");
+    option.value = seller;
+    option.textContent = seller;
+    if (seller === selectedSeller) option.selected = true;
+    sellerSelector.appendChild(option);
+  });
+
+  sellerSelector.addEventListener("change", (e) => {
+    selectedSeller = e.target.value;
+    updateGraph(companies);
+  });
+};
+
+const updateGraph = (companies) => {
+  const { monthlySpending, monthlyDetails } = processTransactions(companies);
+  renderGraph(monthlySpending, monthlyDetails);
+};
+
+const initPage = async () => {
+  const data = await fetchData();
+  if (!data) return;
+
+  const companyList = document.getElementById("company-list");
+
+  renderFilters(data.companies);
+
+  data.companies.forEach(company => {
+    const tile = document.createElement("div");
+    tile.classList.add("company-tile");
+    tile.innerHTML = `
+      <div>
+        <h3>${company.name}</h3>
+        <p>${company.details}</p>
+      </div>
+      <div>&#9654;</div>
+    `;
+
+    tile.addEventListener("click", () => {
+      const details = document.getElementById("details");
+      const productDetails = document.getElementById("product-details");
+
+      document.getElementById("company-name").textContent = company.name;
+      productDetails.innerHTML = "";
+
+      company.products.forEach(product => {
+        const productDiv = document.createElement("div");
+        productDiv.classList.add("product");
+        productDiv.innerHTML = `
           <div>
-            <h3>${company.name}</h3>
-            <p>${company.details}</p>
+            <p><strong>Product:</strong> ${product.name}</p>
+               <p><strong>Date:</strong> ${product.Date}</p>
+            <p><strong>Total Amount:</strong> ${product.totalAmount.toFixed(2)}</p>
+            <p><strong>Paid:</strong> ${product.paid.toFixed(2)}</p>
+            <p><strong>Remaining:</strong> ${product.totalAmount-product.paid}</p>
           </div>
-          <div>&#9654;</div>
         `;
-        tile.addEventListener("click", () => showDetails(company.id, company.name));
-        companyList.appendChild(tile);
 
-        transactionsData[company.id] = company.transactions;
-        company.transactions.forEach(({ date, payment }) => {
-          const month = new Date(date).getMonth();
-          monthlySpending[month] += payment;
-          monthlyDetails[month].push({ company: company.name, payment, date });
+        const transactionDiv = document.createElement("div");
+        transactionDiv.innerHTML = "<strong>Transactions:</strong>";
+
+        product.transactions.forEach(transaction => {
+          const transactionDetails = document.createElement("div");
+          transactionDetails.classList.add("transaction");
+          transactionDetails.innerHTML = `
+            <p><strong>Date:</strong> ${transaction.date}</p>
+            <p><strong>Payment:</strong> ${transaction.payment.toFixed(2)}</p>
+            <p><strong>Notes:</strong> ${transaction.notes || "No notes available"}</p>
+          `;
+          transactionDiv.appendChild(transactionDetails);
         });
+
+        productDiv.appendChild(transactionDiv);
+
+        // Add invoice images section
+        if (product.invoiceImages && product.invoiceImages.length > 0) {
+          const invoiceDiv = document.createElement("div");
+          invoiceDiv.innerHTML = "<strong>Invoice Images:</strong>";
+          product.invoiceImages.forEach(image => {
+            const img = document.createElement("img");
+            img.src = image;
+            img.alt = `Invoice for ${product.name}`;
+            img.classList.add("invoice-img");
+            invoiceDiv.appendChild(img);
+          });
+          productDiv.appendChild(invoiceDiv);
+        }
+
+        productDetails.appendChild(productDiv);
       });
 
-      const spendingData = {
-        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        datasets: [{
-          label: 'Monthly Spending',
-          data: monthlySpending,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        }]
-      };
+      details.style.display = "block";
+    });
 
-      const config = {
-        type: 'bar',
-        data: spendingData,
-        options: {
-          onClick: (event, elements) => {
-            if (elements.length > 0) {
-              const monthIndex = elements[0].index;
-              showMonthlyDetails(monthIndex);
-            }
-          },
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      };
+    companyList.appendChild(tile);
+  });
 
-      new Chart(document.getElementById('spendingChart'), config);
+  updateGraph(data.companies);
+};
 
-      const showMonthlyDetails = (monthIndex) => {
-        const details = document.getElementById("details");
-        const transactions = document.getElementById("transactions");
-        const monthDetails = monthlyDetails[monthIndex];
+initPage();
 
-        document.getElementById("company-name").textContent = `Details for ${spendingData.labels[monthIndex]}`;
-        transactions.innerHTML = "";
 
-        monthDetails.forEach(({ company, payment, date }) => {
-          const transaction = document.createElement("div");
-          transaction.classList.add("transaction", "animated");
-          transaction.innerHTML = `
-            <div>
-              <p><strong>Company:</strong> ${company}</p>
-              <p><strong>Date:</strong> ${date}</p>
-              <p><strong>Payment:</strong> ${payment}</p>
-            </div>
-          `;
-          transactions.appendChild(transaction);
-        });
 
-        details.style.display = "block";
-        details.classList.add("animated");
-      };
-    };
-
-    initPage();
   </script>
 </body>
 </html>

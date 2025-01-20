@@ -2,27 +2,72 @@
   "companies": [
     {
       "id": 1,
-      "name": "Company A",
-      "details": "Supplier of raw materials",
-      "transactions": [
-        {"date": "2025-01-01", "payment": 0, "notes": "Invoice #123", "img": "invoice1.png"},
-        {"date": "2025-01-15", "payment": 0, "notes": "Invoice #124", "img": "invoice2.png"}
-      ]
+      "name": "Pardosh Routroy",
+      "details": "Ply & Regin Seller",
+      "products": [
+                {
+                  "name": "Ply",
+                  "Date":"28/12/2024",
+                  "totalAmount": 170812,
+                  "paid": 120000,
+                  "remaining": 0,
+                  "transactions": [
+                    {"date": "2024-12-28", "payment": 20000, "notes": "Initial Payment"},
+                    {"date": "2025-01-13", "payment": 100000, "notes": "Second Installment"}
+                  ],
+                  "invoiceImages": [
+                    "#"
+                  ]
+                },
+                {
+                  "name": "Regin- 1 Barrel",
+                  "Date":"13/01/2025",
+                  "totalAmount": 6020,
+                  "paid": 0,
+                  "remaining": 0,
+                  "transactions": [
+                    {"date": "", "payment": 0, "notes": "Ammount not Paid"}
+
+                  ],
+                  "invoiceImages": [
+                    "#"
+                  ]
+                }
+
+              ]
     },
     {
       "id": 2,
       "name": "Sanjeeb Dash Cement",
-      "details": "Cement Provider",
-      "transactions": [
-        {"date": "2025-01-09", "payment": 33300, "notes": "Invoice #200", "img": "invoice3.png"}
+      "details": "Cement Seller",
+      "products": [
+              {
+                "name": "Cement 100 -packets",
+                "Date":"09/01/2025",
+                "totalAmount": 33300,
+                "paid": 33300,
+                "remaining": 0,
+                "transactions": [
+                  {"date": "2025-01-09", "payment": 33300, "notes": "Paid in Full"}
+                ]
+              }
       ]
     },
     {
       "id": 3,
-      "name": "Siba cement",
-      "details": "Cement Provider",
-      "transactions": [
-        {"date": "2025-01-09", "payment": 1050, "notes": "Invoice #200", "img": "invoice3.png"}
+      "name": "Siba Cement",
+      "details": "Cement Seller",
+      "products": [
+              {
+                "name": "Cement 3 -packets",
+                "Date":"09/01/2025",
+                "totalAmount": 1050,
+                "paid": 1050,
+                "remaining": 0,
+                "transactions": [
+                  {"date": "2025-01-09", "payment": 1050, "notes": "Paid in Full"}
+                ]
+              }
       ]
     }
   ]

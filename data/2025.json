@@ -76,10 +76,16 @@
           "paid": 1000,
           "description": "Second installment",
           "level": "E"
+        },
+        {
+          "date": "2025-01-18",
+          "paid": 1000,
+          "description": "Third installment",
+          "level": "E"
         }
       ],
-      "totalPaid": 2100,
-      "onHold": 1000
+      "totalPaid": 3100,
+      "onHold": 0
     },
     {
       "customer": "Manoranjan Mallik",
@@ -595,6 +601,21 @@
       "onHold": 0
     },
     {
+      "customer": "NoOne",
+      "products": ["Nothing"],
+      "amount": 0,
+      "payments": [
+          {
+              "date": "2025-01-14",
+              "paid": 0,
+              "description": "No Sales",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 0,
+      "onHold": 0
+    },
+    {
       "customer": "Tuku Bhaina",
       "products": ["PlyDoor Ftting accesories"],
       "amount": 2250,
@@ -788,11 +809,101 @@
           {
               "date": "2025-01-18",
               "paid": 1250,
-              "description": "Advance",
+              "description": "Full Payment Made",
               "level": "F"
             }
       ],
       "totalPaid": 1250,
+      "onHold": 0
+    },
+    {
+      "customer": "Papuni Behera- 7606097825",
+      "products": ["Plydoor"],
+      "amount": 4000,
+      "payments": [
+          {
+              "date": "2025-01-18",
+              "paid": 4000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 4000,
+      "onHold": 0
+    },
+    {
+      "customer": "Samim Mohammed",
+      "products": ["3ft Nanda - 4"],
+      "amount": 1200,
+      "payments": [
+          {
+              "date": "2025-01-18",
+              "paid": 1100,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1100,
+      "onHold": 0
+    },
+    {
+      "customer": "Titu",
+      "products": ["PlyDoor- ND31"],
+      "amount": 2000,
+      "payments": [
+          {
+              "date": "2025-01-18",
+              "paid": 2000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2000,
+      "onHold": 0
+    },
+    {
+      "customer": "Munim",
+      "products": ["Adjust Fan- 1"],
+      "amount": 100,
+      "payments": [
+          {
+              "date": "2025-01-19",
+              "paid": 100,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 100,
+      "onHold": 0
+    },
+    {
+      "customer": "Tukuna",
+      "products": ["4ft Nanda- 5"],
+      "amount": 3000,
+      "payments": [
+          {
+              "date": "2025-01-19",
+              "paid": 0,
+              "description": "No Payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 0,
+      "onHold": 3000
+    },
+    {
+      "customer": "Customer01",
+      "products": ["Phulakunda- 1"],
+      "amount": 50,
+      "payments": [
+          {
+              "date": "2025-01-20",
+              "paid": 50,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 50,
       "onHold": 0
     }
     
