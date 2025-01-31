@@ -27,7 +27,7 @@
     {
       "customer": "Sayed Imteaz (Hakim-kora)",
       "products": ["Door fittings"],
-      "amount": 3965,
+      "amount": 8050,
       "payments": [
         {
           "date": "2025-01-03",
@@ -96,7 +96,7 @@
         {
           "date": "2025-01-04",
           "paid": 3000,
-          "description": "No payment made",
+          "description": "Full Payment Made",
           "level": "F"
         }
       ],
@@ -259,7 +259,7 @@
     {
       "customer": "Baamadeba Mishra- 9438877238",
       "products": ["Ply, PVC Door Advance", "PvcDoor 37.1/4", "PlyDoor 43x78, 44x78"],
-      "amount": 2000,
+      "amount": 14200,
       "payments": [
           {
               "date": "2025-01-08",
@@ -291,11 +291,11 @@
             {
               "date": "2025-01-15",
               "paid": 8400,
-              "description": "Advance",
+              "description": "Full Payment Made",
               "level": "F"
             }
       ],
-      "totalPaid": 14000,
+      "totalPaid": 10400,
       "onHold": 0
     },
     {
@@ -625,11 +625,11 @@
     {
       "customer": "Tuku Bhaina",
       "products": ["PlyDoor Ftting accesories"],
-      "amount": 2250,
+      "amount": 6029,
       "payments": [
           {
               "date": "2025-01-13",
-              "paid": 6029,
+              "paid": 5800,
               "description": "Full Payment Made",
               "level": "F"
             }
@@ -670,7 +670,7 @@
     {
       "customer": "Niranjan Mishara",
       "products": ["Plydoor- 82x37.3/4"],
-      "amount": 1000,
+      "amount": 3000,
       "payments": [
           {
               "date": "2025-01-15",
@@ -883,7 +883,7 @@
               "level": "F"
             }
       ],
-      "totalPaid": 2000,
+      "totalPaid": 4000,
       "onHold": 0
     },
     {
@@ -1442,16 +1442,31 @@
     {
       "customer": "Laxmi teacher (barapada)",
       "products": ["PVD Door 3ft pannel"],
-      "amount": 3000,
+      "amount": 2900,
       "payments": [
           {
               "date": "2025-01-30",
               "paid": 2400,
-              "description": "Advance",
+              "description": "Full Payment Made+fittng charge-500",
               "level": "F"
             }
       ],
       "totalPaid": 2400,
+      "onHold": 0
+    },
+    {
+      "customer": "susuli",
+      "products": ["2.6ft plotting khunta-3x50"],
+      "amount": 150,
+      "payments": [
+          {
+              "date": "2025-01-30",
+              "paid": 150,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 150,
       "onHold": 0
     },
     {
