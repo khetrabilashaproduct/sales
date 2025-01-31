@@ -1,0 +1,40 @@
+{
+  "work": {
+    "custom": [
+      {
+        "title": "Custom Gaming PC Build",
+        "image": "path-to-image1.jpg",
+        "description": "A powerful gaming PC built with the latest specs for an immersive experience."
+      },
+      {
+        "title": "Custom Workstation",
+        "image": "path-to-image2.jpg",
+        "description": "High-performance workstation for video editing and 3D rendering."
+      }
+    ],
+    "repairs": [
+      {
+        "title": "Laptop Repair",
+        "image": "path-to-repair-image1.jpg",
+        "description": "Fixed broken laptop screen with quality parts."
+      },
+      {
+        "title": "Phone Screen Replacement",
+        "image": "path-to-repair-image2.jpg",
+        "description": "Replaced cracked phone screen with a brand-new one."
+      }
+    ],
+    "clients": [
+      {
+        "title": "Client Project 1",
+        "image": "path-to-client-image1.jpg",
+        "description": "Worked with a client to build a custom solution for their business."
+      },
+      {
+        "title": "Client Project 2",
+        "image": "path-to-client-image2.jpg",
+        "description": "Assisted a startup with network setup and device management."
+      }
+    ]
+  }
+}

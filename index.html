@@ -332,6 +332,37 @@ header::after {
 
 
 }
+
+@media print {
+  body {
+    margin: 0;
+    background-color: #E6E6FA; /* Ensure a clean background for printing */
+    color: #000; /* Black text for readability */
+  }
+
+  .container {
+    padding: 10px;
+    box-shadow: none; /* Remove shadow for print */
+    border-radius: 0; /* Remove border radius for clean edges */
+    min-height: auto; /* Let content determine height */
+  }
+
+  .chart-card {
+    flex: 1 1 100%; /* Ensure each graph takes up the full width of the row */
+    height: auto; /* Let height adapt to content */
+    page-break-inside: avoid; /* Avoid breaking a graph between pages */
+    margin-bottom: 20px; /* Ensure 20px gap between graphs vertically */
+    margin-right: 5px; /* Maintain 5px horizontal spacing if needed */
+    margin-left: 0; /* Reset left margin */
+    padding: 10px; /* Adjust padding for print */
+    background-color: #F0F8FF; /* White background for printing */
+    box-shadow: none; /* Remove shadows for better print clarity */
+  }
+
+  .chart-card:last-child {
+    margin-bottom: 0; /* Remove margin after the last graph */
+  }
+}
     </style>
 </head>
 <body>
