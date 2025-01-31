@@ -96,7 +96,7 @@
         {
           "date": "2025-01-04",
           "paid": 3000,
-          "description": "Full payment made",
+          "description": "No payment made",
           "level": "F"
         }
       ],

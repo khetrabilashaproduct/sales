@@ -399,6 +399,7 @@ header::after {
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
+                    <th>#</th> <!-- Serial Number Column -->
                     <th>Customer</th>
                     <th>Products</th>
                     <th>Total Amount</th>
@@ -407,6 +408,7 @@ header::after {
                     <th>On Hold</th>
                 </tr>
             </thead>
+            
             <tbody id="sales-data"></tbody>
         </table>
         </div>
@@ -480,13 +482,14 @@ const renderData = (data) => {
     let totalPaid = 0;
     let totalOnHold = 0;
 
-    data.forEach(item => {
+    data.forEach((item, index) => {
         totalAmount += item.amount;
         totalPaid += item.totalPaid;
         totalOnHold += item.onHold;
 
         const row = `
             <tr>
+                <td>${index + 1}</td> <!-- Serial Number -->
                 <td>${item.customer}</td>
                 <td>${item.products.join("<br>")}</td>
                 <td>₹${item.amount}</td>
