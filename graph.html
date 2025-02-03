@@ -292,6 +292,7 @@ body {
     </style>
 </head>
 <body>
+    
     <div class="container my-5">
         <header>
             <div class="logo-container">
@@ -362,41 +363,64 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Function to process the fetched data
     const processData = (data) => {
-        const daily = {};
-        const monthly = {};
-        const yearly = { sales: 0, onHold: 0, totalPaid: 0 };
+    const daily = {};
+    const monthly = {};
+    let yearlyTotalPaid = 0;
+    let yearlyOnHold = 0;
 
-        data.sales.forEach(({ payments, amount, onHold, totalPaid }) => {
-            payments.forEach(({ date, paid, level }) => {
-                if (!daily[date]) daily[date] = { sales: 0, onHold: 0 };
+    data.sales.forEach(({ payments, amount, onHold }) => {
+        let lastPaymentDate = null;
+        let saleTotalPaid = 0; // Track total paid per sale
 
-                if (level === "E" || level === "F") {
-                    daily[date].sales += paid;
-                }
-            });
+        payments.forEach(({ date, paid }) => {
+            const month = date.slice(0, 7); // Extract YYYY-MM format
+            lastPaymentDate = date;
+            saleTotalPaid += paid; // Track total paid for this sale
 
-            const saleDate = payments[0]?.date;
-            if (saleDate) {
-                if (!daily[saleDate]) daily[saleDate] = { sales: 0, onHold: 0 };
-                daily[saleDate].onHold += onHold;
+            // ✅ Store Daily Sales Data
+            if (!daily[date]) {
+                daily[date] = { sales: 0, onHold: 0 };
             }
+            daily[date].sales += paid || 0;
 
-            const month = saleDate?.slice(0, 7);
-            if (month) {
-                if (!monthly[month]) monthly[month] = { sales: 0, onHold: 0, totalPaid: 0 };
-                monthly[month].totalPaid += totalPaid || 0;
-                monthly[month].onHold += onHold;
+            // ✅ Store Monthly Sales Data
+            if (!monthly[month]) {
+                monthly[month] = { sales: 0, onHold: 0, totalPaid: 0 };
             }
-
-            yearly.totalPaid += totalPaid || 0;
-            yearly.onHold += onHold;
+            monthly[month].totalPaid += paid || 0;
         });
 
-        yearly.sales = yearly.totalPaid + yearly.onHold;
+        // ✅ Ensure OnHold is Tracked at the Last Payment Date
+        if (lastPaymentDate) {
+            const lastMonth = lastPaymentDate.slice(0, 7);
 
-        console.log("Processed Data:", { daily, monthly, yearly }); // Debugging Log
-        return { daily, monthly, yearly };
+            if (!daily[lastPaymentDate]) {
+                daily[lastPaymentDate] = { sales: 0, onHold: 0 };
+            }
+            daily[lastPaymentDate].onHold += onHold;
+
+            if (!monthly[lastMonth]) {
+                monthly[lastMonth] = { sales: 0, onHold: 0, totalPaid: 0 };
+            }
+            monthly[lastMonth].onHold += onHold;
+        }
+
+        // ✅ Add sale's totalPaid and onHold to yearly totals (only once per sale)
+        yearlyTotalPaid += saleTotalPaid;
+        yearlyOnHold += onHold;
+    });
+
+    // ✅ Ensure yearly totals are correctly set
+    const yearly = {
+        sales: yearlyTotalPaid + yearlyOnHold,
+        totalPaid: yearlyTotalPaid,
+        onHold: yearlyOnHold
     };
+
+    return { daily, monthly, yearly };
+};
+
+
 
     // Filter data by selected date range
     const filterDataByDateRange = (data, startDate, endDate) => {
