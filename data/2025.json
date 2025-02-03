@@ -1111,13 +1111,19 @@
     },
     {
       "customer": "Lipu Pradhan - 9861255868",
-      "products": ["Plydoor Advance-5000","Door fittings- 2537","PlyDoor-2=6400","PVC-1=2500","Durabandha-1=900"],
+      "products": ["Door fittings- 2537","PlyDoor-2=6400","PVC-1=2500","Durabandha-1=900"],
       "amount": 12300,
       "payments": [
           {
               "date": "2025-01-23",
               "paid": 5000,
               "description": "Advance",
+              "level": "F"
+            },
+            {
+              "date": "2025-02-03",
+              "paid": 5000,
+              "description": "Parcial Payment",
               "level": "F"
             }
       ],

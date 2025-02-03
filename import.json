@@ -69,6 +69,23 @@
                 ]
               }
       ]
+    },
+    {
+      "id": 4,
+      "name": "Upulei",
+      "details": "Chips (bauri)",
+      "products": [
+              {
+                "name": "Haiwa 1 trip ",
+                "Date":"27/01/2025",
+                "totalAmount": 26500,
+                "paid": 26500,
+                "remaining": 0,
+                "transactions": [
+                  {"date": "2025-01-09", "payment": 1050, "notes": "Paid in Full"}
+                ]
+              }
+      ]
     }
   ]
 }
