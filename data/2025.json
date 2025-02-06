@@ -1112,7 +1112,7 @@
     {
       "customer": "Lipu Pradhan - 9861255868",
       "products": ["Door fittings- 2537","PlyDoor-2=6400","PVC-1=2500","Durabandha-1=900"],
-      "amount": 12300,
+      "amount": 12337,
       "payments": [
           {
               "date": "2025-01-23",
@@ -1127,7 +1127,7 @@
               "level": "F"
             }
       ],
-      "totalPaid": 5000,
+      "totalPaid": 10000,
       "onHold": 0
     },
     {
@@ -1213,7 +1213,7 @@
     },
     {
       "customer": "Jumo",
-      "products": ["3ft Nanda"],
+      "products": ["3ft Nanda-5","Plate- 1"],
       "amount": 1800,
       "payments": [
           {
@@ -1221,10 +1221,16 @@
               "paid": 1000,
               "description": "Partial Payment",
               "level": "F"
+            },
+            {
+              "date": "2025-02-04",
+              "paid": 400,
+              "description": "Partial Payment",
+              "level": "E"
             }
       ],
       "totalPaid": 1000,
-      "onHold": 800
+      "onHold": 300
     },
     {
       "customer": "Customer02",
@@ -1535,16 +1541,22 @@
     {
       "customer": "Kamal kumar biswal",
       "products": ["PlyDoor"],
-      "amount": 1000,
+      "amount": 3250,
       "payments": [
           {
               "date": "2025-02-01",
               "paid": 1000,
               "description": "Advance",
               "level": "F"
+            },
+            {
+              "date": "2025-02-02",
+              "paid": 2250,
+              "description": "Full Payment Made",
+              "level": "F"
             }
       ],
-      "totalPaid": 1000,
+      "totalPaid": 3250,
       "onHold": 0
     },
     {
@@ -1572,10 +1584,16 @@
               "paid": 5000,
               "description": "Parsial Payment",
               "level": "F"
+            },
+            {
+              "date": "2025-02-03",
+              "paid": 3200,
+              "description": "Full Payment Paid",
+              "level": "F"
             }
       ],
       "totalPaid": 5000,
-      "onHold": 3200
+      "onHold": 0
     },
     {
       "customer": "Customer02",
@@ -1600,7 +1618,7 @@
           {
               "date": "2025-02-03",
               "paid": 2400,
-              "description": "Advance",
+              "description": "Full Payment Paid",
               "level": "F"
             }
       ],
@@ -1615,7 +1633,7 @@
           {
               "date": "2025-02-03",
               "paid": 2900,
-              "description": "Advance",
+              "description": "Full Payment Paid",
               "level": "F"
             }
       ],
@@ -1655,18 +1673,160 @@
     {
       "customer": "Dhadia Ojha",
       "products": ["Door Fiiting Accessories"],
-      "amount": 2000,
+      "amount": 692,
       "payments": [
           {
               "date": "2025-02-03",
-              "paid": 692,
+              "paid": 690,
               "description": "Full Payment Made",
               "level": "F"
             }
       ],
       "totalPaid": 690,
       "onHold": 0
+    },
+    {
+      "customer": "Babu Pion",
+      "products": ["3/3.6 (12mmJI)-1= 1800","Adjust Fan-1","12/18-2=240"],
+      "amount": 2040,
+      "payments": [
+          {
+              "date": "2025-02-03",
+              "paid": 2000,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2000,
+      "onHold": 0
+    },
+    {
+      "customer": "Niranjan Nayak",
+      "products": ["3.6 ft Nanda-6"],
+      "amount": 2400,
+      "payments": [
+          {
+              "date": "2025-02-03",
+              "paid": 1800,
+              "description": "First Payment",
+              "level": "F"
+            },
+            {
+              "date": "2025-02-04",
+              "paid": 600,
+              "description": "Full Payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2400,
+      "onHold": 0
+    },
+    {
+      "customer": "Tapan-9078744979",
+      "products": ["3/3.6 (steel)- 1= 1550","Dali Bandha- 2x900=1800"],
+      "amount": 3350,
+      "payments": [
+          {
+              "date": "2025-02-04",
+              "paid": 3150,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 3150,
+      "onHold": 0
+    },
+    {
+      "customer": "Ato Kala",
+      "products": ["3ft Nanda-1"],
+      "amount": 300,
+      "payments": [
+          {
+              "date": "2025-02-04",
+              "paid": 300,
+              "description": "Full Payment Made",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 300,
+      "onHold": 0
+    },
+    {
+      "customer": "Ato Kala",
+      "products": ["PlyDoor"],
+      "amount": 1000,
+      "payments": [
+          {
+              "date": "2025-02-04",
+              "paid": 1000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1000,
+      "onHold": 0
+    },
+    {
+      "customer": "7787870207- Prakash Patra",
+      "products": ["7ft Khunta"],
+      "amount": 2000,
+      "payments": [
+          {
+              "date": "2025-02-05",
+              "paid": 2000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2000,
+      "onHold": 0
+    },
+    {
+      "customer": "Subasa BhairiPur",
+      "products": ["Door Fitting Accesories"],
+      "amount": 940,
+      "payments": [
+          {
+              "date": "2025-02-05",
+              "paid": 900,
+              "description": "Full Payment Paid",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 900,
+      "onHold": 0
+    },
+    {
+      "customer": "Babuli Swain",
+      "products": ["Durabandha-1=800","Ankor Bolt-4=100","Ftting-300"],
+      "amount": 1200,
+      "payments": [
+          {
+              "date": "2025-02-06",
+              "paid": 1000,
+              "description": "Parisal Payment Paid",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1000,
+      "onHold": 0
+    },
+    {
+      "customer": "Jainul Khan",
+      "products": ["Plydoor- 75x38, 74x37.3/4"],
+      "amount": 5400,
+      "payments": [
+          {
+              "date": "2025-02-06",
+              "paid": 1400,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1400,
+      "onHold": 0
     }
+   
    
 
     

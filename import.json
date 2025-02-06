@@ -86,6 +86,29 @@
                 ]
               }
       ]
+    },
+    {
+      "id": 4,
+      "name": "RamKrishna PlyWood",
+      "details": "PlyWood Supplier",
+      "products": [
+              {
+                "name": "19mm, AustinGold 19mm, 12mm, 9mm, 6mm",
+                "Date":"06/02/2025",
+                "totalAmount": 143325,
+                "paid": 143325,
+                "remaining": 0,
+                "transactions": [
+                  {"date": "2025-01-09", "payment": 143325, "notes": "Paid in Full"}
+                ],
+                "invoiceImages": [
+                  "img/RKP01-06022025.jpg",
+                  "img/RKP02-06022025.jpg",
+                  "img/RKP03-06022025.jpg"
+
+                ]
+              }
+      ]
     }
   ]
 }
