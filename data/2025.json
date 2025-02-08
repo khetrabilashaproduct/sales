@@ -1111,8 +1111,8 @@
     },
     {
       "customer": "Lipu Pradhan - 9861255868",
-      "products": ["Door fittings- 2537","PlyDoor-2=6400","PVC-1=2500","Durabandha-1=900"],
-      "amount": 12337,
+      "products": ["Door fittings- 2537","PlyDoor-2=6400","PVC-1=2500","Durabandha-1=2200"],
+      "amount": 13637,
       "payments": [
           {
               "date": "2025-01-23",
@@ -1125,9 +1125,15 @@
               "paid": 5000,
               "description": "Parcial Payment",
               "level": "F"
+            },
+            {
+              "date": "2025-02-05",
+              "paid": 2000,
+              "description": "Parcial Payment",
+              "level": "F"
             }
       ],
-      "totalPaid": 10000,
+      "totalPaid": 12000,
       "onHold": 0
     },
     {
@@ -1533,6 +1539,12 @@
               "paid": 2000,
               "description": "Advance",
               "level": "F"
+            },
+            {
+              "date": "2025-02-07",
+              "paid": 5000,
+              "description": "Full Payment Made",
+              "level": "F"
             }
       ],
       "totalPaid": 2000,
@@ -1767,6 +1779,27 @@
       "onHold": 0
     },
     {
+      "customer": "Punam Begum, jihan ( barahala)",
+      "products": ["PlyDoor"],
+      "amount": 1900,
+      "payments": [
+          {
+              "date": "2025-02-04",
+              "paid": 1000,
+              "description": "Advance",
+              "level": "F"
+            },
+            {
+              "date": "2025-02-06",
+              "paid": 900,
+              "description": "second Payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1900,
+      "onHold": 0
+    },
+    {
       "customer": "7787870207- Prakash Patra",
       "products": ["7ft Khunta"],
       "amount": 2000,
@@ -1825,6 +1858,36 @@
       ],
       "totalPaid": 1400,
       "onHold": 0
+    },
+    {
+      "customer": "Milu",
+      "products": ["Plydoor- 78.1/2x37.3/4","PVC 2.6 pannel-1"],
+      "amount": 1000,
+      "payments": [
+          {
+              "date": "2025-02-06",
+              "paid": 1000,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1000,
+      "onHold": 0
+    },
+    {
+      "customer": "Babu Pion",
+      "products": ["Cement Slab"],
+      "amount": 550,
+      "payments": [
+          {
+              "date": "2025-02-08",
+              "paid": 500,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 500,
+      "onHold": 50
     }
    
    

@@ -9,33 +9,57 @@
                   "name": "Ply",
                   "Date":"28/12/2024",
                   "totalAmount": 170812,
-                  "paid": 120000,
+                  "paid": 170812,
                   "remaining": 0,
                   "transactions": [
                     {"date": "2024-12-28", "payment": 20000, "notes": "Initial Payment"},
-                    {"date": "2025-01-13", "payment": 100000, "notes": "Second Installment"}
+                    {"date": "2025-01-13", "payment": 100000, "notes": "Second Installment"},
+                    {"date": "2025-02-05", "payment": 50812, "notes": "Third Payment"}
+                    
                   ],
                   "invoiceImages": [
-                    "#"
+                    "img/pardosh28122024.jpeg"
                   ]
                 },
                 {
-                  "name": "Regin- 1 Barrel",
+                  "name": "Regin- 2 Barrel",
                   "Date":"13/01/2025",
-                  "totalAmount": 6020,
-                  "paid": 0,
+                  "totalAmount": 12040,
+                  "paid": 12040,
                   "remaining": 0,
                   "transactions": [
-                    {"date": "", "payment": 0, "notes": "Ammount not Paid"}
+                    {"date": "2025-02-05", "payment": 12040, "notes": "Paid in Full"}
 
                   ],
                   "invoiceImages": [
-                    "#"
+                    "img/pardosh13012025.jpeg"
+                  ]
+                },
+                {
+                  "name": "PlyBoard",
+                  "Date":"08/02/2025",
+                  "totalAmount": 96199,
+                  "paid": 0,
+                  "remaining": 96199,
+                  "transactions": [
+                    {"date": "", "payment": 0, "notes": "Not Paid"}
+
+                  ],
+                  "invoiceImages": [
+                    "img/pardosh07022025.jpeg"
                   ]
                 }
 
               ]
     },
+
+
+
+
+
+
+
+
     {
       "id": 2,
       "name": "Sanjeeb Dash Cement",
@@ -53,8 +77,94 @@
               }
       ]
     },
+
     {
       "id": 3,
+      "name": "Upulei",
+      "details": "Chips (bauri)",
+      "products": [
+              {
+                "name": "Haiwa 1 trip ",
+                "Date":"27/01/2025",
+                "totalAmount": 26500,
+                "paid": 26500,
+                "remaining": 0,
+                "transactions": [
+                  {"date": "2025-01-09", "payment": 26500, "notes": "Paid in Full"}
+                ]
+              }
+      ]
+    },
+
+
+
+
+
+    {
+      "id": 4,
+      "name": "Soumaya Ranjan Sahu",
+      "details": "PlyWood Supplier",
+      "products": [
+              {
+                "name": "Door FItting Accessories",
+                "Date":"14/12/2024",
+                "totalAmount": 65200,
+                "paid": 38400,
+                "remaining": 0,
+                "transactions": [
+                  {"date": "2024-12-14", "payment": 16800, "notes": "Initial Payment"},
+                  {"date": "2025-01-17", "payment": 10000, "notes": "Second Payment"}
+                ],
+                "invoiceImages": [
+                  "img/soumya1-14122024.jpg"
+
+                ]
+              },
+              {
+                "name": "Door FItting Accessories",
+                "Date":"19/01/2025",
+                "totalAmount": 52872,
+                "paid": 52872,
+                "remaining": 0,
+                "transactions": [
+                  {"date": "2025-01-19", "payment": 52872, "notes": "Paid in Full [44000(cash), 8872(ppay)"}
+                ],
+                "invoiceImages": [
+                  "img/soumya2-19012025.jpg"
+
+                ]
+              }
+      ]
+    },
+
+
+
+
+    {
+      "id": 5,
+      "name": "RamKrishna PlyWood",
+      "details": "PlyWood Supplier",
+      "products": [
+              {
+                "name": "19mm, AustinGold 19mm, 12mm, 9mm, 6mm",
+                "Date":"06/02/2025",
+                "totalAmount": 143325,
+                "paid": 143325,
+                "remaining": 0,
+                "transactions": [
+                  {"date": "2025-02-06", "payment": 143325, "notes": "Paid in Full"}
+                ],
+                "invoiceImages": [
+                  "img/RKP01-06022025.jpg",
+                  "img/RKP02-06022025.jpg",
+                  "img/RKP03-06022025.jpg"
+
+                ]
+              }
+      ]
+    },
+    {
+      "id": 6,
       "name": "Siba Cement",
       "details": "Cement Seller",
       "products": [
@@ -66,46 +176,6 @@
                 "remaining": 0,
                 "transactions": [
                   {"date": "2025-01-09", "payment": 1050, "notes": "Paid in Full"}
-                ]
-              }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "Upulei",
-      "details": "Chips (bauri)",
-      "products": [
-              {
-                "name": "Haiwa 1 trip ",
-                "Date":"27/01/2025",
-                "totalAmount": 26500,
-                "paid": 26500,
-                "remaining": 0,
-                "transactions": [
-                  {"date": "2025-01-09", "payment": 1050, "notes": "Paid in Full"}
-                ]
-              }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "RamKrishna PlyWood",
-      "details": "PlyWood Supplier",
-      "products": [
-              {
-                "name": "19mm, AustinGold 19mm, 12mm, 9mm, 6mm",
-                "Date":"06/02/2025",
-                "totalAmount": 143325,
-                "paid": 143325,
-                "remaining": 0,
-                "transactions": [
-                  {"date": "2025-01-09", "payment": 143325, "notes": "Paid in Full"}
-                ],
-                "invoiceImages": [
-                  "img/RKP01-06022025.jpg",
-                  "img/RKP02-06022025.jpg",
-                  "img/RKP03-06022025.jpg"
-
                 ]
               }
       ]

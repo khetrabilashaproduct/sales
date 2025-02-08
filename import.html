@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -164,9 +165,9 @@
   
     <!-- Spending Graph -->
     <canvas id="spendingChart" width="400" height="200"></canvas>
-  </div>
-  
+    <canvas id="yearlyChart" width="400" height="200"></canvas>
 
+  </div>
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
@@ -222,6 +223,58 @@ const renderGraph = (monthlySpending, monthlyDetails) => {
   window.spendingChartInstance = new Chart(ctx, config);
 };
 
+
+const renderYearlyGraph = (companies) => {
+    const { yearlyData } = processTransactions(companies);
+
+    const sellerNames = Object.values(yearlyData).map(s => s.originalName);
+    const paidAmounts = Object.values(yearlyData).map(s => s.paid);
+    const remainingAmounts = Object.values(yearlyData).map(s => s.remaining);
+
+    const ctx = document.getElementById("yearlyChart").getContext("2d");
+
+    if (window.yearlyChartInstance) {
+        window.yearlyChartInstance.destroy();
+    }
+
+    window.yearlyChartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: sellerNames,
+            datasets: [
+                {
+                    label: "Total Paid",
+                    data: paidAmounts,
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                },
+                {
+                    label: "Remaining Payment",
+                    data: remainingAmounts,
+                    backgroundColor: "rgba(255, 99, 132, 0.6)",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const seller = sellerNames[index];
+                    showSellerDetails(seller, yearlyData[seller.toLowerCase()]);
+                }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+};
+
+
 const showMonthlyDetails = (monthIndex, monthlyDetails) => {
   const details = document.getElementById("details");
   const productDetails = document.getElementById("product-details");
@@ -252,39 +305,63 @@ const showMonthlyDetails = (monthIndex, monthlyDetails) => {
   details.style.display = "block";
 };
 
+
+
 const processTransactions = (companies) => {
-  const monthlySpending = Array(12).fill(0);
-  const monthlyDetails = Array.from({ length: 12 }, () => []);
-  const monthLabels = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
+    const monthlySpending = Array(12).fill(0);
+    const monthlyDetails = Array.from({ length: 12 }, () => []);
 
-  companies.forEach(company => {
-    if (selectedSeller !== "All Sellers" && company.name !== selectedSeller) return;
+    const yearlyData = {}; // Store yearly paid & remaining per seller
 
-    company.products.forEach(product => {
-      product.transactions.forEach(transaction => {
-        const transactionDate = new Date(transaction.date);
-        const transactionYear = transactionDate.getFullYear();
+    companies.forEach(company => {
+        const seller = company.name.trim().toLowerCase();
 
-        if (transactionYear === selectedYear) {
-          const month = transactionDate.getMonth();
-          monthlySpending[month] += transaction.payment;
-          monthlyDetails[month].push({
-            company: company.name,
-            payment: transaction.payment,
-            date: transaction.date,
-            notes: transaction.notes,
-            month: monthLabels[month] // Use local monthLabels array
-          });
+        // Initialize seller in yearly data if not already present
+        if (!yearlyData[seller]) {
+            yearlyData[seller] = { paid: 0, remaining: 0, originalName: company.name };
         }
-      });
-    });
-  });
 
-  return { monthlySpending, monthlyDetails };
+        // If filtering by seller, skip others
+        if (selectedSeller !== "All Sellers" && seller !== selectedSeller.trim().toLowerCase()) {
+            return;
+        }
+
+        company.products.forEach(product => {
+            product.transactions.forEach(transaction => {
+                const transactionDate = new Date(transaction.date);
+                const transactionYear = transactionDate.getFullYear();
+                const month = transactionDate.getMonth(); // 0 = January, 11 = December
+
+                if (transactionYear === selectedYear) {
+                    const payment = Number(transaction.payment) || 0;
+
+                    // Monthly Calculation
+                    monthlySpending[month] += payment;
+                    monthlyDetails[month].push({
+                        company: company.name,
+                        payment: payment,
+                        date: transaction.date,
+                        notes: transaction.notes || "No notes available",
+                        month: new Intl.DateTimeFormat('en-US', { month: 'long' }).format(transactionDate) // Get month name dynamically
+                    });
+                }
+            });
+
+            // Yearly Calculation (Total Paid & Remaining)
+            yearlyData[seller].paid += Number(product.paid) || 0;
+            yearlyData[seller].remaining += (Number(product.totalAmount) || 0) - (Number(product.paid) || 0);
+        });
+    });
+
+    return { monthlySpending, monthlyDetails, yearlyData };
 };
+
+
+
+
+
+
+
 
 
 const renderFilters = (companies) => {
@@ -319,6 +396,8 @@ const initPage = async () => {
   const companyList = document.getElementById("company-list");
 
   renderFilters(data.companies);
+  updateGraph(data.companies);  // ✅ Monthly Graph
+  renderYearlyGraph(data.companies); // ✅ Yearly Graph (Fix)
 
   data.companies.forEach(company => {
     const tile = document.createElement("div");
@@ -334,6 +413,11 @@ const initPage = async () => {
     tile.addEventListener("click", () => {
       const details = document.getElementById("details");
       const productDetails = document.getElementById("product-details");
+
+      if (details.style.display === "block" && document.getElementById("company-name").textContent === company.name) {
+        details.style.display = "none";
+        return;
+    }
 
       document.getElementById("company-name").textContent = company.name;
       productDetails.innerHTML = "";
@@ -351,8 +435,23 @@ const initPage = async () => {
           </div>
         `;
 
+        details.style.display = "block";
+
+    // Smooth scrolling to the details section
+    details.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    // Stop event propagation to prevent immediate closing when clicking inside the details section
+    event.stopPropagation();
+    document.addEventListener("click", (event) => {
+    const details = document.getElementById("details");
+    if (details.style.display === "block" && !details.contains(event.target) && !event.target.closest(".company-tile")) {
+        details.style.display = "none";
+    }
+});
         const transactionDiv = document.createElement("div");
         transactionDiv.innerHTML = "<strong>Transactions:</strong>";
+
+        
 
         product.transactions.forEach(transaction => {
           const transactionDetails = document.createElement("div");
@@ -392,6 +491,9 @@ const initPage = async () => {
 
   updateGraph(data.companies);
 };
+
+
+
 
 initPage();
 
