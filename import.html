@@ -138,6 +138,9 @@
     border-bottom: 5px solid #50C878;
   
 }
+
+
+
   </style>
 </head>
 <body>
@@ -356,7 +359,18 @@ const processTransactions = (companies) => {
     return { monthlySpending, monthlyDetails, yearlyData };
 };
 
-
+function showSellerDetails(sellerName, sellerData) {
+      console.log("Seller Details:", sellerName, sellerData);
+      const details = document.getElementById("details");
+      const productDetails = document.getElementById("product-details");
+      productDetails.innerHTML = `
+          <h2>${sellerName}</h2>
+          <p><strong>Total Paid:</strong> ${sellerData.paid.toFixed(2)}</p>
+          <p><strong>Total Remaining:</strong> ${sellerData.remaining.toFixed(2)}</p>
+      `;
+      details.style.display = "block";
+      details.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
 
 
@@ -419,6 +433,7 @@ const initPage = async () => {
         return;
     }
 
+    
       document.getElementById("company-name").textContent = company.name;
       productDetails.innerHTML = "";
 

@@ -1111,8 +1111,8 @@
     },
     {
       "customer": "Lipu Pradhan - 9861255868",
-      "products": ["Door fittings- 2537","PlyDoor-2=6400","PVC-1=2500","Durabandha-1=2200"],
-      "amount": 13637,
+      "products": ["Door fittings- 2537","PlyDoor-2=6400","PVC-1=2100","Durabandha-1=2200"],
+      "amount": 13237,
       "payments": [
           {
               "date": "2025-01-23",
@@ -1134,7 +1134,7 @@
             }
       ],
       "totalPaid": 12000,
-      "onHold": 0
+      "onHold": 1237
     },
     {
       "customer": "Jitu Mishra-7735552774",
@@ -1699,7 +1699,7 @@
     },
     {
       "customer": "Babu Pion",
-      "products": ["3/3.6 (12mmJI)-1= 1800","Adjust Fan-1","12/18-2=240"],
+      "products": ["3/3.6 (12mmJI)-1= 1800","Adjust Fan-1"],
       "amount": 2040,
       "payments": [
           {
@@ -1794,6 +1794,12 @@
               "paid": 900,
               "description": "second Payment",
               "level": "F"
+            },
+            {
+              "date": "2025-02-08",
+              "paid": 700,
+              "description": "Full Payment",
+              "level": "F"
             }
       ],
       "totalPaid": 1900,
@@ -1854,6 +1860,12 @@
               "paid": 1400,
               "description": "Advance",
               "level": "F"
+            },
+            {
+              "date": "2025-02-08",
+              "paid": 4000,
+              "description": "Full Payment",
+              "level": "F"
             }
       ],
       "totalPaid": 1400,
@@ -1875,6 +1887,27 @@
       "onHold": 0
     },
     {
+      "customer": "Nalu Sahu- 9938945908(seulakunda)",
+      "products": ["Cement Slab"],
+      "amount": 2600,
+      "payments": [
+          {
+              "date": "2025-02-08",
+              "paid": 600,
+              "description": "Advance",
+              "level": "F"
+            },
+            {
+              "date": "2025-02-09",
+              "paid": 1900,
+              "description": "Full Payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2500,
+      "onHold": 0
+    },
+    {
       "customer": "Babu Pion",
       "products": ["Cement Slab"],
       "amount": 550,
@@ -1888,6 +1921,111 @@
       ],
       "totalPaid": 500,
       "onHold": 50
+    },
+    {
+      "customer": "Kalia",
+      "products": ["3.6ft Nanda-4","Plate- 2","Thipi-1"],
+      "amount": 2500,
+      "payments": [
+          {
+              "date": "2025-02-08",
+              "paid": 0,
+              "description": "Not Paid",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 0,
+      "onHold": 2500
+    },
+    {
+      "customer": "Sammim ke Abbu",
+      "products": ["3ft Nanda-3","Plate- 1"],
+      "amount": 1200,
+      "payments": [
+          {
+              "date": "2025-02-08",
+              "paid": 1100,
+              "description": "Advance",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1100,
+      "onHold": 0
+    },
+    {
+      "customer": "Punam Begum, jihan ( barahala)",
+      "products": ["Door Fitting Accessories"],
+      "amount": 1070,
+      "payments": [
+          {
+              "date": "2025-02-08",
+              "paid": 1000,
+              "description": "Full Payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1000,
+      "onHold": 0
+    },
+    {
+      "customer": "Jainul Khan",
+      "products": ["Door Ftting Accessories"],
+      "amount": 2510,
+      "payments": [
+          {
+              "date": "2025-02-08",
+              "paid": 2300,
+              "description": "Full Payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 2300,
+      "onHold": 0
+    },
+    {
+      "customer": "Susanta Kara",
+      "products": ["5ft khunta-25x145=3625","wire-2800","chulli-1x100"],
+      "amount": 6525,
+      "payments": [
+          {
+              "date": "2025-02-09",
+              "paid": 5600,
+              "description": "Full Payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 5600,
+      "onHold": 925
+    },
+    {
+      "customer": "Mali Raja",
+      "products": ["3.6ft Nanda-4","Plate- 1"],
+      "amount": 2000,
+      "payments": [
+          {
+              "date": "2025-02-09",
+              "paid": 1900,
+              "description": "Full Payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 1900,
+      "onHold": 0
+    },
+    {
+      "customer": "Akbar",
+      "products": ["Duarabandha(roping)-4x700=2800","Main Door Duara Bandha-1=2000","Ankor Bolt-30=450","Fitting- 1500"],
+      "amount": 6700,
+      "payments": [
+          {
+              "date": "2025-02-09",
+              "paid": 6700,
+              "description": "Full Payment",
+              "level": "F"
+            }
+      ],
+      "totalPaid": 6700,
+      "onHold": 0
     }
    
    
