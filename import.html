@@ -309,7 +309,6 @@ const showMonthlyDetails = (monthIndex, monthlyDetails) => {
 };
 
 
-
 const processTransactions = (companies) => {
     const monthlySpending = Array(12).fill(0);
     const monthlyDetails = Array.from({ length: 12 }, () => []);
@@ -371,11 +370,6 @@ function showSellerDetails(sellerName, sellerData) {
       details.style.display = "block";
       details.scrollIntoView({ behavior: "smooth", block: "start" });
   }
-
-
-
-
-
 
 
 const renderFilters = (companies) => {
